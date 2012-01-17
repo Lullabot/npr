@@ -1,0 +1,75 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ *
+ */
+function npr_api_menu() {
+ 
+  $items['admin/config/system/npr'] = array(
+    'title' => 'Configure NPR API',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('npr_api_config_form'),
+    'access arguments' => array('administer npr api'),
+  );
+
+  $items['admin/config/system/npr_api_test'] = array(
+    'title' => 'Test the NPR API',
+    'page callback' => 'npr_api_test_api',
+    'access arguments' => array('administer npr api'),
+  );
+
+  return $items; 
+}
+
+function npr_api_test_api() {
+  $params = array(
+    'id' => 1149, // Afghanistan
+  );
+  return print_r(npr_api_fetch_stories($params), 1);
+}
+
+/**
+ * Implements hook_permisssion().
+ *
+ */
+function npr_api_permission() {
+  return array(
+    'administer npr api' => array(
+      'title' => t('Administer the NPR API'), 
+      'description' => t('Perform administration tasks for the NPR API.'),
+    ),
+  );
+}
+
+
+function npr_api_config_form(&$form, &$form_state) {
+
+  $form['npr_api_station_key'] = array(
+    '#type' => 'textfield',
+    '#title' => t('NPR API Key'),
+    '#default_value' => variable_get('npr_api_station_key'),
+    '#description' => t(''),
+  );
+
+  return system_settings_form($form);
+}
+
+function npr_api_fetch_object($params) {
+  
+  $params['apiKey'] = variable_get('npr_api_station_key');
+  $params['orgId'] = variable_get('npr_api_org_id');
+  
+  include 'classes/NPRAPI.php';
+  include 'classes/NPRAPIDrupal.php';
+  
+  $NPRAPIDrupal = new NPRAPIDrupal();
+  $NPRAPIDrupal->request($params, $method = 'GET', $data = NULL, $path = 'query', $base);
+  $NPRAPIDrupal->parse();
+  return $NPRAPIDrupal;
+}
+
+function npr_api_fetch_stories($params) {
+  $object = npr_api_fetch_object($params);
+  return $object->stories;
+}
