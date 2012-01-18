@@ -1,1 +1,1 @@
-This is a placeholder. I am a drupal developer at NPR. Our team has been working on a lot of drupal7 code, including integrating drupal 7 with the NPR API. I'm hoping we can release code here soon!
+This is a placeholder. I am a drupal developer at NPR. Our team has been working on a lot of drupal7 code, including integrating drupal 7 with the NPR API.
