@@ -66,7 +66,7 @@ class NPRAPI {
     if ($node->type == 'blog') {
       $story->addAttribute('type', 'blog');
     }
-    
+
     // FIX
     $story->addChild('title', substr(htmlentities($node->title),0,100));	
 
