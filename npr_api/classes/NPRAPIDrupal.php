@@ -15,7 +15,7 @@ class NPRAPIDrupal extends NPRAPI {
     $this->request->base = $base;
 
     $queries = array();
-    foreach($this->request->params as $k => $v) {
+    foreach ($this->request->params as $k => $v) {
       $queries[] = "$k=$v";
     }
     $request_url = $this->request->base . '/' . $this->request->path . '?' . implode('&', $queries);
