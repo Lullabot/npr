@@ -5,7 +5,7 @@
  *
  */
 function npr_api_menu() {
- 
+
   $items['admin/config/system/npr'] = array(
     'title' => 'Configure NPR API',
     'page callback' => 'drupal_get_form',
