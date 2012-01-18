@@ -13,7 +13,7 @@ class NPRAPI {
   }
 
   function send_request() {
-  
+
   }
   
   function flatten() {
