@@ -23,7 +23,7 @@ class NPRAPIDrupal extends NPRAPI {
 
     $response = drupal_http_request($request_url, array('method' => $this->request->method, 'data' => $this->request->data));
     $this->response = $response;
-    
+
     if ($response->code == self::NPRAPI_STATUS_OK) {
       if ($response->data) {
         $this->xml = $response->data;
