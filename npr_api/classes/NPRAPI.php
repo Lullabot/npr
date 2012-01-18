@@ -92,7 +92,7 @@ class NPRAPI {
     $org = $story->addChild('organization');
     $org->addAttribute('orgId', $node->org_id);
 
-	return $root;
+    return $root;
   }
 
   function send_NPRML($xml, $path) {
