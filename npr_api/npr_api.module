@@ -46,6 +46,10 @@ function npr_api_permission() {
   );
 }
 
+/**
+ * Callback for admin/config/system/npr.
+ *
+ */
 function npr_api_config_form(&$form, &$form_state) {
   $form['npr_api_station_key'] = array(
     '#type' => 'textfield',
