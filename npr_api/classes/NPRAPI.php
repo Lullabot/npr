@@ -1,7 +1,7 @@
 <?php
 
 class NPRAPI {
-  
+
   const NPRAPI_STATUS_OK = 200;
 
   function __construct() {
