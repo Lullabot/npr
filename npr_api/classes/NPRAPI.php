@@ -90,7 +90,7 @@ class NPRAPI {
 
     //add the station's org ID 
     $org = $story->addChild('organization');
-	$org->addAttribute('orgId', $node->org_id);
+    $org->addAttribute('orgId', $node->org_id);
 
 	return $root;
   }
