@@ -12,7 +12,7 @@ class NPRAPI {
 
   }
 
-  function send_request() {	
+  function send_request() {
   
   }
   
