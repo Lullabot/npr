@@ -46,7 +46,7 @@ class NPRAPI {
     $NPRMLElement = new NPRMLElement();
     add_simplexml_attributes($element, $NPRMLElement);
     if (count($element->children())) { // works for PHP5.2
-      foreach($element->children() as $i => $child) {
+      foreach ($element->children() as $i => $child) {
         $NPRMLElement->$i = $this->parse_simplexml_element($child);    
       }
     }
