@@ -75,7 +75,7 @@ class NPRAPI {
     }
 
     if (isset($node->summary)) {
-	  $story->addChild('teaser', htmlentities($node->summary));
+      $story->addChild('teaser', htmlentities($node->summary));
 	}
 	$story->addChild('storyDate',  format_date($node->created, 'custom', "D, d M Y G:i:s O "));
 	$story->addChild('pubDate', $now);
