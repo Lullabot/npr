@@ -35,7 +35,7 @@ class NPRAPI {
 
     foreach ($object->list->story as $story) {
       $parsed = new NPRMLEntity();
-      foreach($story as $k => $v) {
+      foreach ($story as $k => $v) {
         $parsed->$k = $this->parse_simplexml_element($v);
       }
       $this->stories[] = $parsed;
