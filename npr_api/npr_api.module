@@ -64,7 +64,7 @@ function npr_api_fetch_object($params) {
   include 'classes/NPRAPIDrupal.php';
   
   $NPRAPIDrupal = new NPRAPIDrupal();
-  $NPRAPIDrupal->request($params, $method = 'GET', $data = NULL, $path = 'query', $base);
+  $NPRAPIDrupal->request($params);
   $NPRAPIDrupal->parse();
   return $NPRAPIDrupal;
 }
