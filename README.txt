@@ -1,1 +1,1 @@
-This is a placeholder. I am a drupal developer at NPR. Our team has been working on a lot of drupal7 code, including integrating drupal 7 with the NPR API.
+I am a drupal developer at <a href="http://npr.org">NPR</a>. Our team has been working on a lot of drupal7 code, including integrating drupal 7 with the <a href="http://www.npr.org/api">NPR API</a>. We have a dev release up now (basic API integration). We should have an accelerated release cycle through Q1 of 2012.
