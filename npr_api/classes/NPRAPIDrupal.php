@@ -33,7 +33,7 @@ class NPRAPIDrupal extends NPRAPI {
       }
     }
   }
-  
+
   function flatten() {
     
   }
