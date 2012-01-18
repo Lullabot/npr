@@ -19,7 +19,7 @@ class NPRAPI {
   function flatten() {
 
   }
-  
+
   function parse() {
     if (!empty($this->xml)) {
       $xml = $this->xml;
