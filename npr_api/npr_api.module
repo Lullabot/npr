@@ -22,6 +22,10 @@ function npr_api_menu() {
   return $items; 
 }
 
+/**
+ * Callback for admin/config/system/npr_api_test.
+ *
+ */
 function npr_api_test_api() {
   $params = array(
     'id' => 1149, // topic = Afghanistan
