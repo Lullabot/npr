@@ -20,7 +20,7 @@ class NPRAPIDrupal extends NPRAPI {
     }
     $request_url = $this->request->base . '/' . $this->request->path . '?' . implode('&', $queries);
     $this->request->request_url = $request_url;
-    
+
     $response = drupal_http_request($request_url, array('method' => $this->request->method, 'data' => $this->request->data));
     $this->response = $response;
     
