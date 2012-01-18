@@ -58,7 +58,7 @@ class NPRAPI {
 
   function create_NPRML($node) {
     $language = $node->language;
-	$root = new SimpleXMLElement('<nprml></nprml>', 0, FALSE, 'xmlns:nprml=http://api.npr.org/nprml', TRUE);
+    $root = new SimpleXMLElement('<nprml></nprml>', 0, FALSE, 'xmlns:nprml=http://api.npr.org/nprml', TRUE);
     $root->addAttribute('version', '0.92.2');
     $list = $root->addChild('list');
     $story = $list->addChild('story');
