@@ -24,7 +24,7 @@ class NPRAPI {
     if (!empty($this->xml)) {
       $xml = $this->xml;
     }
-    
+
     else {
       $this->notices[] = t('No XML to parse.');
       return;
