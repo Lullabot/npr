@@ -1,7 +1,7 @@
 <?php
 
 class NPRAPIDrupal extends NPRAPI {
-  
+
   function __construct() {
 
   }
