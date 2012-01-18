@@ -111,7 +111,7 @@ function add_simplexml_attributes($element, $object) {
 }
 
 class NPRMLEntity {
-  
+
 }
 
 class NPRMLElement {
