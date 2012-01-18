@@ -47,14 +47,12 @@ function npr_api_permission() {
 }
 
 function npr_api_config_form(&$form, &$form_state) {
-
   $form['npr_api_station_key'] = array(
     '#type' => 'textfield',
     '#title' => t('NPR API Key'),
     '#default_value' => variable_get('npr_api_station_key'),
     '#description' => t(''),
   );
-
   return system_settings_form($form);
 }
 
