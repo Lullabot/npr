@@ -89,7 +89,7 @@ class NPRAPI {
     $landing_page->addAttribute('type', 'html');
 
     //add the station's org ID 
-	$org = $story->addChild('organization');
+    $org = $story->addChild('organization');
 	$org->addAttribute('orgId', $node->org_id);
 
 	return $root;
