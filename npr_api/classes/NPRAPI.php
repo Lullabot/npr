@@ -9,7 +9,7 @@ class NPRAPI {
   }
   
   function prepare_request() {
-  
+
   }
 
   function send_request() {	
