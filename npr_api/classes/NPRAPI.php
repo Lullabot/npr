@@ -17,7 +17,7 @@ class NPRAPI {
   }
 
   function flatten() {
-  
+
   }
   
   function parse() {
