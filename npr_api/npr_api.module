@@ -63,7 +63,6 @@ function npr_api_test_api() {
 function npr_api_fetch_object($params) {
   
   $params['apiKey'] = variable_get('npr_api_station_key');
-  //$params['orgId'] = variable_get('npr_api_org_id');
   
   include 'classes/NPRAPI.php';
   include 'classes/NPRAPIDrupal.php';
