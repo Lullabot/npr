@@ -23,6 +23,20 @@ function npr_api_menu() {
 }
 
 /**
+ * Callback for admin/config/system/npr.
+ *
+ */
+function npr_api_config_form(&$form, &$form_state) {
+  $form['npr_api_station_key'] = array(
+    '#type' => 'textfield',
+    '#title' => t('NPR API Key'),
+    '#default_value' => variable_get('npr_api_station_key'),
+    '#description' => t(''),
+  );
+  return system_settings_form($form);
+}
+
+/**
  * Callback for admin/config/system/npr_api_test.
  *
  */
@@ -44,20 +58,6 @@ function npr_api_permission() {
       'description' => t('Perform administration tasks for the NPR API.'),
     ),
   );
-}
-
-/**
- * Callback for admin/config/system/npr.
- *
- */
-function npr_api_config_form(&$form, &$form_state) {
-  $form['npr_api_station_key'] = array(
-    '#type' => 'textfield',
-    '#title' => t('NPR API Key'),
-    '#default_value' => variable_get('npr_api_station_key'),
-    '#description' => t(''),
-  );
-  return system_settings_form($form);
 }
 
 function npr_api_fetch_object($params) {
