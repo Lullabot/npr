@@ -63,9 +63,9 @@ function npr_api_test_api() {
 function npr_api_fetch_object($params) {
   
   $params['apiKey'] = variable_get('npr_api_station_key');
-  
-  include 'classes/NPRAPI.php';
-  include 'classes/NPRAPIDrupal.php';
+
+  module_load_include('php', 'npr_api', 'classes/NPRAPI');
+  module_load_include('php', 'npr_api', 'classes/NPRAPIDrupal');
   
   $NPRAPIDrupal = new NPRAPIDrupal();
   $NPRAPIDrupal->request($params);
