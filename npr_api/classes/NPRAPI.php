@@ -105,7 +105,7 @@ class NPRAPI {
 function add_simplexml_attributes($element, $object) {
   if (count($element->attributes())) {
     foreach ($element->attributes() as $attr => $value) {
-      $object->$attr = (string)$value; 
+      $object->$attr = (string)$value;
     }
   } 
 }
