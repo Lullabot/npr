@@ -57,6 +57,7 @@ function npr_api_test_api() {
   $params = array(
     'id' => 1149, // topic = Afghanistan
   );
+  // @TODO: Make this much more elegant
   return print_r(npr_api_fetch_stories($params), 1);
 }
 
