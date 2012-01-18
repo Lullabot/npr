@@ -100,11 +100,6 @@ class NPRAPI {
     return $this->send_request($params, $method = 'PUT', $xml, $path, $base);	
   }
 
-  function 
-
-}
-
-
 }
 
 function add_simplexml_attributes($element, $object) {
