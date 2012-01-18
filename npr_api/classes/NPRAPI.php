@@ -70,7 +70,7 @@ class NPRAPI {
     // FIX
     $story->addChild('title', substr(htmlentities($node->title), 0, 100));
 
-    if (isset($node->body) {
+    if (isset($node->body)) {
       $story->addChild('text', htmlentities($node->body);
     }
 
