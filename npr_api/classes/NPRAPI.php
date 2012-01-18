@@ -107,7 +107,7 @@ function add_simplexml_attributes($element, $object) {
     foreach ($element->attributes() as $attr => $value) {
       $object->$attr = (string)$value;
     }
-  } 
+  }
 }
 
 class NPRMLEntity {
