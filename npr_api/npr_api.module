@@ -60,6 +60,16 @@ function npr_api_test_api() {
   return print_r(npr_api_fetch_stories($params), 1);
 }
 
+/**
+ * Creates an NPRAPIDrupal object, narrowed by query-type parameters.
+ *
+ * @param $params
+ *   An array of query-type parameters.
+ *
+ * @return
+ *   An NPRAPIDrupal object.
+ */
+
 function npr_api_fetch_object($params) {
   
   $params['apiKey'] = variable_get('npr_api_station_key');
