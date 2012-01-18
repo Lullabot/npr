@@ -29,7 +29,7 @@ class NPRAPIDrupal extends NPRAPI {
         $this->xml = $response->data;
       }
       else {
-        $this->notice[] = t('No data available.');  
+        $this->notice[] = t('No data available.');
       }
     }
   }
