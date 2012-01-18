@@ -7,7 +7,7 @@ class NPRAPI {
   function __construct() {
 
   }
-  
+
   function prepare_request() {
 
   }
