@@ -84,6 +84,16 @@ function npr_api_fetch_object($params) {
   return $NPRAPIDrupal;
 }
 
+/**
+ * Creates an array of NPR stories, narrowed by query-type parameters.
+ *
+ * @param $params
+ *   An array of query-type parameters.
+ *
+ * @return
+ *   An array of NPR stories, each an NPRMLEntity.
+ */
+
 function npr_api_fetch_stories($params) {
   $object = npr_api_fetch_object($params);
   return $object->stories;
