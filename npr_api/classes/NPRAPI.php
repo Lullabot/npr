@@ -83,10 +83,10 @@ class NPRAPI {
     //if the nprID field is set, (probably because this is an update) send that along too
     if (isset($node->npr_id){
       $story->addAttribute('id', $node->npr_id);
-	}
+    }
 
     $landing_page = $story->addChild('link', $node->story_url);
-	$landing_page->addAttribute('type', 'html');
+    $landing_page->addAttribute('type', 'html');
     
     //add the station's org ID 
 	$org = $story->addChild('organization');
