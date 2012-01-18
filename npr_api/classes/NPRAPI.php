@@ -87,7 +87,7 @@ class NPRAPI {
 
     $landing_page = $story->addChild('link', $node->story_url);
     $landing_page->addAttribute('type', 'html');
-    
+
     //add the station's org ID 
 	$org = $story->addChild('organization');
 	$org->addAttribute('orgId', $node->org_id);
