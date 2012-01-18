@@ -81,7 +81,7 @@ class NPRAPI {
     $story->addChild('pubDate', $now);
 
     //if the nprID field is set, (probably because this is an update) send that along too
-    if (isset($node->npr_id) {
+    if (isset($node->npr_id)) {
       $story->addAttribute('id', $node->npr_id);
     }
 
