@@ -1,6 +1,19 @@
 <?php
 
 /**
+ * Implements hook_permisssion().
+ *
+ */
+function npr_api_permission() {
+  return array(
+    'administer npr api' => array(
+      'title' => t('Administer the NPR API'), 
+      'description' => t('Perform administration tasks for the NPR API.'),
+    ),
+  );
+}
+
+/**
  * Implements hook_menu().
  *
  */
@@ -45,19 +58,6 @@ function npr_api_test_api() {
     'id' => 1149, // topic = Afghanistan
   );
   return print_r(npr_api_fetch_stories($params), 1);
-}
-
-/**
- * Implements hook_permisssion().
- *
- */
-function npr_api_permission() {
-  return array(
-    'administer npr api' => array(
-      'title' => t('Administer the NPR API'), 
-      'description' => t('Perform administration tasks for the NPR API.'),
-    ),
-  );
 }
 
 function npr_api_fetch_object($params) {
