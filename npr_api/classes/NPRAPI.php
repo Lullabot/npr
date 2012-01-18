@@ -63,7 +63,7 @@ class NPRAPI {
     $list = $root->addChild('list');
     $story = $list->addChild('story');
 
-    if ($node->type == 'blog'){
+    if ($node->type == 'blog') {
 	  $story->addAttribute('type', 'blog');
     }
     
