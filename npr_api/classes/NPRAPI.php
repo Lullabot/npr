@@ -72,8 +72,8 @@ class NPRAPI {
 
     if (isset($node->body) {
       $story->addChild('text', htmlentities($node->body);
-	}
-	
+    }
+
 	if (isset($node->summary)) {
 	  $story->addChild('teaser', htmlentities($node->summary));
 	}
