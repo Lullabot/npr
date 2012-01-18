@@ -41,7 +41,7 @@ class NPRAPI {
       $this->stories[] = $parsed;
     }
   }
-  
+
   function parse_simplexml_element($element) {
     $NPRMLElement = new NPRMLElement();
     add_simplexml_attributes($element, $NPRMLElement);
