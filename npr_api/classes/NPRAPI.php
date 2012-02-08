@@ -47,11 +47,11 @@ class NPRAPI {
     add_simplexml_attributes($element, $NPRMLElement);
     if (count($element->children())) { // works for PHP5.2
       foreach ($element->children() as $i => $child) {
-	    if ($i == 'paragraph') {
-		  $paragraph = $this->parse_simplexml_element($child);
-		  $NPRMLElement->paragraphs[$paragraph->num] = $paragraph; 
-	    }
-	    else {
+	      if ($i == 'paragraph') {
+		      $paragraph = $this->parse_simplexml_element($child);
+		      $NPRMLElement->paragraphs[$paragraph->num] = $paragraph; 
+	      }
+	      else {
           $NPRMLElement->$i = $this->parse_simplexml_element($child);
         }
       }
