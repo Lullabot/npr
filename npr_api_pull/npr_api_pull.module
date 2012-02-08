@@ -172,7 +172,8 @@ function npr_api_pull_save_story($story, $date_flag = 0) {
 
   $form_state['values']['title'] = $story->title->value;
   $form_state['values']['field_npr_id']['und'][0]['value'] = $story->id;
-
+  
+  // Very temp fix, move this up to Drupal class
   $body = '';
   foreach ($story->textWithHtml->paragraphs as $paragraph) {
     $body = $body . '<p>' . $paragraph->value . '</p>';
