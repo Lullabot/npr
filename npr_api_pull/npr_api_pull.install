@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * Implements hook_install().
+ */
+function npr_api_pull_install() {
+
+  $npr_api = array(
+    'field_name' => 'field_npr_id',
+    'type' => 'text',
+    'cardinality' => 1,
+    'translatable' => TRUE,
+    'locked' => TRUE,
+  );
+  field_create_field($npr_api);
+
+  node_types_rebuild();
+  $types = node_type_get_types();
+  node_add_body_field($types['npr_story']);
+
+  $npr_api = array(
+    'field_name' => 'field_npr_id',
+    'entity_type' => 'node',
+    'bundle' => 'npr_story',
+    'label' => 'NPR ID',
+    'translatable' => TRUE,
+    'description' => 'NPR ID',
+  );
+
+  field_create_instance($npr_api);
+}
