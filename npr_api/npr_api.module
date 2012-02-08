@@ -19,17 +19,28 @@ function npr_api_permission() {
  */
 function npr_api_menu() {
 
-  $items['admin/config/system/npr'] = array(
-    'title' => 'Configure NPR API',
+  $items['admin/config/services/npr'] = array(
+    'title' => 'NPR API',
+    'description' => 'Control your NPR API settings',    
     'page callback' => 'drupal_get_form',
     'page arguments' => array('npr_api_config_form'),
     'access arguments' => array('administer npr api'),
   );
 
-  $items['admin/config/system/npr_api_test'] = array(
-    'title' => 'Test the NPR API',
+  $items['admin/config/services/npr/api_config'] = array(
+    'title' => 'Configure NPR API',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('npr_api_config_form'),
+    'access arguments' => array('administer npr api'),
+    'weight' => -20,
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+
+  $items['admin/config/services/npr/npr_api_test'] = array(
+    'title' => 'API Test',
     'page callback' => 'npr_api_test_api',
     'access arguments' => array('administer npr api'),
+    'type' => MENU_LOCAL_TASK,
   );
 
   return $items; 
