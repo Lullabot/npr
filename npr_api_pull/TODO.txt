@@ -2,11 +2,14 @@ Should NPR API field be an INT?
 Add all fields to content type
 Map all fields
 Add true updating (via modified date field from API)
+Fix menu items so they are in more natural places
 Add curation tool
 Preview (?)
 Toggle auto-publish on/off?
+Polish help text
 
 NPR_API
 
 Clean up classes and object creation
 Clean up presentation of API Test page
+Polish help text
