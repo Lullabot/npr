@@ -38,6 +38,7 @@ class NPRAPI {
       foreach ($story as $k => $v) {
         $parsed->$k = $this->parse_simplexml_element($v);
       }
+      add_simplexml_attributes($story, $parsed);
       $this->stories[] = $parsed;
     }
   }
