@@ -52,7 +52,7 @@ function npr_api_pull_menu() {
   $items['admin/config/services/npr/cron'] = array(
     'title' => 'Cron settings',
     'description' => 'Fetch the following types of stories from NPR at every cron.',
-    'access arguments' => array('pull NPR content'),
+    'access arguments' => array('administer npr api'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('npr_api_pull_cron_config'),
     'file' => 'npr_api_pull.admin.inc',
