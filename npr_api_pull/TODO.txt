@@ -13,3 +13,4 @@ NPR_API
 Clean up classes and object creation
 Clean up presentation of API Test page
 Polish help text
+API test should fail more gracefully (as should connection in general)
