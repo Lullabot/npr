@@ -46,6 +46,7 @@ function npr_api_pull_menu() {
     'access arguments' => array('pull NPR content'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('npr_api_pull_get_story'),
+    'file' => 'npr_api_pull.admin.inc',
     'type' => MENU_LOCAL_TASK,
   );
 
