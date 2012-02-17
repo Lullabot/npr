@@ -76,6 +76,7 @@ function npr_api_pull_cron() {
 function pi_api_pull_pull_stories() {
   $ids = variable_get('npr_api_pull_cron_query_ids', array());
   $today = format_date(REQUEST_TIME, 'custom', 'Y-m-d');
+  $pub = variable_get('npr_api_pull_cron_publish_flag', 1);
   foreach ($ids as $id) {
     if ($id) {
       $params = array(
@@ -85,6 +86,7 @@ function pi_api_pull_pull_stories() {
       $NPR = npr_api_fetch_object($params);
       if (!empty($NPR->stories)) {
         foreach ($NPR->stories as $story) {
+          $story->status = $pub;
           npr_api_pull_insert_story($story);
         }
       }
@@ -166,7 +168,7 @@ function npr_api_pull_save_story($story, $date_flag = 0) {
   $node = array(
     'type' => 'npr_story',
     'nid' => NULL,
-    'status' => 1,
+    'status' => isset($story->status) ? $story->status : 1,
     'language' => LANGUAGE_NONE,
     'created' => $pub_date,
   );

@@ -5,7 +5,6 @@ Add true updating (via modified date field from API)
 Fix menu items so they are in more natural places
 Add curation tool
 Preview (?)
-Toggle auto-publish on/off?
 Polish help text
 
 NPR_API
@@ -15,3 +14,6 @@ Clean up presentation of API Test page
 Polish help text
 API test should fail more gracefully (as should connection in general)
  -- Create a verbose/report method that prodcues a nice human-readable graf about the object
+
+DONE
+Toggle auto-publish on/off?

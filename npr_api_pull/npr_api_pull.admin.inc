@@ -19,6 +19,14 @@ function npr_api_pull_cron_config() {
     ),
     '#description' => t('Choose one or more topics. New stories from these topic(s) will be be pulled down at every cron run.')
   );
+  
+  $form['npr_api_pull_cron_publish_flag'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Publish stories upon retrieval?'),
+    '#default_value' => variable_get('npr_api_pull_cron_publish_flag', 1),
+    '#description' => t('If checked stories will automatically be published. If not, stories will still be retrieved and saved in your database - but not published.')
+  );
+  
   return system_settings_form($form);
 }
 
