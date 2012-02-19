@@ -6,7 +6,6 @@ Fix menu items so they are in more natural places
 Add curation tool
 Preview (?)
 Polish help text
-Move date_pub flag out of save and insert functions
 
 NPR_API
 
@@ -18,3 +17,4 @@ API test should fail more gracefully (as should connection in general)
 
 DONE
 Toggle auto-publish on/off?
+Move date_pub flag out of save and insert functions

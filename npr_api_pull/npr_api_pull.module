@@ -97,9 +97,9 @@ function pi_api_pull_pull_stories() {
 /**
  * Creates a new npr_story node from NPRMLEntity object
  */
-function npr_api_pull_insert_story($story, $date_flag = 0) {
+function npr_api_pull_insert_story($story) {
   if (!npr_api_pull_story_exists($story->id)) {
-    npr_api_pull_save_story($story, $date_flag);
+    npr_api_pull_save_story($story);
   }
   else {
     // TODO :: add updating
@@ -155,12 +155,6 @@ function npr_api_pull_save_story($story, $date_flag = 0) {
   audio -- this'll be interesting
   */
   module_load_include('inc', 'node', 'node.pages');
-  if ($date_flag == 0) {
-    $pub_date = REQUEST_TIME;
-  }
-  else {
-    $pub_date = strtotime($story->pubDate->value);
-  }
 
   $node = new stdClass();
   $form_state = array();
@@ -170,12 +164,14 @@ function npr_api_pull_save_story($story, $date_flag = 0) {
     'nid' => NULL,
     'status' => isset($story->status) ? $story->status : 1,
     'language' => LANGUAGE_NONE,
-    'created' => $pub_date,
+    'created' => isset($story->created) ? $story->created : strtotime($story->pubDate->value),
   );
+
+  //$node['date'] = 7878787;
 
   $form_state['values']['title'] = $story->title->value;
   $form_state['values']['field_npr_id']['und'][0]['value'] = $story->id;
-  
+  $form_state['values']['date'] = date('Y-m-d H:i:s O', $node['created']);   
   // Very temp fix, move this up to Drupal class
   $body = '';
   foreach ($story->textWithHtml->paragraphs as $paragraph) {
@@ -183,7 +179,6 @@ function npr_api_pull_save_story($story, $date_flag = 0) {
   }
 
   $form_state['values']['body']['und'][0]['value'] = $body;
-
   $form_state['values']['op'] = t('Save');
   drupal_form_submit('npr_story_node_form', $form_state, (object)$node);
 }

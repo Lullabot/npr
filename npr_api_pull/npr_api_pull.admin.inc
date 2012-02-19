@@ -100,7 +100,6 @@ function npr_api_pull_get_story_submit($form, &$form_state) {
     $story_id = npr_api_pull_extract_id($url_value);
   }
 
-  $date_flag = $form_state['values']['date_flag'];
   //build the params to query the API
   $params = array(
     'id' => $story_id,
@@ -108,8 +107,10 @@ function npr_api_pull_get_story_submit($form, &$form_state) {
 
   $NPR = npr_api_fetch_object($params);
   if (is_object($NPR) && !empty($NPR->stories)) {
-    $stories = $NPR->stories;
-    npr_api_pull_insert_story(array_shift($stories), $date_flag);
+    $story = array_shift($NPR->stories);
+    $date_flag = $form_state['values']['date_flag'];
+    $story->created = ($date_flag) ? strtotime($story->pubDate->value) : REQUEST_TIME;
+    npr_api_pull_insert_story($story);
   }
   else {
     drupal_set_message(t('No story could be found in the NPR API.'));
