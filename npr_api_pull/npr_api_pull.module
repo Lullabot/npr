@@ -167,8 +167,6 @@ function npr_api_pull_save_story($story, $date_flag = 0) {
     'created' => isset($story->created) ? $story->created : strtotime($story->pubDate->value),
   );
 
-  //$node['date'] = 7878787;
-
   $form_state['values']['title'] = $story->title->value;
   $form_state['values']['field_npr_id']['und'][0]['value'] = $story->id;
   $form_state['values']['date'] = date('Y-m-d H:i:s O', $node['created']);   
