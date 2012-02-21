@@ -142,18 +142,21 @@ function npr_api_pull_get_nid_from_story_id($npr_id) {
 function npr_api_pull_save_story($story, $date_flag = 0) {
   /*
   TODO:
-  plain text?
+  
+  DO:
+  lastModifiedDate -- use for updates
+  byline
+  images -- this SEEMS straightforward
+  organization -- doesn't hurt to save this
+  audio -- this'll be interesting
+  
+  PUNT STUFF:
+  plain text -- punt
   story_link -- different from link? -- punt
   link -- punt
-  mod_date -- use for updates
-  byline_name ?
-  bylines ?
-
-  images -- this SEEMS straightforward
-  slug
-  $org_data -- doesn't hurt to save this
-  $transcript - maybe punt on this
-  audio -- this'll be interesting
+  transcript - maybe punt on this
+  slug -- not super useful to typical station
+  
   */
   module_load_include('inc', 'node', 'node.pages');
 
