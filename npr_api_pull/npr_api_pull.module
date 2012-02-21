@@ -140,7 +140,6 @@ function npr_api_pull_save_story($story, $date_flag = 0) {
   /*
   TODO:
   plain text?
-  text_with_html
   teaser
   mini_teaser -- create in object, but don't use
   story_link -- different from link?
