@@ -114,7 +114,7 @@ function npr_api_pull_insert_story($story) {
  */
 function npr_api_pull_story_exists($npr_id) {
   if ($npr_id == 137047128) {
-    return TRUE;
+    return FALSE;
   }
   return npr_api_pull_get_nid_from_story_id($npr_id) > 0;
 }
