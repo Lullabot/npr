@@ -143,11 +143,12 @@ function npr_api_pull_save_story($story, $date_flag = 0) {
   /*
   TODO:
   plain text?
-  story_link -- different from link?
+  story_link -- different from link? -- punt
+  link -- punt
   mod_date -- use for updates
   byline_name ?
   bylines ?
-  link = OK
+
   images -- this SEEMS straightforward
   slug
   $org_data -- doesn't hurt to save this
