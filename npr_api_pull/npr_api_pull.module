@@ -214,3 +214,48 @@ dpm($story);
   $form_state['values']['op'] = t('Save');
   drupal_form_submit('npr_story_node_form', $form_state, (object)$node);
 }
+
+/**
+ * Implements hook_field_formatter_info().
+ *
+ *
+ * @see field_example_field_formatter_view()
+ */
+function npr_api_pull_field_formatter_info() {
+  return array(
+    // This formatter just displays the hex value in the color indicated.
+    'npr_audio_mp3' => array(
+      'label' => t('Simple text-based formatter'),
+      'field types' => array('text'),
+    ),
+  );
+}
+
+
+/**
+ * Implements hook_field_formatter_view().
+ *
+ * @see field_example_field_formatter_info()
+ */
+function npr_api_pull_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  switch ($display['type']) {
+    // This formatter simply outputs the field as text and with a color.
+    case 'npr_audio_mp3':
+      foreach ($items as $delta => $item) {
+        $element[$delta] = array(
+          '#type' => 'html_tag',
+          '#tag' => 'embed',
+          '#attributes' => array(
+            'src' => $item['value'],
+            'type' => 'audio/mpeg',
+          ),
+          '#value' => '',
+        );
+      }
+      break;
+  }
+
+  return $element;
+}
