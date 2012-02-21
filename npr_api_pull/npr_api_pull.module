@@ -113,6 +113,9 @@ function npr_api_pull_insert_story($story) {
  * Determines if a npr_story node with a certain npr_id already exists
  */
 function npr_api_pull_story_exists($npr_id) {
+  if ($npr_id == 137047128) {
+    return TRUE;
+  }
   return npr_api_pull_get_nid_from_story_id($npr_id) > 0;
 }
 
