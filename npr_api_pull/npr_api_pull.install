@@ -5,6 +5,15 @@
  */
 function npr_api_pull_install() {
 
+  $byline = array(
+    'field_name' => 'field_npr_byline',
+    'type' => 'text',
+    'cardinality' => 1,
+    'translatable' => TRUE,
+    'locked' => TRUE,
+  );
+  field_create_field($byline);
+
   $npr_api = array(
     'field_name' => 'field_npr_id',
     'type' => 'text',
@@ -18,6 +27,16 @@ function npr_api_pull_install() {
   $types = node_type_get_types();
   node_add_body_field($types['npr_story']);
 
+  $byline = array(
+    'field_name' => 'field_npr_byline',
+    'entity_type' => 'node',
+    'bundle' => 'npr_story',
+    'label' => 'NPR Byline',
+    'translatable' => TRUE,
+    'description' => 'NPR author name',
+  );
+  field_create_instance($byline);
+
   $npr_api = array(
     'field_name' => 'field_npr_id',
     'entity_type' => 'node',
@@ -28,4 +47,12 @@ function npr_api_pull_install() {
   );
 
   field_create_instance($npr_api);
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function npr_api_pull_uninstall() {
+  field_delete_field('field_npr_byline');
+  field_delete_field('field_npr_id');
 }
