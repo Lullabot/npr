@@ -182,6 +182,7 @@ dpm($story);
   $form_state['values']['body']['und'][0]['value'] = $body;
   $form_state['values']['body']['und'][0]['summary'] = $story->teaser->value;
   $form_state['values']['field_npr_byline']['und'][0]['value'] = $story->byline->name->value;
+  $form_state['values']['field_npr_audio']['und'][0]['value'] = $story->audio->format->mp3->value;
 
   if (!empty($story->image)) {
     $npr_image = $story->image;
