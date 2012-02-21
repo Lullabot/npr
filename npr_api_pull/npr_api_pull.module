@@ -146,7 +146,6 @@ function npr_api_pull_save_story($story, $date_flag = 0) {
   DO:
   lastModifiedDate -- use for updates
   organization -- doesn't hurt to save this
-  audio -- this'll be interesting
   subtitle - find out if this is used
   
   PUNT STUFF:
