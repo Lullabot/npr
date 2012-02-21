@@ -148,13 +148,14 @@ function npr_api_pull_save_story($story, $date_flag = 0) {
   images -- this SEEMS straightforward
   organization -- doesn't hurt to save this
   audio -- this'll be interesting
+  subtitle - find out if this is used
   
   PUNT STUFF:
   plain text -- punt
   story_link -- different from link? -- punt
   link -- punt
   transcript - maybe punt on this
-  slug -- not super useful to typical station
+  slug -- not super-useful to typical station
   
   */
   module_load_include('inc', 'node', 'node.pages');
