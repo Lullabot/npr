@@ -183,7 +183,35 @@ dpm($story);
   $form_state['values']['body']['und'][0]['value'] = $body;
   $form_state['values']['body']['und'][0]['summary'] = $story->teaser->value;
   $form_state['values']['field_npr_byline']['und'][0]['value'] = $story->byline->name->value;
-  
+
+  if (!empty($story->image)) {
+    $npr_image = $story->image;
+    // @TODO
+    // clean up how we do collision prevention
+    // rand() seems to hacky
+    // there MUST be a cleaner way
+    $file_name = $npr_image->id . rand();
+    $file_uri = 'public://' . $file_name;
+    
+    // Download the image and create a local copy.
+    $image_in = fopen($npr_image->src, 'rb');
+    $image_out = fopen('public://' . $file_name, 'wb');
+    stream_copy_to_stream($image_in, $image_out);
+    fclose($image_in);
+    fclose($image_out);
+    
+    $file = new stdClass();
+    $file->filename = $file_name;
+    $file->uri = $file_uri;
+    global $user;
+    $file->uid = $user->uid;
+    $file->filemime = 'image/jpeg';
+    $file->file_size = filesize($file_uri);
+    
+    $saved_file = file_save($file);
+    $saved_file->display = 1;
+    $form_state['values']['field_npr_image']['und'][] = (array)$saved_file;
+  }
   $form_state['values']['op'] = t('Save');
   drupal_form_submit('npr_story_node_form', $form_state, (object)$node);
 }
