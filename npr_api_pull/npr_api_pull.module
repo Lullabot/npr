@@ -182,6 +182,8 @@ dpm($story);
 
   $form_state['values']['body']['und'][0]['value'] = $body;
   $form_state['values']['body']['und'][0]['summary'] = $story->teaser->value;
+  $form_state['values']['field_byline']['und'][0]['value'] = $story->byline->name->value;
+  
   $form_state['values']['op'] = t('Save');
   drupal_form_submit('npr_story_node_form', $form_state, (object)$node);
 }
