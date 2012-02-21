@@ -5,6 +5,14 @@
  */
 function npr_api_pull_install() {
 
+  $audio = array(
+    'field_name' => 'field_npr_audio',
+    'type' => 'text',
+    'cardinality' => 1,
+    'locked' => TRUE,  
+  );
+  field_create_field($audio);
+
   $image = array(
     'field_name' => 'field_npr_image',
     'type' => 'image',
@@ -34,6 +42,15 @@ function npr_api_pull_install() {
   node_types_rebuild();
   $types = node_type_get_types();
   node_add_body_field($types['npr_story']);
+
+  $audio = array(
+    'field_name' => 'field_npr_audio',
+    'entity_type' => 'node',
+    'bundle' => 'npr_story',
+    'label' => 'NPR audio link',
+    'description' => 'NPR audio link',
+  );
+  field_create_instance($audio);
 
   $image = array(
     'field_name' => 'field_npr_image',
@@ -74,4 +91,5 @@ function npr_api_pull_uninstall() {
   field_delete_field('field_npr_byline');
   field_delete_field('field_npr_id');
   field_delete_field('field_npr_image');
+  field_delete_field('field_npr_audio');
 }
