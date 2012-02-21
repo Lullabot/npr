@@ -5,6 +5,14 @@
  */
 function npr_api_pull_install() {
 
+  $image = array(
+    'field_name' => 'field_npr_image',
+    'type' => 'image',
+    'cardinality' => 1,
+    'locked' => TRUE,  
+  );
+  field_create_field($image);
+
   $byline = array(
     'field_name' => 'field_npr_byline',
     'type' => 'text',
@@ -26,6 +34,16 @@ function npr_api_pull_install() {
   node_types_rebuild();
   $types = node_type_get_types();
   node_add_body_field($types['npr_story']);
+
+  $image = array(
+    'field_name' => 'field_npr_image',
+    'entity_type' => 'node',
+    'bundle' => 'npr_story',
+    'label' => 'NPR Image',
+    'translatable' => TRUE,
+    'description' => 'NPR retrieved image',
+  );
+  field_create_instance($image);
 
   $byline = array(
     'field_name' => 'field_npr_byline',
@@ -55,4 +73,5 @@ function npr_api_pull_install() {
 function npr_api_pull_uninstall() {
   field_delete_field('field_npr_byline');
   field_delete_field('field_npr_id');
+  field_delete_field('field_npr_image');
 }
