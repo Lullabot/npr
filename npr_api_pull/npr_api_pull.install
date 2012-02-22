@@ -43,45 +43,11 @@ function npr_api_pull_install() {
   $types = node_type_get_types();
   node_add_body_field($types['npr_story']);
 
-  $audio = array(
-    'field_name' => 'field_npr_audio',
-    'entity_type' => 'node',
-    'bundle' => 'npr_story',
-    'label' => 'NPR audio link',
-    'description' => 'NPR audio link',
-  );
-  field_create_instance($audio);
+  $instances = _npr_api_pull_get_all_field_instances();
+  foreach ($instances as $instance) {
+    field_create_instance($instance);
+  }
 
-  $image = array(
-    'field_name' => 'field_npr_image',
-    'entity_type' => 'node',
-    'bundle' => 'npr_story',
-    'label' => 'NPR Image',
-    'translatable' => TRUE,
-    'description' => 'NPR retrieved image',
-  );
-  field_create_instance($image);
-
-  $byline = array(
-    'field_name' => 'field_npr_byline',
-    'entity_type' => 'node',
-    'bundle' => 'npr_story',
-    'label' => 'NPR Byline',
-    'translatable' => TRUE,
-    'description' => 'NPR author name',
-  );
-  field_create_instance($byline);
-
-  $npr_api = array(
-    'field_name' => 'field_npr_id',
-    'entity_type' => 'node',
-    'bundle' => 'npr_story',
-    'label' => 'NPR ID',
-    'translatable' => TRUE,
-    'description' => 'NPR ID',
-  );
-
-  field_create_instance($npr_api);
 }
 
 /**
@@ -92,4 +58,115 @@ function npr_api_pull_uninstall() {
   field_delete_field('field_npr_id');
   field_delete_field('field_npr_image');
   field_delete_field('field_npr_audio');
+}
+
+function _npr_api_pull_get_all_field_instances() {
+  $instances = array(
+    
+    'byline' => array(
+      'field_name' => 'field_npr_byline',
+      'entity_type' => 'node',
+      'bundle' => 'npr_story',
+      'label' => 'NPR Byline',
+      'description' => 'NPR author name',
+      'widget' => array(
+        'type' => 'text_textfield',
+        'weight' => -15,
+      ),
+      'display' => array(
+        'default' => array(
+          'label' => 'hidden',
+          'weight' => -9,
+        ),
+        'full' => array(
+          'label' => 'hidden',
+          'weight' => -9,
+        ),
+        'teaser' => array(
+          'label' => 'hidden',
+          'weight' => -9,
+        ),
+      ),
+    ),  
+  
+    'audio' => array(
+      'field_name' => 'field_npr_audio',
+      'entity_type' => 'node',
+      'bundle' => 'npr_story',
+      'label' => 'NPR audio link',
+      'description' => 'NPR audio link',
+      'widget' => array(
+        'weight' => -5,
+      ),
+      'display' => array(
+        'default' => array(
+          'label' => 'hidden',
+          'weight' => -7,
+          'type' => 'npr_audio_mp3',
+        ),
+        'full' => array(
+          'label' => 'hidden',
+          'weight' => -7,
+          'type' => 'npr_audio_mp3',
+        ),
+        'teaser' => array(
+          'label' => 'hidden',
+          'weight' => -7,
+          'type' => 'npr_audio_mp3',
+        ),
+      ),
+    ),
+ 
+    'image' => array(
+      'field_name' => 'field_npr_image',
+      'entity_type' => 'node',
+      'bundle' => 'npr_story',
+      'label' => 'NPR Image',
+      'description' => 'NPR retrieved image',
+      'widget' => array(
+        'weight' => -5,
+      ),
+      'display' => array(
+        'default' => array(
+          'label' => 'hidden',
+          'weight' => -5,
+        ),
+        'full' => array(
+          'label' => 'hidden',
+          'weight' => -5,
+        ),
+        'teaser' => array(
+          'label' => 'hidden',
+          'weight' => -5,
+        ),
+      ),
+    ),
+  
+    'npr id' => array(
+      'field_name' => 'field_npr_id',
+      'entity_type' => 'node',
+      'bundle' => 'npr_story',
+      'label' => 'NPR ID',
+      'description' => 'NPR ID',
+      'widget' => array(
+        'type' => 'text_textfield',
+        'weight' => 20,
+      ),
+      'display' => array(
+        'default' => array(
+          'label' => 'hidden',
+          'type' => 'hidden',
+        ),
+        'full' => array(
+          'label' => 'hidden',
+          'type' => 'hidden',
+        ),
+        'teaser' => array(
+          'label' => 'hidden',
+          'type' => 'hidden',
+        ),
+      ),
+    ),
+  );
+  return $instances;
 }
