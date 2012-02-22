@@ -3,6 +3,6 @@
 /**
  * Implements hook_uninstall().
  */
-function npr_api_access_uninstall() {
-  //db_query("DELETE FROM {variable} WHERE name in ()");
+function npr_api_uninstall() {
+  variable_del('npr_api_station_key');
 }
