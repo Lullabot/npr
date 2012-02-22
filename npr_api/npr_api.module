@@ -70,7 +70,7 @@ function npr_api_test_api() {
   );
   // @TODO: Make this much more elegant
   $NPR = npr_api_fetch_object($params);
-  return $NPR->report();
+  return check_plain($NPR->report());
 }
 
 /**
