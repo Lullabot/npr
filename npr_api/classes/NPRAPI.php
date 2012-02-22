@@ -32,14 +32,16 @@ class NPRAPI {
 
     $object = simplexml_load_string($xml);
     add_simplexml_attributes($object, $this);
-
-    foreach ($object->list->story as $story) {
-      $parsed = new NPRMLEntity();
-      foreach ($story as $k => $v) {
-        $parsed->$k = $this->parse_simplexml_element($v);
+    
+    if (!empty($object->list->story)) {
+      foreach ($object->list->story as $story) {
+        $parsed = new NPRMLEntity();
+        foreach ($story as $k => $v) {
+          $parsed->$k = $this->parse_simplexml_element($v);
+        }
+        add_simplexml_attributes($story, $parsed);
+        $this->stories[] = $parsed;
       }
-      add_simplexml_attributes($story, $parsed);
-      $this->stories[] = $parsed;
     }
   }
 
