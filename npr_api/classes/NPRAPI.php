@@ -106,7 +106,15 @@ class NPRAPI {
     $xml = pi_hull_convert_html_entities($xml);
     return $this->send_request($params, $method = 'PUT', $xml, $path, $base);
   }
-
+  
+  function report() {
+    if (!empty($this->stories)) {
+      return 'Request returned ' . count($this->stories) .  ' stories.';
+    }
+    else {
+      return 'No info available.';
+    } 
+  }
 }
 
 function add_simplexml_attributes($element, $object) {
