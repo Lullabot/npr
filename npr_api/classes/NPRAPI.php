@@ -5,7 +5,20 @@ class NPRAPI {
   const NPRAPI_STATUS_OK = 200;
 
   function __construct() {
-
+    $this->request = new stdClass;
+    $this->request->method = NULL;
+    $this->request->params = NULL;
+    $this->request->data = NULL;
+    $this->request->path = NULL;
+    $this->request->base = NULL;
+    
+  
+    $this->response = new stdClass;
+    $this->response->code = NULL;
+  }
+  
+  function request() {
+  
   }
 
   function prepare_request() {
@@ -110,12 +123,31 @@ class NPRAPI {
   }
   
   function report() {
-    if (!empty($this->stories)) {
-      return 'Request returned ' . count($this->stories) .  ' stories.';
+    if (isset($this->request->params)) {
+      $return = 'Request params were';
+      foreach ($this->request->params as $k=>$v) {
+        $return .= " [$k => $v]";  
+      }
+      $return .= '.';
+    }
+    
+    else {
+      $return = 'Request had no parameters.';
+    }
+    
+    if ($this->response->code == self::NPRAPI_STATUS_OK) {
+      $return .= 'Response code was ' . $this->response->code . '.';
+      if (isset($this->stories)) {
+        $return .= ' Request returned ' . count($this->stories) .  ' stories.';
+      }
+    }
+    elseif ($this->response->code != self::NPRAPI_STATUS_OK) {
+      $return = 'Return code was ' . $this->response->code .  '.';
     }
     else {
-      return 'No info available.';
-    } 
+      $return = 'No info available.';
+    }
+    return $return; 
   }
 }
 
