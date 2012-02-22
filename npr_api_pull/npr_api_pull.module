@@ -219,13 +219,12 @@ dpm($story);
  * Implements hook_field_formatter_info().
  *
  *
- * @see field_example_field_formatter_view()
+ * @see npr_api_pull_field_formatter_view()
  */
 function npr_api_pull_field_formatter_info() {
   return array(
-    // This formatter just displays the hex value in the color indicated.
     'npr_audio_mp3' => array(
-      'label' => t('Simple text-based formatter'),
+      'label' => t('Basic MP3 player'),
       'field types' => array('text'),
     ),
   );
@@ -235,13 +234,12 @@ function npr_api_pull_field_formatter_info() {
 /**
  * Implements hook_field_formatter_view().
  *
- * @see field_example_field_formatter_info()
+ * @see npr_api_pull_field_formatter_info()
  */
 function npr_api_pull_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $element = array();
 
   switch ($display['type']) {
-    // This formatter simply outputs the field as text and with a color.
     case 'npr_audio_mp3':
       foreach ($items as $delta => $item) {
         $element[$delta] = array(
