@@ -104,7 +104,7 @@ function npr_api_pull_insert_story($story) {
   else {
     // TODO :: add updating
     // using the date modified field from API
-    // npr_api_pull_update_story($story, $date_flag, TRUE);
+    // npr_api_pull_update_story($story);
     drupal_set_message(t("Story with ID=@id  already exists.", array('@id' => $story->id)));
   }
 }
@@ -139,7 +139,7 @@ function npr_api_pull_get_nid_from_story_id($npr_id) {
  * Converts an NPRMLEntity story object into a node object
  * and saves it to the DB (via form submit)
  */
-function npr_api_pull_save_story($story, $date_flag = 0) {
+function npr_api_pull_save_story($story) {
   /*
   TODO:
   
