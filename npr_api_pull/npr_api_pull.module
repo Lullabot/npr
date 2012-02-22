@@ -145,15 +145,15 @@ function npr_api_pull_save_story($story) {
   
   DO:
   lastModifiedDate -- use for updates
-  organization -- doesn't hurt to save this
-  subtitle - find out if this is used
   
-  PUNT STUFF:
+  PUNT:
   plain text -- punt
   story_link -- different from link? -- punt
   link -- punt
   transcript - maybe punt on this
   slug -- not super-useful to typical station
+  subtitle - find out if this is even used
+  organization -- doesn't hurt to save this
   
   */
   module_load_include('inc', 'node', 'node.pages');
