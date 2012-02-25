@@ -5,6 +5,7 @@ Should audio be a distinct/custom field type? Images? Org?
 Add true updating (via modified date field from API)
 Add a touch of starter CSS
 Polish help text
+Have formatters for byline?
 
 NPR_API_CURATE
 --------------
@@ -16,6 +17,10 @@ Clean up classes and object creation
 Connection should fail more gracefully
 Clean up presentation of API Test page
 Polish help text
+
+ALL
+___
+Add VERY EXPLICIT README.txt
 
 DONE
 ----
