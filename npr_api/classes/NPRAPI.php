@@ -53,6 +53,13 @@ class NPRAPI {
           $parsed->$k = $this->parse_simplexml_element($v);
         }
         add_simplexml_attributes($story, $parsed);
+        $body ='';
+        if (!empty($parsed->textWithHtml->paragraphs)) {
+          foreach ($parsed->textWithHtml->paragraphs as $paragraph) {
+            $body = $body . '<p>' . $paragraph->value . '</p>';
+          }
+        }
+        $parsed->body = $body;
         $this->stories[] = $parsed;
       }
     }
