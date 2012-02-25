@@ -1,10 +1,10 @@
 NPR_API_PULL
 ------------
 Should NPR API field be an INT?
-Add true updating (via modified date field from API)
-Polish help text
 Should audio be a distinct/custom field type? Images? Org?
+Add true updating (via modified date field from API)
 Add a touch of starter CSS
+Polish help text
 
 NPR_API_CURATE
 --------------
@@ -13,10 +13,9 @@ Add curation tool (sep. module?) Preview (?)
 NPR_API
 -------
 Clean up classes and object creation
+Connection should fail more gracefully
 Clean up presentation of API Test page
 Polish help text
-API test should fail more gracefully (as should connection in general)
- -- Create a verbose/report method that prodcues a nice human-readable graf about the object
 
 DONE
 ----
@@ -26,3 +25,7 @@ Fix menu items so they are in more natural places
 Add all (major) fields to content type
 Map all (major) fields
 Add sensible defaults to a) field order b) labels c) formats
+Create a verbose/report method that prodcues a nice human-readable graf about the object
+API test should fail more gracefully
+
+
