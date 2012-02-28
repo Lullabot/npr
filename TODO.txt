@@ -7,6 +7,10 @@ Add a touch of starter CSS
 Polish help text
 Have formatters for byline?
 
+NPR_API_PUSH
+------------
+?????
+
 NPR_API_CURATE
 --------------
 Add curation tool (sep. module?) Preview (?)
@@ -20,7 +24,7 @@ Polish help text
 
 ALL
 ___
-Add VERY EXPLICIT README.txt
+
 
 DONE
 ----
@@ -32,5 +36,4 @@ Map all (major) fields
 Add sensible defaults to a) field order b) labels c) formats
 Create a verbose/report method that prodcues a nice human-readable graf about the object
 API test should fail more gracefully
-
-
+Add VERY EXPLICIT README.txt
