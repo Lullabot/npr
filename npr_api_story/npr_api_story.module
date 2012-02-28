@@ -21,3 +21,48 @@ function npr_api_story_node_info() {
 function npr_story_form($node, $form_state) {
   return node_content_form($node, $form_state);
 }
+
+/**
+ * Implements hook_field_formatter_info().
+ *
+ *
+ * @see npr_api_story_field_formatter_view()
+ */
+function npr_api_story_field_formatter_info() {
+  return array(
+    'npr_audio_mp3' => array(
+      'label' => t('Basic MP3 player'),
+      'field types' => array('text'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ *
+ * @see npr_api_story_field_formatter_info()
+ */
+function npr_api_story_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  switch ($display['type']) {
+    case 'npr_audio_mp3':
+      foreach ($items as $delta => $item) {
+        $element[$delta] = array(
+          '#type' => 'html_tag',
+          '#tag' => 'embed',
+          '#attributes' => array(
+            'src' => $item['value'],
+            'type' => 'audio/mpeg',
+            'autostart' => 'FALSE',
+            'height' => 30,
+            'width' => 200,
+          ),
+          '#value' => '',
+        );
+      }
+      break;
+  }
+
+  return $element;
+}
