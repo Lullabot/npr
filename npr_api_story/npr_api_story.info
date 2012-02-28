@@ -1,0 +1,6 @@
+name = NPR API Story
+description = Create a content type (and fields) to be used by NPR api, puull, push, etc.
+core = 7.x
+package = NPR
+
+files[] = npr_api_story.module

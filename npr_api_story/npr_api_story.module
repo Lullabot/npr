@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * Implements hook_node_info().
+ */
+function npr_api_story_node_info() {
+  return array(
+    'npr_story' => array(
+      'name' => t('NPR Story'),
+      'base' => 'npr_story',
+      'description' => t('NPR Story.'),
+      'locked' => TRUE,
+      'title_label' => 'Headline',
+    ),
+  );
+}
+
+/**
+ * Implements hook_form().
+ */
+function npr_story_form($node, $form_state) {
+  return node_content_form($node, $form_state);
+}

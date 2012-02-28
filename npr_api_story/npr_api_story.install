@@ -3,7 +3,7 @@
 /**
  * Implements hook_install().
  */
-function npr_api_pull_install() {
+function npr_api_story_install() {
 
   $audio = array(
     'field_name' => 'field_npr_audio',
@@ -43,7 +43,7 @@ function npr_api_pull_install() {
   $types = node_type_get_types();
   node_add_body_field($types['npr_story']);
 
-  $instances = _npr_api_pull_get_all_field_instances();
+  $instances = _npr_api_story_get_all_field_instances();
   foreach ($instances as $instance) {
     field_create_instance($instance);
   }
@@ -53,14 +53,14 @@ function npr_api_pull_install() {
 /**
  * Implements hook_uninstall().
  */
-function npr_api_pull_uninstall() {
+function npr_api_story_uninstall() {
   field_delete_field('field_npr_byline');
   field_delete_field('field_npr_id');
   field_delete_field('field_npr_image');
   field_delete_field('field_npr_audio');
 }
 
-function _npr_api_pull_get_all_field_instances() {
+function _npr_api_story_get_all_field_instances() {
   $instances = array(
     
     'byline' => array(

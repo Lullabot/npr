@@ -7,3 +7,4 @@ package = NPR
 files[] = npr_api_pull.module
 
 dependencies[] = npr_api
+dependencies[] = npr_api_story
