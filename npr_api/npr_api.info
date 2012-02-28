@@ -1,7 +1,6 @@
 name = NPR API
 description = Utility module for accessing the NPR API
 core = 7.x
-
 package = NPR
 
 files[] = npr_api.install
