@@ -19,7 +19,7 @@ function npr_api_pull_menu() {
   $items = array();
 
   $items['admin/content/npr'] = array(
-    'title' => 'Retrieve NPR Story',
+    'title' => 'Pull NPR Story',
     'description' => 'Retrieve a single story from the NPR API.',
     'access arguments' => array('pull NPR content'),
     'page callback' => 'drupal_get_form',
@@ -30,7 +30,7 @@ function npr_api_pull_menu() {
 
   $items['admin/config/services/npr/cron'] = array(
     'title' => 'Cron settings',
-    'description' => 'Fetch the following types of stories from NPR at every cron.',
+    'description' => 'Retrieve the following types of stories from NPR at every cron.',
     'access arguments' => array('administer npr api'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('npr_api_pull_cron_config'),
