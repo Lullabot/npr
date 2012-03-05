@@ -55,8 +55,6 @@ function npr_api_story_field_formatter_view($entity_type, $entity, $field, $inst
             'src' => $item['value'],
             'type' => 'audio/mpeg',
             'autostart' => 'FALSE',
-            'height' => 30,
-            'width' => 200,
           ),
           '#value' => '',
         );
