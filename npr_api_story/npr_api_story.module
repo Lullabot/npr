@@ -66,3 +66,9 @@ function npr_api_story_field_formatter_view($entity_type, $entity, $field, $inst
 
   return $element;
 }
+
+function npr_api_story_preprocess_node(&$variables) {
+  if ($variables['node']->type == 'npr_story') {
+    drupal_add_css(drupal_get_path('module', 'npr_api_story') . '/css/npr_api_story.css');
+  }
+}
