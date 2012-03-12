@@ -1,0 +1,7 @@
+name = NPR Fields
+description = Create basic fields to be used by NPR api, pull, push, etc.
+core = 7.x
+package = NPR
+
+dependencies[] = text
+dependencies[] = image

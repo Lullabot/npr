@@ -1,0 +1,134 @@
+<?php
+
+/**
+ * Implements hook_field_info().
+ */
+function npr_fields_field_info() {
+  return array(
+    'npr_audio' => array(
+      'label' => t('NPR Audio'),
+      'description' => t('This field stores NPR audio in the database.'),
+      'default_widget' => 'npr_audio',
+      'default_formatter' => 'npr_audio_basic',
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ *
+ *
+ * @see npr_fields_field_formatter_view()
+ */
+function npr_fields_field_formatter_info() {
+  return array(
+    'npr_audio_basic' => array(
+      'label' => t('Basic MP3 player'),
+      'field types' => array('npr_audio'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ *
+ * @see npr_fields_field_formatter_info()
+ */
+function npr_fields_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  switch ($display['type']) {
+    case 'npr_audio_basic':
+      foreach ($items as $delta => $item) {
+        $element[$delta] = array(
+          '#type' => 'html_tag',
+          '#tag' => 'embed',
+          '#attributes' => array(
+            'src' => $item['value'],
+            'type' => 'audio/mpeg',
+            'autostart' => 'FALSE',
+          ),
+        );
+      }
+      break;
+  }
+  return $element;
+}
+
+/**
+ * Implements hook_field_widget_info().
+ */
+function npr_fields_field_widget_info() {
+  return array(
+    'npr_audio' => array(
+      'label' => t('NPR Audio'),
+      'field types' => array('npr_audio'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_form().
+ */
+function npr_fields_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+
+  $widget = $element;
+  if ($instance['widget']['type'] = 'npr_audio') {
+
+
+    // Make this a fieldset with the three text fields.
+    $element += array(
+      '#type' => 'fieldset',
+      //'#element_validate' => array('field_example_3text_validate'),
+
+      // #delta is set so that the validation function will be able
+      // to access external value information which otherwise would be
+      // unavailable.
+      '#delta' => $delta,
+    );
+
+    // Create a textfield for saturation values for Red, Green, and Blue.
+    $subfields = array(
+      'title' => 'Title',
+      'description' => 'Description',
+      'duration' => 'Duration',
+      'mp3' => 'MP3 Link',
+      'rm' => 'RealMedia Link',
+      'wm' => 'Windows Media Link',
+      'download' => 'download',
+      'stream' => 'stream',
+      'embed' => 'embed',
+    );
+    
+    $delta = 0;
+    foreach ($subfields as $key => $title) {
+      $value = isset($items[$delta][$key]) ? $items[$delta][$key] : '';
+      
+      $element[$key] = array(
+        '#type' => 'textfield',
+        '#title' => $title,
+        '#size' => 2,
+        '#default_value' => $value,
+        '#size' => 30,
+        '#disabled' => TRUE,
+      );
+    }  
+  } 
+
+  return $element;
+}
+
+
+function npr_fields_field_is_empty() {
+
+}
+
+
+function npr_fields_field_attach_insert($entity_type, $entity) {
+  if ($entity_type == 'node') {
+    if (!empty($entity->npr_audio['und'][0]['audio'])) {
+      $audio = $entity->npr_audio['und'][0]['audio'];
+      
+    }
+  }
+}
