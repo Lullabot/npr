@@ -3,7 +3,7 @@
 /**
  * Implements hook_permission().
  */
-function npr_api_pull_permission() {
+function npr_pull_permission() {
   return array(
     'pull NPR content' => array(
       'title' => t('Pull NPR content'),
@@ -15,7 +15,7 @@ function npr_api_pull_permission() {
 /**
  * Implements hook_menu().
  */
-function npr_api_pull_menu() {
+function npr_pull_menu() {
   $items = array();
 
   $items['admin/content/npr'] = array(
@@ -23,8 +23,8 @@ function npr_api_pull_menu() {
     'description' => 'Retrieve a single story from the NPR API.',
     'access arguments' => array('pull NPR content'),
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('npr_api_pull_get_story'),
-    'file' => 'npr_api_pull.admin.inc',
+    'page arguments' => array('npr_pull_get_story'),
+    'file' => 'npr_pull.admin.inc',
     'type' => MENU_LOCAL_TASK,
   );
 
@@ -33,8 +33,8 @@ function npr_api_pull_menu() {
     'description' => 'Retrieve the following types of stories from NPR at every cron.',
     'access arguments' => array('administer npr api'),
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('npr_api_pull_cron_config'),
-    'file' => 'npr_api_pull.admin.inc',
+    'page arguments' => array('npr_pull_cron_config'),
+    'file' => 'npr_pull.admin.inc',
     'type' => MENU_LOCAL_TASK,
   );
 
@@ -44,7 +44,7 @@ function npr_api_pull_menu() {
 /**
  * Implements hook_cron().
  */
-function npr_api_pull_cron() {
+function npr_pull_cron() {
   pi_api_pull_pull_stories();
 }
 
@@ -52,9 +52,9 @@ function npr_api_pull_cron() {
  * Pulls NPR stories (according to config settings).
  */
 function pi_api_pull_pull_stories() {
-  $ids = variable_get('npr_api_pull_cron_query_ids', array());
+  $ids = variable_get('npr_pull_cron_query_ids', array());
   $today = format_date(REQUEST_TIME, 'custom', 'Y-m-d');
-  $pub = variable_get('npr_api_pull_cron_publish_flag', 1);
+  $pub = variable_get('npr_pull_cron_publish_flag', 1);
   foreach ($ids as $id) {
     if ($id) {
       $params = array(
@@ -65,7 +65,7 @@ function pi_api_pull_pull_stories() {
       if (!empty($NPR->stories)) {
         foreach ($NPR->stories as $story) {
           $story->status = $pub;
-          npr_api_pull_insert_story($story);
+          npr_pull_insert_story($story);
         }
       }
     }
@@ -75,14 +75,14 @@ function pi_api_pull_pull_stories() {
 /**
  * Creates a new npr_story node from NPRMLEntity object
  */
-function npr_api_pull_insert_story($story) {
-  if (!npr_api_pull_story_exists($story->id)) {
-    npr_api_pull_save_story($story);
+function npr_pull_insert_story($story) {
+  if (!npr_pull_story_exists($story->id)) {
+    npr_pull_save_story($story);
   }
   else {
     // TODO :: add updating
     // using the date modified field from API
-    // npr_api_pull_update_story($story);
+    // npr_pull_update_story($story);
     drupal_set_message(t("Story with ID=@id  already exists.", array('@id' => $story->id)));
   }
 }
@@ -90,19 +90,19 @@ function npr_api_pull_insert_story($story) {
 /**
  * Determines if a npr_story node with a certain npr_id already exists
  */
-function npr_api_pull_story_exists($npr_id) {
+function npr_pull_story_exists($npr_id) {
   //dpm
   // de-bug :: remove
   if ($npr_id == 137047128) {
     return FALSE;
   }
-  return npr_api_pull_get_nid_from_story_id($npr_id) > 0;
+  return npr_pull_get_nid_from_story_id($npr_id) > 0;
 }
 
 /**
  * Given an npr_id, finds a matching nid
  */
-function npr_api_pull_get_nid_from_story_id($npr_id) {
+function npr_pull_get_nid_from_story_id($npr_id) {
   $query = new EntityFieldQuery;
   $result = $query
     ->entityCondition('entity_type', 'node')
@@ -119,7 +119,7 @@ function npr_api_pull_get_nid_from_story_id($npr_id) {
  * Converts an NPRMLEntity story object into a node object
  * and saves it to the DB (via form submit)
  */
-function npr_api_pull_save_story($story) {
+function npr_pull_save_story($story) {
   /*
   TODO:
   

@@ -4,11 +4,11 @@
  * Menu callback. Generates a form to choose blog types.
  */
  
-function npr_api_pull_cron_config() {
-  $form['npr_api_pull_cron_query_ids'] = array(
+function npr_pull_cron_config() {
+  $form['npr_pull_cron_query_ids'] = array(
     '#type' => 'checkboxes',
     '#title' => t('IDs'),
-    '#default_value' => variable_get('npr_api_pull_cron_query_ids', array()),
+    '#default_value' => variable_get('npr_pull_cron_query_ids', array()),
     '#options' => array(
       '15709577'  => t('All Songs Considered'),
       '102920358' => t('All Tech Considered'),
@@ -20,10 +20,10 @@ function npr_api_pull_cron_config() {
     '#description' => t('Choose one or more topics. New stories from these topic(s) will be be pulled down at every cron run.')
   );
   
-  $form['npr_api_pull_cron_publish_flag'] = array(
+  $form['npr_pull_cron_publish_flag'] = array(
     '#type' => 'checkbox',
     '#title' => t('Publish stories upon retrieval?'),
-    '#default_value' => variable_get('npr_api_pull_cron_publish_flag', 1),
+    '#default_value' => variable_get('npr_pull_cron_publish_flag', 1),
     '#description' => t('If checked stories will automatically be published. If not, stories will still be retrieved and saved in your database - but not published.')
   );
   
@@ -34,7 +34,7 @@ function npr_api_pull_cron_config() {
 /**
  * Menu callback. Generates a form to retrieve an NPR story by URL.
  */
-function npr_api_pull_get_story() {
+function npr_pull_get_story() {
   $form = array();
 
   $form['url'] = array(
@@ -45,15 +45,12 @@ function npr_api_pull_get_story() {
   );
 
   $form['date_flag'] = array(
-    '#type' => 'radios',
-    '#title' => t('Publish story date'),
-    '#options' => array(
-      '0' => t('Now'),
-      '1' => t('API Publish Date'),
-    ),
-    '#description' => t('Choose either current time or the time it was published on NPR as publish date that will appear on your node.'),
+    '#type' => 'checkbox',
+    '#title' => t('Publish stories upon retrieval?'),
+    '#default_value' => variable_get('npr_api_pull_cron_publish_flag', 1),
+    '#description' => t('If checked stories will automatically be published. If not, stories will still be retrieved and saved in your database - but not published.'),
   );
-
+  
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Get story'),
@@ -63,9 +60,9 @@ function npr_api_pull_get_story() {
 }
 
 /**
- * Validation handler for npr_api_pull_get_story().
+ * Validation handler for npr_pull_get_story().
  */
-function npr_api_pull_get_story_validate($form, &$form_state) {
+function npr_pull_get_story_validate($form, &$form_state) {
 
   $story_id = 0;
   $url_value = $form_state['values']['url'];
@@ -82,24 +79,25 @@ function npr_api_pull_get_story_validate($form, &$form_state) {
     return;
   }
 
-  if (!npr_api_pull_extract_id($url_value)) {
+  if (!npr_pull_extract_id($url_value)) {
     form_set_error('url', t('Could not extract an NPR ID from given URL.'));
   }
 }
 
 /**
- * Submit handler for npr_api_pull_get_story().
+ * Submit handler for npr_pull_get_story().
  */
-function npr_api_pull_get_story_submit($form, &$form_state) {
+function npr_pull_get_story_submit($form, &$form_state) {
 
   $story_id = 0;
   $url_value = $form_state['values']['url'];
 
   if ((int)$url_value > 0 &&drupal_strlen($url_value) >= 8) {
     $story_id = (int)$url_value;
-  }
+  } 
+  
   else {
-    $story_id = npr_api_pull_extract_id($url_value);
+    $story_id = npr_pull_extract_id($url_value);
   }
 
   //build the params to query the API
@@ -112,7 +110,7 @@ function npr_api_pull_get_story_submit($form, &$form_state) {
     $story = array_shift($NPR->stories);
     $date_flag = $form_state['values']['date_flag'];
     $story->created = ($date_flag) ? strtotime($story->pubDate->value) : REQUEST_TIME;
-    npr_api_pull_insert_story($story);
+    npr_pull_insert_story($story);
   }
   else {
     drupal_set_message(t('No story could be found in the NPR API.'));
@@ -122,7 +120,7 @@ function npr_api_pull_get_story_submit($form, &$form_state) {
 /**
  * Extract a NPR ID from an NPR URL
  */
-function npr_api_pull_extract_id($url) {
+function npr_pull_extract_id($url) {
   // url format: /yyyy/mm/dd/id
   // url format: /blogs/name/yyyy/mm/dd/id
   preg_match('/http\:\/\/[^\s\/]*npr\.org\/((([^\/]*\/){3,5})([0-9]{8,12}))\/.*/', $url, $date_matches);

@@ -3,6 +3,6 @@ description = Download stories via the NPR API
 core = 7.x
 package = NPR
 
-files[] = npr_api_pull.module
+files[] = npr_pull.module
 dependencies[] = npr_api
-dependencies[] = npr_api_story
+dependencies[] = npr_story
