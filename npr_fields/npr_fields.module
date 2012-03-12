@@ -44,7 +44,7 @@ function npr_fields_field_formatter_view($entity_type, $entity, $field, $instanc
           '#type' => 'html_tag',
           '#tag' => 'embed',
           '#attributes' => array(
-            'src' => $item['value'],
+            'src' => $item['mp3'],
             'type' => 'audio/mpeg',
             'autostart' => 'FALSE',
           ),
