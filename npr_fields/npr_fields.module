@@ -123,11 +123,3 @@ function npr_fields_field_is_empty() {
 }
 
 
-function npr_fields_field_attach_insert($entity_type, $entity) {
-  if ($entity_type == 'node') {
-    if (!empty($entity->npr_audio['und'][0]['audio'])) {
-      $audio = $entity->npr_audio['und'][0]['audio'];
-      
-    }
-  }
-}
