@@ -6,38 +6,12 @@
 function npr_api_story_install() {
 
   $audio = array(
-    'field_name' => 'field_npr_audio',
-    'type' => 'text',
+    'field_name' => 'npr_audio',
+    'type' => 'npr_audio',
     'cardinality' => 1,
     'locked' => TRUE,  
   );
   field_create_field($audio);
-
-  $image = array(
-    'field_name' => 'field_npr_image',
-    'type' => 'image',
-    'cardinality' => 1,
-    'locked' => TRUE,  
-  );
-  field_create_field($image);
-
-  $byline = array(
-    'field_name' => 'field_npr_byline',
-    'type' => 'text',
-    'cardinality' => 1,
-    'translatable' => TRUE,
-    'locked' => TRUE,
-  );
-  field_create_field($byline);
-
-  $npr_api = array(
-    'field_name' => 'field_npr_id',
-    'type' => 'text',
-    'cardinality' => 1,
-    'translatable' => TRUE,
-    'locked' => TRUE,
-  );
-  field_create_field($npr_api);
 
   node_types_rebuild();
   $types = node_type_get_types();
@@ -54,10 +28,7 @@ function npr_api_story_install() {
  * Implements hook_uninstall().
  */
 function npr_api_story_uninstall() {
-  field_delete_field('field_npr_byline');
-  field_delete_field('field_npr_id');
-  field_delete_field('field_npr_image');
-  field_delete_field('field_npr_audio');
+
 }
 
 function _npr_api_story_get_all_field_instances() {
@@ -90,7 +61,7 @@ function _npr_api_story_get_all_field_instances() {
     ),  
   
     'audio' => array(
-      'field_name' => 'field_npr_audio',
+      'field_name' => 'npr_audio',
       'entity_type' => 'node',
       'bundle' => 'npr_story',
       'label' => 'NPR audio link',
@@ -102,17 +73,17 @@ function _npr_api_story_get_all_field_instances() {
         'default' => array(
           'label' => 'hidden',
           'weight' => -7,
-          'type' => 'npr_audio_mp3',
+          'type' => 'npr_audio_basic',
         ),
         'full' => array(
           'label' => 'hidden',
           'weight' => -7,
-          'type' => 'npr_audio_mp3',
+          'type' => 'npr_audio_basic',
         ),
         'teaser' => array(
           'label' => 'hidden',
           'weight' => -7,
-          'type' => 'npr_audio_mp3',
+          'type' => 'npr_audio_basic',
         ),
       ),
     ),
