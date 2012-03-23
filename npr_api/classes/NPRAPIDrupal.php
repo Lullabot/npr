@@ -45,8 +45,8 @@ class NPRAPIDrupal extends NPRAPI {
   
     $node = $this->node;
     $language = $node->language;
-    $root = new SimpleXMLElement('<nprml></nprml>', 0, FALSE, 'xmlns:nprml=http://api.npr.org/nprml', TRUE);
-    $root->addAttribute('version', '0.92.2');
+    $root = new SimpleXMLElement(self::NPRML_DATA, 0, FALSE, self::NPRML_NAMESPACE, TRUE);
+    $root->addAttribute('version', self::NPRML_VERSION);
     $list = $root->addChild('list');
     $story = $list->addChild('story');
 

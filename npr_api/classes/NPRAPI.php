@@ -3,6 +3,11 @@
 class NPRAPI {
 
   const NPRAPI_STATUS_OK = 200;
+  
+  // NPRML CONSTANTS
+  const NPRML_DATA = '<nprml></nprml>';
+  const NPRML_NAMESPACE = 'xmlns:nprml=http://api.npr.org/nprml';
+  const NPRML_VERSION = '0.92.2';
 
   function __construct() {
     $this->request = new stdClass;
