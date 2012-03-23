@@ -1,0 +1,8 @@
+name = NPR Push
+description = Send info to the NPR API
+core = 7.x
+package = NPR
+
+files[] = npr_push.module
+files[] = npr_push.install
+dependencies[] = npr_api

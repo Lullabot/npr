@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ *
+ */
+/*function npr_push_menu() {
+    
+  $items= array();
+
+  $items['admin/config/services/npr/push'] = array(
+    'title' => 'Push settings',
+    'description' => 'Select which content types (and mapped fields) to push to NPR.',
+    'access arguments' => array('administer npr api'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('npr_push_admin_config'),
+    'file' => 'npr_push.admin.inc',
+    'type' => MENU_LOCAL_TASK,
+  );
+
+  return $items;  
+}
+*/
+
+/**
+ * Implements hook_node_insert().
+ *
+ */
+function npr_push_node_insert($node) {
+  //$types = variable_get('npr_push_types_to_push', array());
+  $types = array('article');
+  if (in_array($node->type, $types)) {
+    // Load API classes
+    module_load_include('php', 'npr_api', 'classes/NPRAPI');
+    module_load_include('php', 'npr_api', 'classes/NPRAPIDrupal');  
+    $NPRAPIDrupal = new NPRAPIDrupal($node);
+    //$NPRAPIDrupal->create_NPRML();
+    $NPRAPIDrupal->push_NPRML();
+    dpm($NPRAPIDrupal);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function npr_pull_form_npr_api_config_form_alter(&$form, &$form_state, $form_id) {
+  $form['npr_push_api_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('NPR Push URL'),
+    '#default_value' => variable_get('npr_push_api_url'),
+    '#description' => t(''),
+  );
+  
+  $form['npr_push_org_id'] = array(
+    '#type' => 'textfield',
+    '#title' => t('NPR Organization ID'),
+    '#default_value' => variable_get('npr_push_org_id'),
+    '#description' => t(''),
+  );   
+}
