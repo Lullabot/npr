@@ -4,7 +4,7 @@
  * Implements hook_menu().
  *
  */
-/*function npr_push_menu() {
+function npr_push_menu() {
     
   $items= array();
 
@@ -20,15 +20,13 @@
 
   return $items;  
 }
-*/
 
 /**
  * Implements hook_node_insert().
  *
  */
 function npr_push_node_insert($node) {
-  //$types = variable_get('npr_push_types_to_push', array());
-  $types = array('article');
+  $types = variable_get('npr_push_types_to_push', array());
   if (in_array($node->type, $types)) {
     // Load API classes
     module_load_include('php', 'npr_api', 'classes/NPRAPI');
