@@ -100,31 +100,32 @@ class NPRAPI {
   }
   
   function report() {
+    $msg = array();
+    $params = '';
     if (isset($this->request->params)) {
-      $return = 'Request params were';
       foreach ($this->request->params as $k=>$v) {
-        $return .= " [$k => $v]";  
+        $params .= " [$k => $v]";  
       }
-      $return .= '.';
+      $msg[] =  'Request params were: ' . $params;
     }
     
     else {
-      $return = 'Request had no parameters.';
+      $msg[] = 'Request had no parameters.';
     }
     
     if ($this->response->code == self::NPRAPI_STATUS_OK) {
-      $return .= 'Response code was ' . $this->response->code . '.';
+      $msg[] = 'Response code was ' . $this->response->code . '.';
       if (isset($this->stories)) {
-        $return .= ' Request returned ' . count($this->stories) .  ' stories.';
+        $msg[] = ' Request returned ' . count($this->stories) .  ' stories.';
       }
     }
     elseif ($this->response->code != self::NPRAPI_STATUS_OK) {
-      $return = 'Return code was ' . $this->response->code .  '.';
+      $msg[] = 'Return code was ' . $this->response->code .  '.';
     }
     else {
-      $return = 'No info available.';
+      $msg[] = 'No info available.';
     }
-    return $return; 
+    return $msg; 
   }
 }
 

@@ -68,9 +68,8 @@ function npr_api_test_api() {
   $params = array(
     'id' => 1149, // topic = Afghanistan
   );
-  // @TODO: Make this much more elegant
   $NPR = npr_api_fetch_object($params);
-  return check_plain($NPR->report());
+  return theme('item_list', array('items' => $NPR->report()));
 }
 
 /**
