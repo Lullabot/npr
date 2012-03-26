@@ -5,4 +5,6 @@
  */
 function npr_pull_uninstall() {
   variable_del('npr_push_types_to_push');
+  variable_del('npr_push_api_url');
+  variable_del('npr_push_org_id');
 }
