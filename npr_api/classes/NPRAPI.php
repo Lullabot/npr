@@ -65,7 +65,7 @@ class NPRAPI {
         $body ='';
         if (!empty($parsed->textWithHtml->paragraphs)) {
           foreach ($parsed->textWithHtml->paragraphs as $paragraph) {
-            $body = $body . '<p>' . $paragraph->value . '</p>';
+            $body = $body . $paragraph->value . "\n\n";
           }
         }
         $parsed->body = $body;
