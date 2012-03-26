@@ -4,6 +4,8 @@ class NPRAPI {
 
   const NPRAPI_STATUS_OK = 200;
   
+  const NPRAPI_PULL_URL = 'http://api.npr.org';
+  
   // NPRML CONSTANTS
   const NPRML_DATA = '<nprml></nprml>';
   const NPRML_NAMESPACE = 'xmlns:nprml=http://api.npr.org/nprml';

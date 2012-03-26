@@ -2,7 +2,7 @@
 
 class NPRAPIDrupal extends NPRAPI {
 
-  function request($params = array(), $method = 'GET', $data = NULL, $path = 'query', $base = 'http://api.npr.org') {
+  function request($params = array(), $method = 'GET', $data = NULL, $path = 'query', $base = self::NPRAPI_PULL_URL) {
 
     $this->request->method = $method;
     $this->request->params = $params;
