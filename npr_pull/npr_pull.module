@@ -195,5 +195,7 @@ function npr_pull_save_story($story) {
     $form_state['values']['field_npr_image'][LANGUAGE_NONE][] = (array)$saved_file;
   }
   $form_state['values']['op'] = t('Save');
-  drupal_form_submit('npr_story_node_form', $form_state, (object)$node);
+  $node = (object)$node;
+  drupal_form_submit('npr_story_node_form', $form_state, $node);
+  drupal_set_message(t('Go to') . ' ' . l($node->title, 'node/' . $node->nid));
 }
