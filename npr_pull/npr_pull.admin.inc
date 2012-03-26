@@ -47,7 +47,7 @@ function npr_pull_get_story() {
   $form['date_flag'] = array(
     '#type' => 'checkbox',
     '#title' => t('Publish stories upon retrieval?'),
-    '#default_value' => variable_get('npr_api_pull_cron_publish_flag', 1),
+    '#default_value' => variable_get('npr_pull_cron_publish_flag', 1),
     '#description' => t('If checked stories will automatically be published. If not, stories will still be retrieved and saved in your database - but not published.'),
   );
   
