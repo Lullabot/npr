@@ -149,22 +149,22 @@ function npr_pull_save_story($story) {
   );
 
   $form_state['values']['title'] = $story->title->value;
-  $form_state['values']['field_npr_id']['und'][0]['value'] = $story->id;
+  $form_state['values']['field_npr_id'][LANGUAGE_NONE][0]['value'] = $story->id;
   $form_state['values']['date'] = date('Y-m-d H:i:s O', $node['created']);
 
-  $form_state['values']['body']['und'][0]['value'] = $story->body;
-  $form_state['values']['body']['und'][0]['summary'] = $story->teaser->value;
-  $form_state['values']['field_npr_byline']['und'][0]['value'] = $story->byline->name->value;
-  $form_state['values']['npr_audio']['und'][0]['value'] = $story->audio->id;
-  $form_state['values']['npr_audio']['und'][0]['title'] = $story->audio->title->value;
-  $form_state['values']['npr_audio']['und'][0]['description'] = $story->audio->description->value;
-  $form_state['values']['npr_audio']['und'][0]['duration'] = $story->audio->duration->value;
-  $form_state['values']['npr_audio']['und'][0]['mp3'] = $story->audio->format->mp3->value;
-  $form_state['values']['npr_audio']['und'][0]['rm'] = $story->audio->format->mediastream->value;
-  $form_state['values']['npr_audio']['und'][0]['wm'] = 'xxx';
-  $form_state['values']['npr_audio']['und'][0]['download'] = ($story->audio->permissions->download->allow == 'true');
-  $form_state['values']['npr_audio']['und'][0]['embed'] = ($story->audio->permissions->stream->allow == 'true');
-  $form_state['values']['npr_audio']['und'][0]['stream'] = ($story->audio->permissions->embed->allow == 'true');
+  $form_state['values']['body'][LANGUAGE_NONE][0]['value'] = $story->body;
+  $form_state['values']['body'][LANGUAGE_NONE][0]['summary'] = $story->teaser->value;
+  $form_state['values']['field_npr_byline'][LANGUAGE_NONE][0]['value'] = $story->byline->name->value;
+  $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['value'] = $story->audio->id;
+  $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['title'] = $story->audio->title->value;
+  $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['description'] = $story->audio->description->value;
+  $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['duration'] = $story->audio->duration->value;
+  $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['mp3'] = $story->audio->format->mp3->value;
+  $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['rm'] = $story->audio->format->mediastream->value;
+  $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['wm'] = 'xxx';
+  $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['download'] = ($story->audio->permissions->download->allow == 'true');
+  $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['embed'] = ($story->audio->permissions->stream->allow == 'true');
+  $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['stream'] = ($story->audio->permissions->embed->allow == 'true');
 
   if (!empty($story->image)) {
     $npr_image = $story->image;
@@ -192,7 +192,7 @@ function npr_pull_save_story($story) {
     
     $saved_file = file_save($file);
     $saved_file->display = 1;
-    $form_state['values']['field_npr_image']['und'][] = (array)$saved_file;
+    $form_state['values']['field_npr_image'][LANGUAGE_NONE][] = (array)$saved_file;
   }
   $form_state['values']['op'] = t('Save');
   drupal_form_submit('npr_story_node_form', $form_state, (object)$node);
