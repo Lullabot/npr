@@ -68,10 +68,10 @@ class NPRAPIDrupal extends NPRAPI {
     $org = $story->addChild('organization');
     $org->addAttribute('orgId', variable_get('npr_push_org_id'));
 
-    $this->NPRML = $root->asXML();
+    return $root->asXML();
   }
 
-  function push_NPRML() {
+  function push_NPRML($node) {
     $org_id = variable_get('npr_push_org_id');
     $api_key = variable_get('npr_api_api_key');
     $params = array(
@@ -82,7 +82,7 @@ class NPRAPIDrupal extends NPRAPI {
     $base = variable_get('npr_push_api_url');
     $path = 'story';
 
-    $data = $this->NPRML;    
+    $data = $this->create_NPRML($node);
     $this->request($params, $method, $data, $path, $base);
   }
 }

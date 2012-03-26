@@ -32,8 +32,7 @@ function npr_push_node_insert($node) {
     module_load_include('php', 'npr_api', 'classes/NPRAPI');
     module_load_include('php', 'npr_api', 'classes/NPRAPIDrupal');  
     $NPRAPIDrupal = new NPRAPIDrupal();
-    $NPRAPIDrupal->create_NPRML($node);
-    $NPRAPIDrupal->push_NPRML();
+    $NPRAPIDrupal->push_NPRML($node);
     //dpm($NPRAPIDrupal);
   }
 }
