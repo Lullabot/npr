@@ -2,13 +2,6 @@
 
 class NPRAPIDrupal extends NPRAPI {
 
-  function __construct($node = NULL) {
-    parent::__construct();
-    if ($node) {
-      $this->node = $node;
-    }
-  }
-
   function request($params = array(), $method = 'GET', $data = NULL, $path = 'query', $base = 'http://api.npr.org') {
 
     $this->request->method = $method;
@@ -41,9 +34,7 @@ class NPRAPIDrupal extends NPRAPI {
 
   }
 
-  function create_NPRML() {
-  
-    $node = $this->node;
+  function create_NPRML($node) {
     $language = $node->language;
     $root = new SimpleXMLElement(self::NPRML_DATA, 0, FALSE, self::NPRML_NAMESPACE, TRUE);
     $root->addAttribute('version', self::NPRML_VERSION);
@@ -90,9 +81,8 @@ class NPRAPIDrupal extends NPRAPI {
     $method = 'PUT';
     $base = variable_get('npr_push_api_url');
     $path = 'story';
-    $this->create_NPRML();
-    $data = $this->NPRML;
-    
+
+    $data = $this->NPRML;    
     $this->request($params, $method, $data, $path, $base);
   }
 }
