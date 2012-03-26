@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * Implements hook_uninstall().
+ */
+function npr_pull_uninstall() {
+  variable_del('npr_push_types_to_push');
+}

@@ -1,0 +1,9 @@
+<?php
+
+/**
+ * Implements hook_uninstall().
+ */
+function npr_pull_uninstall() {
+  variable_del('npr_pull_cron_query_ids');
+  variable_del('npr_pull_cron_publish_flag');
+}
