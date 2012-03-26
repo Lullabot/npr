@@ -73,7 +73,7 @@ class NPRAPIDrupal extends NPRAPI {
 
   function push_NPRML() {
     $org_id = variable_get('npr_push_org_id');
-    $api_key = variable_get('npr_api_station_key');
+    $api_key = variable_get('npr_api_api_key');
     $params = array(
       'orgId' => $org_id,
       'apiKey' => $api_key, 
