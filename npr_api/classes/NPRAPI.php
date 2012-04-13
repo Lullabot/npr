@@ -50,7 +50,7 @@ class NPRAPI {
     }
 
     else {
-      $this->notices[] = t('No XML to parse.');
+      $this->notices[] = 'No XML to parse.';
       return;
     }
 
