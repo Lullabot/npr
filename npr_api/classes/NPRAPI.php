@@ -60,10 +60,40 @@ class NPRAPI {
     if (!empty($object->list->story)) {
       foreach ($object->list->story as $story) {
         $parsed = new NPRMLEntity();
-        foreach ($story as $k => $v) {
-          $parsed->$k = $this->parse_simplexml_element($v);
-        }
         add_simplexml_attributes($story, $parsed);
+
+        //Iterate trough the XML document and list all the children
+        $xml_iterator = new SimpleXMLIterator($story->asXML());
+        $key = NULL;
+        $current = NULL;
+        for($xml_iterator->rewind(); $xml_iterator->valid(); $xml_iterator->next()) {
+          $current = $xml_iterator->current();
+          $key = $xml_iterator->key();
+          
+          if (!empty($parsed->{$key})) {
+            // images
+            if ($key == 'image') {
+              if (!is_array($parsed->{$key})) {
+                $temp = $parsed->{$key};
+                $parsed->{$key} = NULL;
+                $parsed->{$key}[] = $temp;
+              }
+              $parsed->{$key}[] = $this->parse_simplexml_element($current);    
+            }
+            // links
+            if ($key == 'link') {
+              if (!is_array($parsed->{$key})) {
+                $temp = $parsed->{$key};
+                $parsed->{$key} = NULL;
+              }
+              $type = $this->get_attribute($current, 'type');
+              $parsed->{$key}[$type] = $this->parse_simplexml_element($current);
+            }
+          }  
+          else {
+            $parsed->{$key} = $this->parse_simplexml_element($current);
+          }    
+        }
         $body ='';
         if (!empty($parsed->textWithHtml->paragraphs)) {
           foreach ($parsed->textWithHtml->paragraphs as $paragraph) {
@@ -74,6 +104,7 @@ class NPRAPI {
         $this->stories[] = $parsed;
       }
     }
+    dpm($this);
   }
 
   function parse_simplexml_element($element) {
@@ -94,6 +125,14 @@ class NPRAPI {
       $NPRMLElement->value = (string)$element;
     }
     return $NPRMLElement;
+  }
+  
+  function get_attribute($element, $attribute) {
+    foreach ($element->attributes() as $k => $v) {
+      if ($k == $attribute) {
+        return (string)$v;
+      }
+    }  
   }
 
   function send_NPRML($xml, $path) {
