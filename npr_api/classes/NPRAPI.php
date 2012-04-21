@@ -109,7 +109,6 @@ class NPRAPI {
         $this->stories[] = $parsed;
       }
     }
-    dpm($this);
   }
 
   function parse_simplexml_element($element) {
