@@ -57,6 +57,11 @@ class NPRAPI {
     $object = simplexml_load_string($xml);
     add_simplexml_attributes($object, $this);
     
+    if (!empty($object->message)) {
+      $this->message->id = $this->get_attribute($object->message, 'id');
+      $this->message->level = $this->get_attribute($object->message, 'level');
+    }
+    
     if (!empty($object->list->story)) {
       foreach ($object->list->story as $story) {
         $parsed = new NPRMLEntity();

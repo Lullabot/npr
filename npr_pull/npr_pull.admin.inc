@@ -88,7 +88,6 @@ function npr_pull_get_story_validate($form, &$form_state) {
  * Submit handler for npr_pull_get_story().
  */
 function npr_pull_get_story_submit($form, &$form_state) {
-
   $story_id = 0;
   $url_value = $form_state['values']['url'];
 
@@ -106,7 +105,9 @@ function npr_pull_get_story_submit($form, &$form_state) {
   );
 
   $NPR = npr_api_fetch_object($params);
-  if (is_object($NPR) && !empty($NPR->stories)) {
+  $failure = !empty($NPR->message) && $NPR->message->id == 201;
+  
+  if (is_object($NPR) && !empty($NPR->stories) && !$failure) {
     $story = array_shift($NPR->stories);
     $date_flag = $form_state['values']['date_flag'];
     $story->created = ($date_flag) ? strtotime($story->pubDate->value) : REQUEST_TIME;
