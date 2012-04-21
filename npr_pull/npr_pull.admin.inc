@@ -91,7 +91,7 @@ function npr_pull_get_story_submit($form, &$form_state) {
   $story_id = 0;
   $url_value = $form_state['values']['url'];
 
-  if ((int)$url_value > 0 &&drupal_strlen($url_value) >= 8) {
+  if ((int)$url_value > 0 && drupal_strlen($url_value) >= 8) {
     $story_id = (int)$url_value;
   } 
   
