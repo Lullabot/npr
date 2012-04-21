@@ -167,7 +167,9 @@ function npr_pull_save_story($story) {
   $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['stream'] = ($story->audio->permissions->embed->allow == 'true');
 
   if (!empty($story->image)) {
-    $npr_image = $story->image;
+    // Take first image in array (for now)
+    // (presume that $story->image[0] == 'primary')
+    $npr_image = $story->image[0];
     // @TODO
     // clean up how we do collision prevention
     // rand() seems to hacky
