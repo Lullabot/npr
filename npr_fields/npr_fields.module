@@ -99,11 +99,11 @@ function npr_fields_field_widget_form(&$form, &$form_state, $field, $instance, $
       'stream' => 'stream',
       'embed' => 'embed',
     );
-    
+
     $delta = 0;
     foreach ($subfields as $key => $title) {
       $value = isset($items[$delta][$key]) ? $items[$delta][$key] : '';
-      
+
       $element[$key] = array(
         '#type' => 'textfield',
         '#title' => $title,
@@ -112,7 +112,7 @@ function npr_fields_field_widget_form(&$form, &$form_state, $field, $instance, $
         '#size' => 30,
         //'#disabled' => TRUE,
       );
-    }  
+    }
   }
   return $element;
 }

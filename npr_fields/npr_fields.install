@@ -12,39 +12,39 @@
 function npr_fields_field_schema($field) {
   switch ($field['type']) {
     case 'npr_audio' :
-      $columns = array (
+      $columns = array(
         'value' => array(
           'type' => 'int',
           'not null' => FALSE,
         ),
-        'title' => array (
+        'title' => array(
           'type' => 'text',
         ),
-        'duration' => array (
+        'duration' => array(
           'type' => 'int',
-          'unsigned' => TRUE, 
-          'not null' => TRUE, 
+          'unsigned' => TRUE,
+          'not null' => TRUE,
           'default' => 0,
         ),
-        'description' => array (
+        'description' => array(
           'type' => 'text',
         ),
-        'mp3' => array (
+        'mp3' => array(
           'type' => 'text',
         ),
-        'rm' => array (
+        'rm' => array(
           'type' => 'text',
         ),
-        'wm' => array (
+        'wm' => array(
           'type' => 'text',
         ),
-        'download' => array (
+        'download' => array(
           'type' => 'int',
         ),
-        'stream' => array (
+        'stream' => array(
           'type' => 'int',
         ),
-        'embed' => array (
+        'embed' => array(
           'type' => 'int',
         ),
       );
@@ -60,7 +60,7 @@ function npr_fields_install() {
     'field_name' => 'field_npr_image',
     'type' => 'image',
     'cardinality' => 1,
-    'locked' => TRUE,  
+    'locked' => TRUE,
   );
   field_create_field($image);
 
