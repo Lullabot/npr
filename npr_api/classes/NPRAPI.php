@@ -7,7 +7,7 @@ class NPRAPI {
   const NPRAPI_PULL_URL = 'http://api.npr.org';
 
   // NPRML CONSTANTS
-  const NPRML_DATA = '<nprml></nprml>';
+  const NPRML_DATA = '<?xml version="1.0" encoding="UTF-8"?><nprml></nprml>';
   const NPRML_NAMESPACE = 'xmlns:nprml=http://api.npr.org/nprml';
   const NPRML_VERSION = '0.92.2';
 
