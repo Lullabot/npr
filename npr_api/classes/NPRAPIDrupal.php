@@ -52,7 +52,7 @@ class NPRAPIDrupal extends NPRAPI {
       $story->addChild('teaser', htmlentities($node->body[$language][0]['value']));
     }
     $now = format_date($node->created, 'custom', "D, d M Y G:i:s O ");
-    
+
     $story->addChild('storyDate', $now);
     $story->addChild('pubDate', $now);
 
@@ -76,7 +76,7 @@ class NPRAPIDrupal extends NPRAPI {
     $api_key = variable_get('npr_api_api_key');
     $params = array(
       'orgId' => $org_id,
-      'apiKey' => $api_key, 
+      'apiKey' => $api_key,
     );
     $method = 'PUT';
     $base = variable_get('npr_push_api_url');
