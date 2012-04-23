@@ -3,7 +3,7 @@
 /**
  * Menu callback. Generates a form to choose blog types.
  */
- 
+
 function npr_pull_cron_config() {
   $form['npr_pull_cron_query_ids'] = array(
     '#type' => 'checkboxes',
@@ -19,14 +19,14 @@ function npr_pull_cron_config() {
     ),
     '#description' => t('Choose one or more topics. New stories from these topic(s) will be be pulled down at every cron run.')
   );
-  
+
   $form['npr_pull_cron_publish_flag'] = array(
     '#type' => 'checkbox',
     '#title' => t('Publish stories upon retrieval?'),
     '#default_value' => variable_get('npr_pull_cron_publish_flag', 1),
     '#description' => t('If checked stories will automatically be published. If not, stories will still be retrieved and saved in your database - but not published.')
   );
-  
+
   return system_settings_form($form);
 }
 
@@ -50,7 +50,7 @@ function npr_pull_get_story() {
     '#default_value' => variable_get('npr_pull_cron_publish_flag', 1),
     '#description' => t('If checked stories will automatically be published. If not, stories will still be retrieved and saved in your database - but not published.'),
   );
-  
+
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Get story'),
@@ -69,7 +69,7 @@ function npr_pull_get_story_validate($form, &$form_state) {
 
   if ((int)$url_value > 0) {
     if (drupal_strlen($url_value) < 8) {
-      form_set_error('url', t('Does not appear to be a valid NPR ID.')); 
+      form_set_error('url', t('Does not appear to be a valid NPR ID.'));
     }
     return;
   }
@@ -93,8 +93,8 @@ function npr_pull_get_story_submit($form, &$form_state) {
 
   if ((int)$url_value > 0 && drupal_strlen($url_value) >= 8) {
     $story_id = (int)$url_value;
-  } 
-  
+  }
+
   else {
     $story_id = npr_pull_extract_id($url_value);
   }
@@ -106,7 +106,7 @@ function npr_pull_get_story_submit($form, &$form_state) {
 
   $NPR = npr_api_fetch_object($params);
   $failure = !empty($NPR->message) && $NPR->message->id == 201;
-  
+
   if (is_object($NPR) && !empty($NPR->stories) && !$failure) {
     $story = array_shift($NPR->stories);
     $date_flag = $form_state['values']['date_flag'];
