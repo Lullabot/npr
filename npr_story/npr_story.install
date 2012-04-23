@@ -9,7 +9,7 @@ function npr_story_install() {
     'field_name' => 'npr_audio',
     'type' => 'npr_audio',
     'cardinality' => 1,
-    'locked' => TRUE,  
+    'locked' => TRUE,
   );
   field_create_field($audio);
 
@@ -33,7 +33,7 @@ function npr_story_uninstall() {
 
 function _npr_story_get_all_field_instances() {
   $instances = array(
-    
+
     'byline' => array(
       'field_name' => 'field_npr_byline',
       'entity_type' => 'node',
@@ -58,8 +58,8 @@ function _npr_story_get_all_field_instances() {
           'weight' => -9,
         ),
       ),
-    ),  
-  
+    ),
+
     'audio' => array(
       'field_name' => 'npr_audio',
       'entity_type' => 'node',
@@ -87,7 +87,7 @@ function _npr_story_get_all_field_instances() {
         ),
       ),
     ),
- 
+
     'image' => array(
       'field_name' => 'field_npr_image',
       'entity_type' => 'node',
@@ -112,7 +112,7 @@ function _npr_story_get_all_field_instances() {
         ),
       ),
     ),
-  
+
     'npr id' => array(
       'field_name' => 'field_npr_id',
       'entity_type' => 'node',
