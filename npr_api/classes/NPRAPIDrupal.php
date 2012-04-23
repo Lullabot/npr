@@ -42,14 +42,14 @@ class NPRAPIDrupal extends NPRAPI {
     $story = $list->addChild('story');
 
     // FIX
-    $story->addChild('title', substr(htmlentities($node->title), 0, 100));
+    $story->addChild('title', substr(($node->title), 0, 100));
 
     if (!empty($node->body[$language][0]['value'])) {
-      $story->addChild('text', htmlentities($node->body[$language][0]['value']));
+      $story->addChild('text', $node->body[$language][0]['value']);
     }
 
     if (!empty($node->body[$language][0]['value'])) {
-      $story->addChild('teaser', htmlentities($node->body[$language][0]['value']));
+      $story->addChild('teaser', $node->body[$language][0]['value']);
     }
     $now = format_date($node->created, 'custom', "D, d M Y G:i:s O ");
 
