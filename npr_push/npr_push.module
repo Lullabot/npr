@@ -5,7 +5,7 @@
  *
  */
 function npr_push_menu() {
-    
+
   $items= array();
 
   $items['admin/config/services/npr/push'] = array(
@@ -18,7 +18,7 @@ function npr_push_menu() {
     'type' => MENU_LOCAL_TASK,
   );
 
-  return $items;  
+  return $items;
 }
 
 /**
@@ -30,7 +30,7 @@ function npr_push_node_insert($node) {
   if (in_array($node->type, $types, TRUE)) {
     // Load API classes
     module_load_include('php', 'npr_api', 'classes/NPRAPI');
-    module_load_include('php', 'npr_api', 'classes/NPRAPIDrupal');  
+    module_load_include('php', 'npr_api', 'classes/NPRAPIDrupal');
     $NPRAPIDrupal = new NPRAPIDrupal();
     $NPRAPIDrupal->push_NPRML($node);
     //dpm($NPRAPIDrupal);
@@ -47,11 +47,11 @@ function npr_pull_form_npr_api_config_form_alter(&$form, &$form_state, $form_id)
     '#default_value' => variable_get('npr_push_api_url'),
     '#description' => t(''),
   );
-  
+
   $form['npr_push_org_id'] = array(
     '#type' => 'textfield',
     '#title' => t('NPR Organization ID'),
     '#default_value' => variable_get('npr_push_org_id'),
     '#description' => t(''),
-  );   
+  );
 }

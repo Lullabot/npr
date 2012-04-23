@@ -9,7 +9,7 @@ function npr_push_admin_config() {
   foreach (node_type_get_types() as $type) {
     $available_types[$type->type] = $type->name;
   }
-  
+
   $form['npr_push_types_to_push'] = array(
     '#type' => 'checkboxes',
     '#title' => t('Content types to be pushed to the NPR API'),
