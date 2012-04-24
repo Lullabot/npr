@@ -36,41 +36,69 @@ class NPRAPIDrupal extends NPRAPI {
 
   function create_NPRML($node) {
     $language = $node->language;
-    $root = new SimpleXMLElement(self::NPRML_DATA, 0, FALSE, self::NPRML_NAMESPACE, TRUE);
-    $root->addAttribute('version', self::NPRML_VERSION);
-    $list = $root->addChild('list');
-    $story = $list->addChild('story');
+    $xml = new DOMDocument();
+    $xml->version = '1.0';
+    $xml->encoding = 'UTF-8';
+    
+    //$xml->add_element($xml, 'nprml', array('version' => self::NPRML_VERSION), NULL,);
+    $nprml_element = $xml->createElement('nprml');
+    $nprml_version = $xml->createAttribute('version');
+    $nprml_version-> value = self::NPRML_VERSION;
+    $nprml_element->appendChild($nprml_version);
+    
+    $nprml = $xml->appendChild($nprml_element);
+    $list = $nprml->appendChild($xml->createElement('list'));
 
-    // FIX
-    $story->addChild('title', substr(($node->title), 0, 100));
-
-    if (!empty($node->body[$language][0]['value'])) {
-      $story->addChild('text', $node->body[$language][0]['value']);
-    }
-
-    if (!empty($node->body[$language][0]['value'])) {
-      $story->addChild('teaser', $node->body[$language][0]['value']);
-    }
-    $now = format_date($node->created, 'custom', "D, d M Y G:i:s O ");
-
-    $story->addChild('storyDate', $now);
-    $story->addChild('pubDate', $now);
+    $story = $xml->createElement('story');
 
     //if the nprID field is set, (probably because this is an update) send that along too
     if (isset($node->npr_id)) {
-      $story->addAttribute('id', $node->npr_id);
+      $id_element = $xml->createElement('id', $node->npr_id);
+      $story->appendChild($id_element);
     }
+
+    $title = substr(($node->title), 0, 100);
+    $title_cdata = $xml->createCDATASection($title);
+    $title_element = $xml->createElement('title');
+    $title_element->appendChild($title_cdata);
+    $story->appendChild($title_element);
+    
+    $story->appendChild($xml->createElement('title', $title));
+
+    if (!empty($node->body[$language][0]['value'])) {
+      $body = $node->body[$language][0]['value'];
+      $body_cdata = $xml->createCDATASection($body);
+      
+      $text = $xml->createElement('text');
+      $text->appendChild($body_cdata);
+      $story->appendChild($text);
+      
+      // FIX!
+      $teaser = $xml->createElement('teaser');
+      $teaser->appendChild($body_cdata);
+      $story->appendChild($teaser);
+    }
+
+    $now = format_date($node->created, 'custom', "D, d M Y G:i:s O ");
+
+    $story->appendChild($xml->createElement('storyDate', $now));
+    $story->appendChild($xml->createElement('pubDate', $now));
 
     //$landing_page = $story->addChild('link', $node->story_url);
     //$landing_page->addAttribute('type', 'html');
 
     //add the station's org ID
-    $org = $story->addChild('organization');
-    $org->addAttribute('orgId', variable_get('npr_push_org_id'));
-
-    return $root->asXML();
+    $org_element = $xml->createElement('organization');
+    $org_id = $xml->createAttribute('orgId');
+    $org_id->value = variable_get('npr_push_org_id');
+    $org_element->appendChild($org_id);
+    $story->appendChild($org_element);
+    
+    $list->appendChild($story);
+    dpm($xml->saveXML());
+    return $xml->saveXML();
   }
-
+  
   function push_NPRML($node) {
     $org_id = variable_get('npr_push_org_id');
     $api_key = variable_get('npr_api_api_key');
