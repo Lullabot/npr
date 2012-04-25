@@ -41,7 +41,7 @@ function npr_pull_get_story() {
     '#type' => 'textfield',
     '#title' => t('NPR API story URL'),
     '#required' => TRUE,
-    '#description' => t('Provide full URL for a story on NPR.org (or simply the story id)'),
+    '#description' => t('Full URL for a story on NPR.org.'),
   );
 
   $form['date_flag'] = array(
@@ -67,13 +67,6 @@ function npr_pull_get_story_validate($form, &$form_state) {
   $story_id = 0;
   $url_value = $form_state['values']['url'];
 
-  if ((int)$url_value > 0) {
-    if (drupal_strlen($url_value) < 8) {
-      form_set_error('url', t('Does not appear to be a valid NPR ID.'));
-    }
-    return;
-  }
-
   if (!valid_url($url_value, TRUE)) {
     form_set_error('url', t('Does not appear to be a valid URL.'));
     return;
@@ -90,14 +83,7 @@ function npr_pull_get_story_validate($form, &$form_state) {
 function npr_pull_get_story_submit($form, &$form_state) {
   $story_id = 0;
   $url_value = $form_state['values']['url'];
-
-  if ((int)$url_value > 0 && drupal_strlen($url_value) >= 8) {
-    $story_id = (int)$url_value;
-  }
-
-  else {
-    $story_id = npr_pull_extract_id($url_value);
-  }
+  $story_id = npr_pull_extract_id($url_value);
 
   //build the params to query the API
   $params = array(
