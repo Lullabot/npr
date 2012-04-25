@@ -162,7 +162,7 @@ function npr_pull_save_story($story) {
     'duration' => isset($story->audio->duration->value) ? $story->audio->duration->value : 0,
     'mp3' => isset($story->audio->format->mp3->value) ? $story->audio->format->mp3->value : '',
     'rm' => isset($story->audio->format->mediastream->value) ? $story->audio->format->mediastream->value : '',
-    'wm' => 'xxx',
+    'wm' => isset($story->audio->format->wm->value) ? $story->audio->format->wm->value : '',
     'download' => isset($story->audio->permissions->download->allow) ? 1 : 0,
     'embed' => isset($story->audio->permissions->embed->allow) ? 1 : 0,
     'stream' => isset($story->audio->permissions->stream->allow) ? 1 : 0,
