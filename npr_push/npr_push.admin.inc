@@ -6,7 +6,7 @@ function npr_push_admin_config() {
   foreach (node_type_get_types() as $type) {
     $available_types[$type->type] = $type->name;
   }
-  
+
   $required_fields = array('body');
   $nprml_fields = npr_api_get_nprml_fields();
   $nprml_options = array();
@@ -17,7 +17,7 @@ function npr_push_admin_config() {
 
   foreach (node_type_get_types() as $type) {
     $form[$type->type . '_settings'] = array(
-      '#type' => 'fieldset', 
+      '#type' => 'fieldset',
       '#title' => t($type->name . ' settings'),
       '#collapsible' => TRUE,
       '#collapsed' => FALSE,
@@ -38,8 +38,8 @@ function npr_push_admin_config() {
           '#title' => t('Map "' . $all_field['field_name'] . '" to the following NPRML field:'),
           '#options' => $nprml_options,
           '#default_value' => !empty($map[$all_field['field_name']]) ? $map[$all_field['field_name']] : 0,
-        );   
-      }  
+        );
+      }
     }
   }
   $form['submit'] = array(
@@ -62,7 +62,7 @@ function npr_push_admin_config_validate($form, &$form_state) {
         $value = $form_state['values']['npr_push_mapping_' . $name];
         if ($value !== '0') {
           if (!in_array($all_field['widget']['type'], $nprml_fields[$value]['accepted_types'])) {
-            form_set_error('npr_push_mapping_' . $all_field['field_name'], 'Incompatible field types.');  
+            form_set_error('npr_push_mapping_' . $all_field['field_name'], 'Incompatible field types.');
           }
           if (in_array($value, $taken)) {
             form_set_error('npr_push_mapping_' . $all_field['field_name'], 'Multiple fields cannot be mapped to the same NPRML field.');
@@ -71,7 +71,7 @@ function npr_push_admin_config_validate($form, &$form_state) {
         }
       }
     }
-  }  
+  }
 }
 
 function npr_push_admin_config_submit($form, &$form_state) {
@@ -79,9 +79,9 @@ function npr_push_admin_config_submit($form, &$form_state) {
   $required_fields = array('body');
 
   foreach (node_type_get_types() as $type) {
-  
+
     variable_set('npr_push_types_' . $type->type, $form_state['values']['npr_push_types_' . $type->type]);
-  
+
     $all_fields = field_info_instances('node', $type->type);
     $mapping = array();
     foreach ($all_fields as $key => $all_field) {
@@ -89,6 +89,6 @@ function npr_push_admin_config_submit($form, &$form_state) {
         $mapping[$all_field['field_name']] = $form_state['values']['npr_push_mapping_' . $all_field['field_name']];
       }
     }
-    variable_set('npr_push_field_map_' . $type->type, $mapping);   
-  }    
+    variable_set('npr_push_field_map_' . $type->type, $mapping);
+  }
 }
