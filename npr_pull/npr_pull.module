@@ -155,16 +155,18 @@ function npr_pull_save_story($story) {
   $form_state['values']['body'][LANGUAGE_NONE][0]['value'] = $story->body;
   $form_state['values']['body'][LANGUAGE_NONE][0]['summary'] = $story->teaser->value;
   $form_state['values']['field_npr_byline'][LANGUAGE_NONE][0]['value'] = $story->byline->name->value;
-  $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['value'] = $story->audio->id;
-  $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['title'] = $story->audio->title->value;
-  $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['description'] = $story->audio->description->value;
-  $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['duration'] = $story->audio->duration->value;
-  $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['mp3'] = $story->audio->format->mp3->value;
-  $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['rm'] = $story->audio->format->mediastream->value;
-  $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['wm'] = 'xxx';
-  $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['download'] = ($story->audio->permissions->download->allow == 'true');
-  $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['embed'] = ($story->audio->permissions->stream->allow == 'true');
-  $form_state['values']['npr_audio'][LANGUAGE_NONE][0]['stream'] = ($story->audio->permissions->embed->allow == 'true');
+  $form_state['values']['npr_audio'][LANGUAGE_NONE][0] = array(
+    'value' => isset($story->audio->id) ? $story->audio->id : 0,
+    'title' => isset($story->audio->title->value) ? $story->audio->title->value : '',
+    'description' => isset($story->audio->description->value) ? $story->audio->description->value : '',
+    'duration' => isset($story->audio->duration->value) ? $story->audio->duration->value : 0,
+    'mp3' => isset($story->audio->format->mp3->value) ? $story->audio->format->mp3->value : '',
+    'rm' => isset($story->audio->format->mediastream->value) ? $story->audio->format->mediastream->value : '',
+    'wm' => 'xxx',
+    'download' => isset($story->audio->permissions->download->allow) ? 1 : 0,
+    'embed' => isset($story->audio->permissions->embed->allow) ? 1 : 0,
+    'stream' => isset($story->audio->permissions->stream->allow) ? 1 : 0,
+  );
 
   if (!empty($story->image)) {
     // Take first image in array (for now)
