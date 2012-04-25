@@ -110,3 +110,30 @@ function npr_api_fetch_stories($params) {
   $object = npr_api_fetch_object($params);
   return $object->stories;
 }
+
+
+function npr_api_get_nprml_fields() {
+  $nprml_fields = array(
+    'subtitle' => array(
+      'type' => 'text', 
+      'accepted_types' => array('text_textfield'),
+    ),
+    'shortTitle' => array(
+      'type' => 'text',
+      'accepted_types' => array('text_textfield'), 
+    ),
+    'miniteaser' => array(
+      'type' => 'text',
+      'accepted_types' => array('text_textfield'),
+    ),
+    'slug' => array(
+      'type' => 'text',
+      'accepted_types' => array('text_textfield'),
+    ),
+    'image' => array(
+      'type' => 'image',
+      'accepted_types' => array('image_image'),    
+    ),
+  );
+  return $nprml_fields;
+}

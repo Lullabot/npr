@@ -94,6 +94,31 @@ class NPRAPIDrupal extends NPRAPI {
     $org_element->appendChild($org_id);
     $story->appendChild($org_element);
     
+    $type = $node->type;
+    $nprml_fields = npr_api_get_nprml_fields();
+    $map = variable_get('npr_push_field_map_' . $type, array());
+    foreach ($map as $custom_field => $npr_field) {
+      if ($npr_field) {
+        $field = field_get_items('node', $node, $custom_field);
+        foreach ($field as $k => $v) {
+          if ($nprml_fields[$npr_field]['type'] == 'text') {
+            $value = $field[$k]['value'];
+            //cdata this
+            $element = $xml->createElement($npr_field, $value);
+          }
+          if ($nprml_fields[$npr_field]['type'] == 'image') {
+            $element = $xml->createElement($npr_field);
+            $image_file = file_load($field[$k]['fid']);
+		        $image_url = file_create_url($image_file->uri);
+            $src = $xml->createAttribute('src');
+            $src->value = $image_url;
+            $element->appendChild($src);  
+          }
+          $story->appendChild($element);
+        }
+      } 
+    }
+    
     $list->appendChild($story);
     dpm($xml->saveXML());
     return $xml->saveXML();

@@ -26,8 +26,7 @@ function npr_push_menu() {
  *
  */
 function npr_push_node_insert($node) {
-  $types = variable_get('npr_push_types_to_push', array());
-  if (in_array($node->type, $types, TRUE)) {
+  if (variable_get('npr_push_types_' . $node->type)) {
     // Load API classes
     module_load_include('php', 'npr_api', 'classes/NPRAPI');
     module_load_include('php', 'npr_api', 'classes/NPRAPIDrupal');
