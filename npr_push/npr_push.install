@@ -1,6 +1,13 @@
 <?php
 
 /**
+ * Implements hook_install().
+ */
+function npr_push_install() {
+  variable_set('npr_push_api_url', NPR_PUSH_STAGE_URL);
+}
+
+/**
  * Implements hook_uninstall().
  */
 function npr_push_uninstall() {
