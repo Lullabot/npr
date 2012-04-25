@@ -84,8 +84,14 @@ class NPRAPIDrupal extends NPRAPI {
     $story->appendChild($xml->createElement('storyDate', $now));
     $story->appendChild($xml->createElement('pubDate', $now));
 
-    //$landing_page = $story->addChild('link', $node->story_url);
-    //$landing_page->addAttribute('type', 'html');
+  	$url = url(drupal_get_path_alias('node/' . $node->nid), array('absolute' => TRUE));
+  	$url_cdata = $xml->createCDATASection($url);
+  	$url_type = $xml->createAttribute('type');
+  	$url_type->value = 'html';
+  	$url_element = $xml->createElement('link');
+  	$url_element->appendChild($url_cdata);
+    $url_element->appendChild($url_type);
+    $story->appendChild($url_element);
 
     //add the station's org ID
     $org_element = $xml->createElement('organization');
