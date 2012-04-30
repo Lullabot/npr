@@ -1,5 +1,7 @@
 <?php
 
+define('NPR_PULL_MAPPING_CONTENT_TYPE', 'npr_story');
+
 /**
  * Implements hook_permission().
  */
