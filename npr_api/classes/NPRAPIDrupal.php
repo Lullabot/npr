@@ -107,10 +107,16 @@ class NPRAPIDrupal extends NPRAPI {
       if ($npr_field) {
         $field = field_get_items('node', $node, $custom_field);
         foreach ($field as $k => $v) {
+          $element = NULL;
+          $value = !empty($field[$k]['value']) ? $field[$k]['value'] : NULL;
+
           if ($nprml_fields[$npr_field]['type'] == 'text') {
-            $value = $field[$k]['value'];
             //cdata this
             $element = $xml->createElement($npr_field, $value);
+          }
+          if ($nprml_fields[$npr_field]['type'] == 'attribute' && $value) {
+            $element = $xml->createAttribute($npr_field);
+            $element->value = $value;
           }
           if ($nprml_fields[$npr_field]['type'] == 'image') {
             $element = $xml->createElement($npr_field);
@@ -120,7 +126,9 @@ class NPRAPIDrupal extends NPRAPI {
             $src->value = $image_url;
             $element->appendChild($src);  
           }
-          $story->appendChild($element);
+          if (is_object($element)) {
+            $story->appendChild($element);
+          }
         }
       } 
     }

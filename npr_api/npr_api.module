@@ -114,6 +114,10 @@ function npr_api_fetch_stories($params) {
 
 function npr_api_get_nprml_fields() {
   $nprml_fields = array(
+    'id' => array(
+      'type' => 'attribute',
+      'accepted_types' => array('text_textfield'),
+    ),
     'subtitle' => array(
       'type' => 'text', 
       'accepted_types' => array('text_textfield'),

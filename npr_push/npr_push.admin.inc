@@ -51,6 +51,7 @@ function npr_push_admin_config() {
 
 function npr_push_admin_config_validate($form, &$form_state) {
   $required_fields = array('body');
+
   $nprml_fields = npr_api_get_nprml_fields();
   foreach (node_type_get_types() as $type) {
       variable_set('npr_push_types_' . $type->type, $form_state['values']['npr_push_types_' . $type->type]);
@@ -70,6 +71,12 @@ function npr_push_admin_config_validate($form, &$form_state) {
           $taken[] = $value;
         }
       }
+    }
+  }
+  $required_nprml_fields = array('id');
+  foreach ($required_nprml_fields as $nprml_field) {
+    if (!in_array($nprml_field, $taken)) {
+      form_set_error('npr_push', "A field must map to the NPRML field: $nprml_field");  
     }
   }
 }
