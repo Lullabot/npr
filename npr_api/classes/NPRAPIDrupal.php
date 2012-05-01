@@ -84,12 +84,12 @@ class NPRAPIDrupal extends NPRAPI {
     $story->appendChild($xml->createElement('storyDate', $now));
     $story->appendChild($xml->createElement('pubDate', $now));
 
-  	$url = url(drupal_get_path_alias('node/' . $node->nid), array('absolute' => TRUE));
-  	$url_cdata = $xml->createCDATASection($url);
-  	$url_type = $xml->createAttribute('type');
-  	$url_type->value = 'html';
-  	$url_element = $xml->createElement('link');
-  	$url_element->appendChild($url_cdata);
+    $url = url(drupal_get_path_alias('node/' . $node->nid), array('absolute' => TRUE));
+    $url_cdata = $xml->createCDATASection($url);
+    $url_type = $xml->createAttribute('type');
+    $url_type->value = 'html';
+    $url_element = $xml->createElement('link');
+    $url_element->appendChild($url_cdata);
     $url_element->appendChild($url_type);
     $story->appendChild($url_element);
 
@@ -121,7 +121,7 @@ class NPRAPIDrupal extends NPRAPI {
           if ($nprml_fields[$npr_field]['type'] == 'image') {
             $element = $xml->createElement($npr_field);
             $image_file = file_load($field[$k]['fid']);
-		        $image_url = file_create_url($image_file->uri);
+		          $image_url = file_create_url($image_file->uri);
             $src = $xml->createAttribute('src');
             $src->value = $image_url;
             $element->appendChild($src);  
