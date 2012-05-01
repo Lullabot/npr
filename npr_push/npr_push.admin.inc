@@ -72,11 +72,11 @@ function npr_push_admin_config_validate($form, &$form_state) {
         }
       }
     }
-  }
-  $required_nprml_fields = array('id');
-  foreach ($required_nprml_fields as $nprml_field) {
-    if (!in_array($nprml_field, $taken)) {
-      form_set_error('npr_push', "A field must map to the NPRML field: $nprml_field");  
+    $required_nprml_fields = array('id');
+    foreach ($required_nprml_fields as $nprml_field) {
+      if (!in_array($nprml_field, $taken)) {
+        form_set_error('npr_push', "A field must map to the NPRML field: $nprml_field");  
+      }
     }
   }
 }
