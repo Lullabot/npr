@@ -138,6 +138,10 @@ function npr_api_get_nprml_fields() {
       'type' => 'image',
       'accepted_types' => array('image_image'),    
     ),
+    'audio' => array(
+      'type' => 'audio',
+      'accepted_types' => array('npr_audio'),
+    ),
   );
   return $nprml_fields;
 }
