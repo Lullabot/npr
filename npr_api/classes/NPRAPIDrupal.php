@@ -100,6 +100,10 @@ class NPRAPIDrupal extends NPRAPI {
     $org_element->appendChild($org_id);
     $story->appendChild($org_element);
     
+    //partner id
+    $partner_id = $xml->createElement('partnerID', $node->nid);
+    $story->appendChild($partner_id);
+    
     $type = $node->type;
     $nprml_fields = npr_api_get_nprml_fields();
     $map = variable_get('npr_push_field_map_' . $type, array());
