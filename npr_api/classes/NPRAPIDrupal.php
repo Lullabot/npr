@@ -120,6 +120,12 @@ class NPRAPIDrupal extends NPRAPI {
           }
           if ($nprml_fields[$npr_field]['type'] == 'image') {
             $element = $xml->createElement($npr_field);
+            if (!empty($image_primary_set)) {
+              $image_type = $xml->createAttribute('type');
+              $image_type->value = 'primary';
+              $element->appendChild($image_type);
+              $image_primary_set = TRUE;
+            }
             $image_file = file_load($field[$k]['fid']);
 		          $image_url = file_create_url($image_file->uri);
             $src = $xml->createAttribute('src');
@@ -128,7 +134,12 @@ class NPRAPIDrupal extends NPRAPI {
           }
           if ($nprml_fields[$npr_field]['type'] == 'audio') {
             $element = $xml->createElement($npr_field);
-            
+            if (!empty($audio_primary_set)) {
+              $audio_type = $xml->createAttribute('type');
+              $audio_type->value = 'primary';
+              $element->appendChild($audio_type);
+              $audio_primary_set = TRUE;
+            }
             $title = $xml->createElement('title', $v['title']);
             $element->appendChild($title);
             
