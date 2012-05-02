@@ -89,24 +89,50 @@ function npr_fields_field_widget_form(&$form, &$form_state, $field, $instance, $
 
     // Create a textfield for saturation values for Red, Green, and Blue.
     $subfields = array(
-      'title' => 'Title',
-      'description' => 'Description',
-      'duration' => 'Duration',
-      'mp3' => 'MP3 Link',
-      'rm' => 'RealMedia Link',
-      'wm' => 'Windows Media Link',
-      'download' => 'download',
-      'stream' => 'stream',
-      'embed' => 'embed',
+      'title' => array(
+        'title' => 'Title',
+        'type' => 'textfield',
+      ),
+      'description' => array(
+        'title' => 'Description',
+        'type' => 'textfield',
+      ),
+      'duration' => array(
+        'title' => 'Duration',
+        'type' => 'textfield',
+      ),
+      'mp3' => array(
+        'title' => 'MP3 Link',
+        'type' => 'textfield',
+      ),
+      'rm' => array(
+        'title' => 'rm',
+        'type' => 'textfield',
+      ),
+      'wm' => array(
+        'title' => 'wm',
+        'type' => 'textfield',
+      ),
+      'download' => array(
+        'title' => 'download',
+        'type' => 'checkbox',
+      ),
+      'stream' => array(
+        'title' => 'stream',
+        'type' => 'checkbox',
+      ),
+      'embed' => array(
+        'title' => 'embed',
+        'type' => 'checkbox',
+      ),
     );
 
     $delta = 0;
-    foreach ($subfields as $key => $title) {
+    foreach ($subfields as $key => $field) {
       $value = isset($items[$delta][$key]) ? $items[$delta][$key] : '';
-
       $element[$key] = array(
-        '#type' => 'textfield',
-        '#title' => $title,
+        '#type' => $field['type'],
+        '#title' => $field['title'],
         '#size' => 2,
         '#default_value' => $value,
         '#size' => 30,
