@@ -126,6 +126,56 @@ class NPRAPIDrupal extends NPRAPI {
             $src->value = $image_url;
             $element->appendChild($src);  
           }
+          if ($nprml_fields[$npr_field]['type'] == 'audio') {
+            $element = $xml->createElement($npr_field);
+            
+            $title = $xml->createElement('title', $v['title']);
+            $element->appendChild($title);
+            
+            $duration = $xml->createElement('duration', $v['duration']);
+            $element->appendChild($duration);
+            
+            $description = $xml->createElement('description', $v['description']);
+            $element->appendChild($description);
+            
+            $format = $xml->createElement('format');
+            $mp3 = $xml->createElement('mp3', $v['mp3']);
+            $mp3type = $xml->createAttribute('type');
+            $mp3type->value = 'm3u';
+            $mp3->appendChild($mp3type);
+            $format->appendChild($mp3);
+            
+            $wm = $xml->createElement('wm', $v['wm']);
+            $format->appendChild($wm);
+            
+            $mediastream = $xml->createElement('rm', $v['rm']);
+            $format->appendChild($mediastream);
+            
+            $element->appendChild($format);
+            
+            $permissions = $xml->createElement('permissions');
+            
+            $download = $xml->createElement('download');
+            $download_allow = $xml->createAttribute('allow');
+            $download_allow->value = $v['download'] ? 'true' : 'false';
+            $download->appendChild($download_allow);
+            $permissions->appendChild($download);
+            
+            $stream = $xml->createElement('stream');
+            $stream_allow = $xml->createAttribute('stream');
+            $stream_allow->value = $v['stream'] ? 'true' : 'false';
+            $stream->appendChild($stream_allow);
+            $permissions->appendChild($stream);
+            
+            $embed = $xml->createElement('embed');
+            $embed_allow = $xml->createAttribute('allow');
+            $embed_allow->value = $v['embed'] ? 'true' : 'false';
+            $embed->appendChild($embed_allow);
+            $permissions->appendChild($embed);
+            
+            $element->appendChild($permissions);
+            
+          }
           if (is_object($element)) {
             $story->appendChild($element);
           }
