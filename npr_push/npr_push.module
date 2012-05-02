@@ -44,14 +44,20 @@ function npr_push_node_insert($node) {
  * Implements hook_form_FORM_ID_alter().
  */
 function npr_pull_form_npr_api_config_form_alter(&$form, &$form_state, $form_id) {
-  $form['npr_push_api_url'] = array(
+
+  $form['npr_push_settings'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('NPR Push Settings'),
+  );
+
+  $form['npr_push_settings']['npr_push_api_url'] = array(
     '#type' => 'textfield',
     '#title' => t('NPR Push URL'),
     '#default_value' => variable_get('npr_push_api_url'),
     '#description' => t('Users are strongly encouraged to first test API push functionality by pushing content to a stage server (!stage) before using the live server(!production).', array('!stage' => NPR_PUSH_STAGE_URL, '!production' => NPR_PUSH_PRODUCTION_URL)),
   );
 
-  $form['npr_push_org_id'] = array(
+  $form['npr_push_settings']['npr_push_org_id'] = array(
     '#type' => 'textfield',
     '#title' => t('NPR Organization ID'),
     '#default_value' => variable_get('npr_push_org_id'),
