@@ -79,7 +79,7 @@ function npr_fields_field_widget_form(&$form, &$form_state, $field, $instance, $
     // Make this a fieldset with the three text fields.
     $element += array(
       '#type' => 'fieldset',
-      //'#element_validate' => array('field_example_3text_validate'),
+      '#element_validate' => array('npr_fields_npr_audio_validate'),
 
       // #delta is set so that the validation function will be able
       // to access external value information which otherwise would be
@@ -148,4 +148,8 @@ function npr_fields_field_is_empty() {
 
 }
 
-
+function npr_fields_npr_audio_validate($element, &$form_state) {
+  if (!$element['mp3']['#value'] && !$element['rm']['#value'] && !$element['wm']['#value']) {
+    form_error($element, 'At least one audio link must be non-empty.');
+  }
+}
