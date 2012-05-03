@@ -138,6 +138,33 @@ function _npr_story_get_all_field_instances() {
         ),
       ),
     ),
+
+    'npr url' => array(
+      'field_name' => 'field_npr_url',
+      'entity_type' => 'node',
+      'bundle' => 'npr_story',
+      'label' => 'NPR URL',
+      'description' => 'NPR URL',
+      'widget' => array(
+        'type' => 'text_textfield',
+        'weight' => 25,
+      ),
+      'display' => array(
+        'default' => array(
+          'label' => 'hidden',
+          'type' => 'hidden',
+        ),
+        'full' => array(
+          'label' => 'hidden',
+          'type' => 'hidden',
+        ),
+        'teaser' => array(
+          'label' => 'hidden',
+          'type' => 'hidden',
+        ),
+      ),
+    ),
+
   );
   return $instances;
 }

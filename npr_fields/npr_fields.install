@@ -81,4 +81,13 @@ function npr_fields_install() {
     'locked' => TRUE,
   );
   field_create_field($npr_api);
+  
+  $npr_url = array(
+    'field_name' => 'field_npr_url',
+    'type' => 'text',
+    'cardinality' => 1,
+    'translatable' => TRUE,
+    'locked' => TRUE,
+  );
+  field_create_field($npr_url);  
 }

@@ -87,11 +87,12 @@ class NPRAPI {
             }
             // links
             if ($key == 'link') {
+              $type = $this->get_attribute($current, 'type');
               if (!is_array($parsed->{$key})) {
                 $temp = $parsed->{$key};
                 $parsed->{$key} = NULL;
+                $parsed->{$key}[$temp->type] = $temp;
               }
-              $type = $this->get_attribute($current, 'type');
               $parsed->{$key}[$type] = $this->parse_simplexml_element($current);
             }
           }
