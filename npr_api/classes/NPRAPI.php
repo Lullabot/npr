@@ -75,24 +75,14 @@ class NPRAPI {
           $current = $xml_iterator->current();
           $key = $xml_iterator->key();
 
-          if (!empty($parsed->{$key})) {
+          if ($key == 'image' || $key == 'link') {
             // images
             if ($key == 'image') {
-              if (!is_array($parsed->{$key})) {
-                $temp = $parsed->{$key};
-                $parsed->{$key} = NULL;
-                $parsed->{$key}[] = $temp;
-              }
               $parsed->{$key}[] = $this->parse_simplexml_element($current);
             }
             // links
             if ($key == 'link') {
               $type = $this->get_attribute($current, 'type');
-              if (!is_array($parsed->{$key})) {
-                $temp = $parsed->{$key};
-                $parsed->{$key} = NULL;
-                $parsed->{$key}[$temp->type] = $temp;
-              }
               $parsed->{$key}[$type] = $this->parse_simplexml_element($current);
             }
           }
