@@ -21,7 +21,7 @@ function npr_story_install() {
   foreach ($instances as $instance) {
     field_create_instance($instance);
   }
-
+  variable_set('node_submitted_npr_story', 0);  
 }
 
 /**
