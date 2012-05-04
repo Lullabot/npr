@@ -105,8 +105,8 @@ function npr_fields_field_widget_form(&$form, &$form_state, $field, $instance, $
         'title' => 'MP3 Link',
         'type' => 'textfield',
       ),
-      'rm' => array(
-        'title' => 'rm',
+      'mediastream' => array(
+        'title' => 'mediastream',
         'type' => 'textfield',
       ),
       'wm' => array(
@@ -150,7 +150,7 @@ function npr_fields_field_is_empty() {
 
 function npr_fields_npr_audio_validate($element, &$form_state) {
   $one_meta_field_not_empty = $element['title']['#value'] || $element['description']['#value'] || $element['duration']['#value'];
-  $all_audio_empty = !$element['mp3']['#value'] && !$element['rm']['#value'] && !$element['wm']['#value'];
+  $all_audio_empty = !$element['mp3']['#value'] && !$element['mediastream']['#value'] && !$element['wm']['#value'];
   if ($one_meta_field_not_empty && $all_audio_empty) {
     form_error($element, 'At least one audio link must be non-empty.');
   }

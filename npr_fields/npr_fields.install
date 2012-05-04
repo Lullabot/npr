@@ -29,7 +29,7 @@ function npr_fields_field_schema($field) {
         'mp3' => array(
           'type' => 'text',
         ),
-        'rm' => array(
+        'mediastream' => array(
           'type' => 'text',
         ),
         'wm' => array(

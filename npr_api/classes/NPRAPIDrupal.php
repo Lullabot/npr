@@ -163,7 +163,7 @@ class NPRAPIDrupal extends NPRAPI {
             $wm = $xml->createElement('wm', $v['wm']);
             $format->appendChild($wm);
             
-            $mediastream = $xml->createElement('rm', $v['rm']);
+            $mediastream = $xml->createElement('mediastream', $v['mediastream']);
             $format->appendChild($mediastream);
             
             $element->appendChild($format);
