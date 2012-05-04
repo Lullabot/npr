@@ -38,7 +38,7 @@ function _npr_story_get_all_field_instances() {
       'field_name' => 'field_npr_byline',
       'entity_type' => 'node',
       'bundle' => 'npr_story',
-      'label' => 'NPR Byline',
+      'label' => 'By',
       'description' => 'NPR author name',
       'widget' => array(
         'type' => 'text_textfield',
@@ -46,15 +46,15 @@ function _npr_story_get_all_field_instances() {
       ),
       'display' => array(
         'default' => array(
-          'label' => 'hidden',
+          'label' => 'inline',
           'weight' => -9,
         ),
         'full' => array(
-          'label' => 'hidden',
+          'label' => 'inline',
           'weight' => -9,
         ),
         'teaser' => array(
-          'label' => 'hidden',
+          'label' => 'inline',
           'weight' => -9,
         ),
       ),
