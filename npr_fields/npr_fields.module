@@ -149,7 +149,9 @@ function npr_fields_field_is_empty() {
 }
 
 function npr_fields_npr_audio_validate($element, &$form_state) {
-  if (!$element['mp3']['#value'] && !$element['rm']['#value'] && !$element['wm']['#value']) {
+  $one_meta_field_not_empty = $element['title']['#value'] || $element['description']['#value'] || $element['duration']['#value'];
+  $all_audio_empty = !$element['mp3']['#value'] && !$element['rm']['#value'] && !$element['wm']['#value'];
+  if ($one_meta_field_not_empty && $all_audio_empty) {
     form_error($element, 'At least one audio link must be non-empty.');
   }
 }

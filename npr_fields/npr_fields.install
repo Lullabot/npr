@@ -21,10 +21,7 @@ function npr_fields_field_schema($field) {
           'type' => 'text',
         ),
         'duration' => array(
-          'type' => 'int',
-          'unsigned' => TRUE,
-          'not null' => TRUE,
-          'default' => 0,
+          'type' => 'text',
         ),
         'description' => array(
           'type' => 'text',
