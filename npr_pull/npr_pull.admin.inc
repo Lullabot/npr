@@ -5,6 +5,11 @@
  */
 
 function npr_pull_cron_config() {
+
+  if (!variable_get('npr_api_api_key')) {
+    drupal_set_message(t('Story pulls will not work without a valid NPR API key. !npr_link. !admin_link.', array('!npr_link' => l('Get a key from NPR', 'http://www.npr.org/templates/reg/'), '!admin_link' => l('Add key to NPR settings', 'admin/config/services/npr/api_config'))), 'warning');
+  }
+
   $form['npr_pull_cron_query_ids'] = array(
     '#type' => 'checkboxes',
     '#title' => t('IDs'),
@@ -68,6 +73,11 @@ function npr_pull_cron_config() {
  * Menu callback. Generates a form to retrieve an NPR story by URL.
  */
 function npr_pull_get_story() {
+
+  if (!variable_get('npr_api_api_key')) {
+    drupal_set_message(t('Story pulls will not work without a valid NPR API key. !npr_link. !admin_link.', array('!npr_link' => l('Get a key from NPR', 'http://www.npr.org/templates/reg/'), '!admin_link' => l('Add key to NPR settings', 'admin/config/services/npr/api_config'))), 'warning');
+  }
+
   $form = array();
 
   $form['url'] = array(
