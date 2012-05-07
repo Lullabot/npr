@@ -169,7 +169,7 @@ function npr_pull_save_story($story) {
     'download' => isset($story->audio->permissions->download->allow) ? 1 : 0,
     'embed' => isset($story->audio->permissions->embed->allow) ? 1 : 0,
     'stream' => isset($story->audio->permissions->stream->allow) ? 1 : 0,
-    );
+  );
 
   if (!empty($story->image)) {
     // Take first image in array (for now)
