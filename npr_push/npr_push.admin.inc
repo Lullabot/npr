@@ -65,7 +65,7 @@ function npr_push_admin_config_validate($form, &$form_state) {
           $value = $form_state['values']['npr_push_mapping_' . $name];
           if ($value !== '0') {
             if (!in_array($all_field['widget']['type'], $nprml_fields[$value]['accepted_types'])) {
-              $error_msg = "To map to NPRML field $value, the (druapl) field must be one of the following type(s): " . implode(',', $nprml_fields[$value]['accepted_types']);
+              $error_msg = "To map to NPRML field $value, the (drupal) field must be one of the following type(s): " . implode(',', $nprml_fields[$value]['accepted_types']);
               form_set_error('npr_push_mapping_' . $all_field['field_name'], 'Incompatible field types. ' . $error_msg);
             }
             if (in_array($value, $taken)) {
