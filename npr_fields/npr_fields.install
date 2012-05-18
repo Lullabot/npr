@@ -67,7 +67,7 @@ function npr_fields_install() {
     'field_name' => 'field_npr_byline',
     'type' => 'text',
     'cardinality' => 1,
-    'translatable' => TRUE,
+    'translatable' => FALSE,
     'locked' => TRUE,
   );
   field_create_field($byline);
@@ -76,7 +76,7 @@ function npr_fields_install() {
     'field_name' => 'field_npr_id',
     'type' => 'text',
     'cardinality' => 1,
-    'translatable' => TRUE,
+    'translatable' => FALSE,
     'locked' => TRUE,
   );
   field_create_field($npr_api);
@@ -85,7 +85,7 @@ function npr_fields_install() {
     'field_name' => 'field_npr_url',
     'type' => 'text',
     'cardinality' => 1,
-    'translatable' => TRUE,
+    'translatable' => FALSE,
     'locked' => TRUE,
   );
   field_create_field($npr_url);  
