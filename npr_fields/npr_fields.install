@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * @file
  * Install, update and uninstall functions for the npr_fields module.
@@ -52,6 +51,9 @@ function npr_fields_field_schema($field) {
   );
 }
 
+/**
+ * Implements hook_install().
+ */
 function npr_fields_install() {
   $image = array(
     'field_name' => 'field_npr_image',

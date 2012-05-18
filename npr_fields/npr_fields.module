@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Generates some basic fields that be useful for content types that are pushing to, and pulling from, the NPR API.
+ */
+
+/**
  * Implements hook_field_info().
  */
 function npr_fields_field_info() {
@@ -16,7 +21,6 @@ function npr_fields_field_info() {
 
 /**
  * Implements hook_field_formatter_info().
- *
  *
  * @see npr_fields_field_formatter_view()
  */
@@ -76,18 +80,12 @@ function npr_fields_field_widget_form(&$form, &$form_state, $field, $instance, $
   if ($instance['widget']['type'] = 'npr_audio') {
 
 
-    // Make this a fieldset with the three text fields.
     $element += array(
       '#type' => 'fieldset',
       '#element_validate' => array('npr_fields_npr_audio_validate'),
-
-      // #delta is set so that the validation function will be able
-      // to access external value information which otherwise would be
-      // unavailable.
       '#delta' => $delta,
     );
 
-    // Create a textfield for saturation values for Red, Green, and Blue.
     $subfields = array(
       'title' => array(
         'title' => 'Title',
@@ -136,18 +134,28 @@ function npr_fields_field_widget_form(&$form, &$form_state, $field, $instance, $
         '#size' => 2,
         '#default_value' => $value,
         '#size' => 30,
-        //'#disabled' => TRUE,
       );
     }
   }
   return $element;
 }
 
-
+/**
+ * Implements hook_field_is_empty().
+ */
 function npr_fields_field_is_empty() {
 
 }
 
+/**
+ * Validates npr_audio field.
+ * 
+ * @param $element array
+ *   Form element being validated.
+ * @param $form_state array
+ *   State of current form.
+ * 
+ */
 function npr_fields_npr_audio_validate($element, &$form_state) {
   $one_meta_field_not_empty = $element['title']['#value'] || $element['description']['#value'] || $element['duration']['#value'];
   $all_audio_empty = !$element['mp3']['#value'] && !$element['mediastream']['#value'] && !$element['wm']['#value'];

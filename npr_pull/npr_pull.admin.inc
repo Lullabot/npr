@@ -1,9 +1,19 @@
 <?php
 
 /**
- * Menu callback. Generates a form to choose blog types.
+ * @file
+ * Basic admin forms, validators, and submit handlers.
  */
 
+/**
+ * Form constructor for the npr pull cron config form. 
+ *
+ * Generates a form to choose what types of stories will be pulled.
+ * Callback for admin/config/services/npr/cron.
+ *
+ * @see npr_pull_menu()
+ * @ingroup forms
+ */
 function npr_pull_cron_config() {
 
   if (!variable_get('npr_api_api_key')) {
@@ -68,9 +78,16 @@ function npr_pull_cron_config() {
   return system_settings_form($form);
 }
 
-
 /**
- * Menu callback. Generates a form to retrieve an NPR story by URL.
+ * Form constructor for the ad-hoc npr pull form.
+ *
+ * Generates a form to retrieve an NPR story by URL.
+ * Callback for admin/content/npr.
+ *
+ * @see npr_pull_menu()
+ * @see npr_pull_get_story_validate()
+ * @see npr_pull_get_story_submit()
+ * @ingroup forms
  */
 function npr_pull_get_story() {
 
@@ -103,7 +120,9 @@ function npr_pull_get_story() {
 }
 
 /**
- * Validation handler for npr_pull_get_story().
+ * Form validation handler for npr_pull_get_story().
+ *
+ * @see npr_pull_get_story_submit()
  */
 function npr_pull_get_story_validate($form, &$form_state) {
 
@@ -121,7 +140,9 @@ function npr_pull_get_story_validate($form, &$form_state) {
 }
 
 /**
- * Submit handler for npr_pull_get_story().
+ * Form submission handler for npr_pull_get_story().
+ *
+ * @see npr_pull_get_story_validate()
  */
 function npr_pull_get_story_submit($form, &$form_state) {
   $story_id = 0;
@@ -148,7 +169,10 @@ function npr_pull_get_story_submit($form, &$form_state) {
 }
 
 /**
- * Extract a NPR ID from an NPR URL
+ * Extracts an NPR ID from an NPR URL.
+ *
+ * @param string $url
+ *   A URL.
  */
 function npr_pull_extract_id($url) {
   // url format: /yyyy/mm/dd/id

@@ -1,9 +1,19 @@
 <?php
 
+/**
+ * @file
+ * Defines basic OOP containers for NPRML.
+ */
+
+/**
+ * Defines a class for NPRML creation/transmission and retreival/parsing, for any PHP-based system.
+ */
 class NPRAPI {
 
+  // HTTP status code = OK
   const NPRAPI_STATUS_OK = 200;
 
+  // Default URL for pulling stories
   const NPRAPI_PULL_URL = 'http://api.npr.org';
 
   // NPRML CONSTANTS
@@ -11,6 +21,9 @@ class NPRAPI {
   const NPRML_NAMESPACE = 'xmlns:nprml=http://api.npr.org/nprml';
   const NPRML_VERSION = '0.92.2';
 
+  /**
+   * Initializes an NPRML object.
+   */
   function __construct() {
     $this->request = new stdClass;
     $this->request->method = NULL;
@@ -44,6 +57,9 @@ class NPRAPI {
 
   }
 
+  /**
+   * Parses object. Turns raw XML(NPRML) into various object properties.
+   */
   function parse() {
     if (!empty($this->xml)) {
       $xml = $this->xml;
@@ -102,6 +118,15 @@ class NPRAPI {
     }
   }
 
+  /**
+   * Converts SimpleXML element into NPRMLElement.
+   *
+   * @param object $element
+   *   A SimpleXML element.
+   *
+   * @return object
+   *   An NPRML element.
+   */
   function parse_simplexml_element($element) {
     $NPRMLElement = new NPRMLElement();
     add_simplexml_attributes($element, $NPRMLElement);
@@ -122,6 +147,18 @@ class NPRAPI {
     return $NPRMLElement;
   }
 
+  /**
+   * Extracts value of a given attribute from a SimpleXML element.
+   *
+   * @param object $element
+   *   A SimpleXML element.
+   *
+   * @param string $attribute
+   *   The name of an attribute of the element.
+   *
+   * @return string
+   *   The value of the attribute (if it exists in element).
+   */
   function get_attribute($element, $attribute) {
     foreach ($element->attributes() as $k => $v) {
       if ($k == $attribute) {
@@ -135,6 +172,12 @@ class NPRAPI {
     return $this->send_request($params, $method = 'PUT', $xml, $path, $base);
   }
 
+  /**
+   * Generates basic report of NPRML object.
+   *
+   * @return array
+   *   Various messages (strings) .
+   */
   function report() {
     $msg = array();
     $params = '';
@@ -165,6 +208,16 @@ class NPRAPI {
   }
 }
 
+
+/**
+ * Takes attributes of a SimpleXML element and adds them to an object (as properties).
+ *
+ * @param object $element
+ *   A SimpleXML element.
+ *
+ * @param object $object
+ *   Any PHP object.
+ */
 function add_simplexml_attributes($element, $object) {
   if (count($element->attributes())) {
     foreach ($element->attributes() as $attr => $value) {
@@ -173,10 +226,16 @@ function add_simplexml_attributes($element, $object) {
   }
 }
 
+/**
+ * Basic OOP container for NPR entity (story, author, etc.).
+ */
 class NPRMLEntity {
 
 }
 
+/**
+ * Basic OOP container for NPRML element.
+ */
 class NPRMLElement {
   function __toString() {
     return $this->value;

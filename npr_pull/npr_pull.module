@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @file
+ * Allows admins to pull content from the NPR API, and turn NPR articles into
+   (locally-stored, independent) drupal nodes.
+ */
+
+/**
+ * The content type to which pulled stories will be mapped.
+ */
 define('NPR_PULL_MAPPING_CONTENT_TYPE', 'npr_story');
 
 /**
@@ -90,7 +99,13 @@ function npr_pull_insert_story($story) {
 }
 
 /**
- * Determines if a npr_story node with a certain npr_id already exists
+ * Determines if a (drupal) NPR story node with a certain NPR ID already exists.
+ *
+ * @param string $npr_id
+ *   The NPR ID in question
+ *
+ * @return boolean
+ *  TRUE if nor story already exists locally, FALSE otherwise.
  */
 function npr_pull_story_exists($npr_id) {
   //dpm
@@ -102,7 +117,12 @@ function npr_pull_story_exists($npr_id) {
 }
 
 /**
- * Given an npr_id, finds a matching nid
+ * Given a NPR ID, finds a matching nid.
+ *
+ * @param string $npr_id
+ *
+ * @return integer/FALSE
+ *   The nid of the node, or FALSE, if no node exists.  
  */
 function npr_pull_get_nid_from_story_id($npr_id) {
   $query = new EntityFieldQuery;
@@ -118,8 +138,11 @@ function npr_pull_get_nid_from_story_id($npr_id) {
 }
 
 /**
- * Converts an NPRMLEntity story object into a node object
- * and saves it to the DB (via form submit)
+ * Converts an NPRMLEntity story object into a node object and saves it to the
+ * DB (via form submit)
+ * 
+ * @param object
+ *   An NPR story pulled from the API.
  */
 function npr_pull_save_story($story) {
   /*

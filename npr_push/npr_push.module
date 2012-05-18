@@ -1,12 +1,16 @@
 <?php
 
-// CONSTANTS
+/**
+ * @file
+ * Allows admins to turn nodes into NPRML and push content to the NPR API.
+ * Notes: users must register with NPR in order to use this module properly.
+ */
+
 define('NPR_PUSH_STAGE_URL', 'http://api-s1.npr.org');
 define('NPR_PUSH_PRODUCTION_URL', 'http://api.npr.org');
 
 /**
  * Implements hook_menu().
- *
  */
 function npr_push_menu() {
 
@@ -27,7 +31,6 @@ function npr_push_menu() {
 
 /**
  * Implements hook_node_insert().
- *
  */
 function npr_push_node_insert($node) {
   if (variable_get('npr_push_types_' . $node->type)) {

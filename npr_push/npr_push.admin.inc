@@ -1,5 +1,21 @@
 <?php
 
+/**
+ * @file
+ * Basic admin forms, validators, and submit handlers.
+ */
+
+/**
+ * Form constructor for the npr push config form. 
+ *
+ * Generates a form to choose which drupal fields will map to which NPR fields.
+ * Callback for admin/config/services/npr/push.
+ *
+ * @see npr_push_menu()
+ * @see npr_push_admin_config_validate()
+ * @see npr_push_admin_config_submit()
+ * @ingroup forms
+ */
 function npr_push_admin_config() {
   $form = array();
   $available_types = array();
@@ -49,6 +65,11 @@ function npr_push_admin_config() {
   return $form;
 }
 
+/**
+ * Form validation handler for npr_push_admin_config().
+ *
+ * @see npr_push_admin_config_submit()
+ */
 function npr_push_admin_config_validate($form, &$form_state) {
   $required_fields = array('body');
 
@@ -85,6 +106,11 @@ function npr_push_admin_config_validate($form, &$form_state) {
   }
 }
 
+/**
+ * Form submission handler for npr_push_admin_config().
+ *
+ * @see npr_push_admin_config_validate()
+ */
 function npr_push_admin_config_submit($form, &$form_state) {
 
   $required_fields = array('body');

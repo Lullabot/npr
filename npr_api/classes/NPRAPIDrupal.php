@@ -1,7 +1,32 @@
 <?php
 
+/**
+ * @file
+ *
+ * Defines a class for NPRML creation/transmission and retreival/parsing
+ * Unlike NPRAPI class, NPRAPIDrupal is drupal-specific
+ */
+
 class NPRAPIDrupal extends NPRAPI {
 
+  /**
+   * Makes HTTP request to NPR API.
+   *
+   * @param array $params
+   *   Key/value pairs to be sent (within the request's query string).
+   *
+   * @param string $method
+   *   The HTTP method (e.g., GET, POST) to be used.
+   *
+   * @param string $data
+   *   A string containing the request body.
+   *
+   * @param string $path
+   *   The path part of the request URL (i.e., http://example.com/PATH).
+   *
+   * @param string $base
+   *   The base URL of the request (i.e., HTTP://EXAMPLE.COM/path) with no trailing slash.
+   */
   function request($params = array(), $method = 'GET', $data = NULL, $path = 'query', $base = self::NPRAPI_PULL_URL) {
 
     $this->request->method = $method;
@@ -34,18 +59,27 @@ class NPRAPIDrupal extends NPRAPI {
 
   }
 
+  /**
+   * Create NPRML from drupal node.
+   *
+   * @param object $node
+   *   A drupal node.
+   *
+   * @return string
+   *   An NPRML string.
+   */
   function create_NPRML($node) {
     $language = $node->language;
     $xml = new DOMDocument();
     $xml->version = '1.0';
     $xml->encoding = 'UTF-8';
-    
+
     //$xml->add_element($xml, 'nprml', array('version' => self::NPRML_VERSION), NULL,);
     $nprml_element = $xml->createElement('nprml');
     $nprml_version = $xml->createAttribute('version');
     $nprml_version-> value = self::NPRML_VERSION;
     $nprml_element->appendChild($nprml_version);
-    
+
     $nprml = $xml->appendChild($nprml_element);
     $list = $nprml->appendChild($xml->createElement('list'));
 
@@ -62,17 +96,17 @@ class NPRAPIDrupal extends NPRAPI {
     $title_element = $xml->createElement('title');
     $title_element->appendChild($title_cdata);
     $story->appendChild($title_element);
-    
+
     $story->appendChild($xml->createElement('title', $title));
 
     if (!empty($node->body[$language][0]['value'])) {
       $body = $node->body[$language][0]['value'];
       $body_cdata = $xml->createCDATASection($body);
-      
+
       $text = $xml->createElement('text');
       $text->appendChild($body_cdata);
       $story->appendChild($text);
-      
+
       // FIX!
       $teaser = $xml->createElement('teaser');
       $teaser->appendChild($body_cdata);
@@ -99,11 +133,11 @@ class NPRAPIDrupal extends NPRAPI {
     $org_id->value = variable_get('npr_push_org_id');
     $org_element->appendChild($org_id);
     $story->appendChild($org_element);
-    
+
     //partner id
     $partner_id = $xml->createElement('partnerID', $node->nid);
     $story->appendChild($partner_id);
-    
+
     $type = $node->type;
     $nprml_fields = npr_api_get_nprml_fields();
     $map = variable_get('npr_push_field_map_' . $type, array());
@@ -134,7 +168,7 @@ class NPRAPIDrupal extends NPRAPI {
 		          $image_url = file_create_url($image_file->uri);
             $src = $xml->createAttribute('src');
             $src->value = $image_url;
-            $element->appendChild($src);  
+            $element->appendChild($src);
           }
           if ($nprml_fields[$npr_field]['type'] == 'audio') {
             $element = $xml->createElement($npr_field);
@@ -146,65 +180,71 @@ class NPRAPIDrupal extends NPRAPI {
             }
             $title = $xml->createElement('title', $v['title']);
             $element->appendChild($title);
-            
+
             $duration = $xml->createElement('duration', $v['duration']);
             $element->appendChild($duration);
-            
+
             $description = $xml->createElement('description', $v['description']);
             $element->appendChild($description);
-            
+
             $format = $xml->createElement('format');
             $mp3 = $xml->createElement('mp3', $v['mp3']);
             $mp3type = $xml->createAttribute('type');
             $mp3type->value = 'm3u';
             $mp3->appendChild($mp3type);
             $format->appendChild($mp3);
-            
+
             $mediastream = $xml->createElement('mediastream', $v['mediastream']);
             $format->appendChild($mediastream);
 
             $wm = $xml->createElement('wm', $v['wm']);
             $format->appendChild($wm);
-            
 
-            
+
+
             $element->appendChild($format);
-            
+
             $permissions = $xml->createElement('permissions');
-            
+
             $download = $xml->createElement('download');
             $download_allow = $xml->createAttribute('allow');
             $download_allow->value = $v['download'] ? 'true' : 'false';
             $download->appendChild($download_allow);
             $permissions->appendChild($download);
-            
+
             $stream = $xml->createElement('stream');
             $stream_allow = $xml->createAttribute('stream');
             $stream_allow->value = $v['stream'] ? 'true' : 'false';
             $stream->appendChild($stream_allow);
             $permissions->appendChild($stream);
-            
+
             $embed = $xml->createElement('embed');
             $embed_allow = $xml->createAttribute('allow');
             $embed_allow->value = $v['embed'] ? 'true' : 'false';
             $embed->appendChild($embed_allow);
             $permissions->appendChild($embed);
-            
+
             $element->appendChild($permissions);
-            
+
           }
           if (is_object($element)) {
             $story->appendChild($element);
           }
         }
-      } 
+      }
     }
-    
+
     $list->appendChild($story);
     dpm($xml->saveXML());
     return $xml->saveXML();
   }
-  
+
+  /**
+   * Takes node, creates NPRML, sends it to NPR API.
+   *
+   * @param object $node
+   *   A drupal node.
+   */
   function push_NPRML($node) {
     $org_id = variable_get('npr_push_org_id');
     $api_key = variable_get('npr_api_api_key');

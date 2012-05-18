@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Install, update and uninstall functions for the npr_push module.
+ */
+
+/**
  * Implements hook_install().
  */
 function npr_push_install() {

@@ -1,8 +1,12 @@
 <?php
 
 /**
+ * @file
+ * Creates basic calls to NPR API; creates and parses NPR's flavor of XML (NPRML).
+ */
+
+/**
  * Implements hook_permisssion().
- *
  */
 function npr_api_permission() {
   return array(
@@ -15,7 +19,6 @@ function npr_api_permission() {
 
 /**
  * Implements hook_menu().
- *
  */
 function npr_api_menu() {
 
@@ -47,8 +50,14 @@ function npr_api_menu() {
 }
 
 /**
+ * Page callback: Config form for NPR API connection settings.
+ * 
  * Callback for admin/config/system/npr.
  *
+ * @return array
+ *   A renderable (form) array.
+ *
+ * @see npr_api_menu()
  */
 function npr_api_config_form($form, &$form_state) {
   $form['npr_api_api_key'] = array(
@@ -61,8 +70,14 @@ function npr_api_config_form($form, &$form_state) {
 }
 
 /**
+ * Page callback: Test page NPR API connection/settings.
+ *
  * Callback for admin/config/system/npr_api_test.
  *
+ * @return array
+ *   An item list of various test API call stats. 
+ *
+ * @see npr_api_menu()
  */
 function npr_api_test_api() {
   $params = array(
@@ -111,7 +126,12 @@ function npr_api_fetch_stories($params) {
   return $object->stories;
 }
 
-
+/**
+ * Returns a nested array of info about all NPRML "fields".
+ *
+ * @return
+ *   An array of all NPRML "fields".
+ */
 function npr_api_get_nprml_fields() {
   $nprml_fields = array(
     'id' => array(

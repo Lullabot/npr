@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Install, update and uninstall functions for the npr_story module.
+ */
+
+/**
  * Implements hook_install().
  */
 function npr_story_install() {
@@ -31,6 +36,12 @@ function npr_story_uninstall() {
 
 }
 
+/**
+ * Generates all the field instances to be used by the npr_story node type.
+ *
+ * @return array
+ *   All field instances to be used by the npr_story node type.
+ */
 function _npr_story_get_all_field_instances() {
   $instances = array(
 
