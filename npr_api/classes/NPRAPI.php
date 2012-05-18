@@ -167,11 +167,6 @@ class NPRAPI {
     }
   }
 
-  function send_NPRML($xml, $path) {
-    $xml = pi_hull_convert_html_entities($xml);
-    return $this->send_request($params, $method = 'PUT', $xml, $path, $base);
-  }
-
   /**
    * Generates basic report of NPRML object.
    *
