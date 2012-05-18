@@ -71,7 +71,7 @@ class NPRAPI {
     }
 
     $object = simplexml_load_string($xml);
-    add_simplexml_attributes($object, $this);
+    $this->add_simplexml_attributes($object, $this);
 
     if (!empty($object->message)) {
       $this->message->id = $this->get_attribute($object->message, 'id');
@@ -81,7 +81,7 @@ class NPRAPI {
     if (!empty($object->list->story)) {
       foreach ($object->list->story as $story) {
         $parsed = new NPRMLEntity();
-        add_simplexml_attributes($story, $parsed);
+        $this->add_simplexml_attributes($story, $parsed);
 
         //Iterate trough the XML document and list all the children
         $xml_iterator = new SimpleXMLIterator($story->asXML());
@@ -129,7 +129,7 @@ class NPRAPI {
    */
   function parse_simplexml_element($element) {
     $NPRMLElement = new NPRMLElement();
-    add_simplexml_attributes($element, $NPRMLElement);
+    $this->add_simplexml_attributes($element, $NPRMLElement);
     if (count($element->children())) { // works for PHP5.2
       foreach ($element->children() as $i => $child) {
         if ($i == 'paragraph') {
@@ -206,22 +206,21 @@ class NPRAPI {
     }
     return $msg;
   }
-}
 
-
-/**
- * Takes attributes of a SimpleXML element and adds them to an object (as properties).
- *
- * @param object $element
- *   A SimpleXML element.
- *
- * @param object $object
- *   Any PHP object.
- */
-function add_simplexml_attributes($element, $object) {
-  if (count($element->attributes())) {
-    foreach ($element->attributes() as $attr => $value) {
-      $object->$attr = (string)$value;
+  /**
+   * Takes attributes of a SimpleXML element and adds them to an object (as properties).
+   *
+   * @param object $element
+   *   A SimpleXML element.
+   *
+   * @param object $object
+   *   Any PHP object.
+   */
+  function add_simplexml_attributes($element, $object) {
+    if (count($element->attributes())) {
+      foreach ($element->attributes() as $attr => $value) {
+        $object->$attr = (string)$value;
+      }
     }
   }
 }
