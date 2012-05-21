@@ -17,7 +17,7 @@
 function npr_pull_cron_config() {
 
   if (!variable_get('npr_api_api_key')) {
-    drupal_set_message(t('Story pulls will not work without a valid NPR API key. !npr_link. !admin_link.', array('!npr_link' => l('Get a key from NPR', 'http://www.npr.org/templates/reg/'), '!admin_link' => l('Add key to NPR settings', 'admin/config/services/npr/api_config'))), 'warning');
+    drupal_set_message(t('Story pulls will not work without a valid NPR API key. !npr_link. !admin_link.', array('!npr_link' => l(t('Get a key from NPR'), 'http://www.npr.org/templates/reg/'), '!admin_link' => l(t('Add key to NPR settings'), 'admin/config/services/npr/api_config'))), 'warning');
   }
 
   $form['npr_pull_cron_query_ids'] = array(
@@ -59,7 +59,7 @@ function npr_pull_cron_config() {
   $markup = t("Stories pulled down from the NPR API will be turned into !type nodes, with the following additional settings", array('!type' => NPR_PULL_MAPPING_CONTENT_TYPE));
 
   if (user_access('administer content types')) {
-    $markup .= ' [' . l('Edit settings', 'admin/structure/types/manage/' . str_replace('-', '_', NPR_PULL_MAPPING_CONTENT_TYPE)) . ']';
+    $markup .= ' [' . l(t('Edit settings'), 'admin/structure/types/manage/' . str_replace('-', '_', NPR_PULL_MAPPING_CONTENT_TYPE)) . ']';
   }
 
   $markup .= ':' . theme('item_list', array('items' => $items));
@@ -92,7 +92,7 @@ function npr_pull_cron_config() {
 function npr_pull_get_story() {
 
   if (!variable_get('npr_api_api_key')) {
-    drupal_set_message(t('Story pulls will not work without a valid NPR API key. !npr_link. !admin_link.', array('!npr_link' => l('Get a key from NPR', 'http://www.npr.org/templates/reg/'), '!admin_link' => l('Add key to NPR settings', 'admin/config/services/npr/api_config'))), 'warning');
+    drupal_set_message(t('Story pulls will not work without a valid NPR API key. !npr_link. !admin_link.', array('!npr_link' => l(t('Get a key from NPR'), 'http://www.npr.org/templates/reg/'), '!admin_link' => l(t('Add key to NPR settings'), 'admin/config/services/npr/api_config'))), 'warning');
   }
 
   $form = array();
