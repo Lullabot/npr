@@ -165,7 +165,7 @@ class NPRAPIDrupal extends NPRAPI {
               $image_primary_set = TRUE;
             }
             $image_file = file_load($field[$k]['fid']);
-		          $image_url = file_create_url($image_file->uri);
+            $image_url = file_create_url($image_file->uri);
             $src = $xml->createAttribute('src');
             $src->value = $image_url;
             $element->appendChild($src);

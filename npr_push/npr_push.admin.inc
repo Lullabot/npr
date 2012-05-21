@@ -6,7 +6,7 @@
  */
 
 /**
- * Form constructor for the npr push config form. 
+ * Form constructor for the npr push config form.
  *
  * Generates a form to choose which drupal fields will map to which NPR fields.
  * Callback for admin/config/services/npr/push.
@@ -77,7 +77,7 @@ function npr_push_admin_config_validate($form, &$form_state) {
   foreach (node_type_get_types() as $type) {
     $is_pushing = $form_state['values']['npr_push_types_' . $type->type];
     variable_set('npr_push_types_' . $type->type, $is_pushing);
-    if ($is_pushing) { 
+    if ($is_pushing) {
       $all_fields = field_info_instances('node', $type->type);
       $taken = array();
       foreach ($all_fields as $key => $all_field) {
@@ -99,7 +99,7 @@ function npr_push_admin_config_validate($form, &$form_state) {
       $required_nprml_fields = array('id', 'teaser');
       foreach ($required_nprml_fields as $nprml_field) {
         if (!in_array($nprml_field, $taken)) {
-          form_set_error('npr_push', "A field must map to the NPRML field: $nprml_field");  
+          form_set_error('npr_push', "A field must map to the NPRML field: $nprml_field");
         }
       }
     }

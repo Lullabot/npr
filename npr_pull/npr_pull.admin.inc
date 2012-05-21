@@ -6,7 +6,7 @@
  */
 
 /**
- * Form constructor for the npr pull cron config form. 
+ * Form constructor for the npr pull cron config form.
  *
  * Generates a form to choose what types of stories will be pulled.
  * Callback for admin/config/services/npr/cron.
@@ -39,31 +39,31 @@ function npr_pull_cron_config() {
     '#title' => t('Node settings'),
     '#type' => 'fieldset',
   );
-    
+
   $options = variable_get('node_options_' . NPR_PULL_MAPPING_CONTENT_TYPE, array('status', 'promote'));
-  
+
   // Skipping 'publish', as that value
   // is overridden by 'npr_pull_cron_publish_flag' (below)
   $labels = array(
     'promote' => t('Promoted to front page'),
     'sticky' => t('Sticky at top of lists'),
-    'revision' => t('Create a new revision'),  
+    'revision' => t('Create a new revision'),
   );
-  
+
   $items = array();
-  foreach($labels as $key => $label) {
+  foreach ($labels as $key => $label) {
     $setting = in_array($key, $options) ? t('Yes') : t('No');
     $items[] = array('data' => $label . ": " . $setting);
-  } 
-  
-  $markup = t("Stories pulled down from the NPR API will be turned into !type nodes, with the following additional settings", array('!type' => NPR_PULL_MAPPING_CONTENT_TYPE));
-  
-  if (user_access('administer content types')) {
-    $markup .= ' [' . l('Edit settings', 'admin/structure/types/manage/' . str_replace('-', '_', NPR_PULL_MAPPING_CONTENT_TYPE)) . ']';  
   }
-  
+
+  $markup = t("Stories pulled down from the NPR API will be turned into !type nodes, with the following additional settings", array('!type' => NPR_PULL_MAPPING_CONTENT_TYPE));
+
+  if (user_access('administer content types')) {
+    $markup .= ' [' . l('Edit settings', 'admin/structure/types/manage/' . str_replace('-', '_', NPR_PULL_MAPPING_CONTENT_TYPE)) . ']';
+  }
+
   $markup .= ':' . theme('item_list', array('items' => $items));
-  
+
   $form['node_settings']['npr_pull_config_explanation'] = array(
     '#markup' => $markup,
   );
@@ -74,7 +74,7 @@ function npr_pull_cron_config() {
     '#default_value' => variable_get('npr_pull_cron_publish_flag', 1),
     '#description' => t('If checked stories will automatically be published. If not, stories will still be retrieved and saved in your database - but not published. This setting overrides the default Publish setting for this content type.')
   );
-  
+
   return system_settings_form($form);
 }
 

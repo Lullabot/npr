@@ -121,7 +121,7 @@ function npr_pull_story_exists($npr_id) {
  * @param string $npr_id
  *
  * @return integer/FALSE
- *   The nid of the node, or FALSE, if no node exists.  
+ *   The nid of the node, or FALSE, if no node exists.
  */
 function npr_pull_get_nid_from_story_id($npr_id) {
   $query = new EntityFieldQuery;
@@ -139,7 +139,7 @@ function npr_pull_get_nid_from_story_id($npr_id) {
 /**
  * Converts an NPRMLEntity story object into a node object and saves it to the
  * DB (via form submit)
- * 
+ *
  * @param object
  *   An NPR story pulled from the API.
  */
