@@ -44,15 +44,17 @@ function npr_fields_field_formatter_view($entity_type, $entity, $field, $instanc
   switch ($display['type']) {
     case 'npr_audio_basic':
       foreach ($items as $delta => $item) {
-        $element[$delta] = array(
-          '#type' => 'html_tag',
-          '#tag' => 'embed',
-          '#attributes' => array(
-            'src' => $item['mp3'],
-            'type' => 'audio/mpeg',
-            'autostart' => 'FALSE',
-          ),
-        );
+        if ($item['mp3']) {
+          $element[$delta] = array(
+            '#type' => 'html_tag',
+            '#tag' => 'embed',
+            '#attributes' => array(
+              'src' => $item['mp3'],
+              'type' => 'audio/mpeg',
+              'autostart' => 'FALSE',
+            ),
+          );
+        }
       }
       break;
   }
