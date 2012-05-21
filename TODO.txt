@@ -1,11 +1,6 @@
 NPR_API_PULL
 ------------
-Should NPR API field be an INT?
-Should audio be a distinct/custom field type? Images? Org?
 Add true updating (via modified date field from API)
-Add a touch of starter CSS
-Polish help text
-Have formatters for byline?
 
 NPR_API_PUSH
 ------------
@@ -18,9 +13,6 @@ Add curation tool (sep. module?) Preview (?)
 NPR_API
 -------
 Clean up classes and object creation
-Connection should fail more gracefully
-Clean up presentation of API Test page
-Polish help text
 
 ALL
 ___
@@ -28,6 +20,14 @@ ___
 
 DONE
 ----
+Connection should fail more gracefully
+Clean up presentation of API Test page
+Polish help text
+Should NPR API field be an INT? No.
+Should audio be a distinct/custom field type? Images? Org? Yes.
+Add a touch of starter CSS
+Polish help text
+Have formatters for byline?
 Toggle auto-publish on/off?
 Move date_pub flag out of save and insert functions
 Fix menu items so they are in more natural places
