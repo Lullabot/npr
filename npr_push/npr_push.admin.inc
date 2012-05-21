@@ -87,10 +87,10 @@ function npr_push_admin_config_validate($form, &$form_state) {
           if ($value !== '0') {
             if (!in_array($all_field['widget']['type'], $nprml_fields[$value]['accepted_types'])) {
               $error_msg = "To map to NPRML field $value, the (drupal) field must be one of the following type(s): " . implode(',', $nprml_fields[$value]['accepted_types']);
-              form_set_error('npr_push_mapping_' . $all_field['field_name'], 'Incompatible field types. ' . $error_msg);
+              form_set_error('npr_push_mapping_' . $all_field['field_name'], t('Incompatible field types.') . ' ' . $error_msg);
             }
             if (in_array($value, $taken)) {
-              form_set_error('npr_push_mapping_' . $all_field['field_name'], 'Multiple fields cannot be mapped to the same NPRML field.');
+              form_set_error('npr_push_mapping_' . $all_field['field_name'], t('Multiple fields cannot be mapped to the same NPRML field.'));
             }
             $taken[] = $value;
           }
@@ -99,7 +99,7 @@ function npr_push_admin_config_validate($form, &$form_state) {
       $required_nprml_fields = array('id', 'teaser');
       foreach ($required_nprml_fields as $nprml_field) {
         if (!in_array($nprml_field, $taken)) {
-          form_set_error('npr_push', "A field must map to the NPRML field: $nprml_field");
+          form_set_error('npr_push', t('A field must map to the NPRML field:') . ' ' . $nprml_field);
         }
       }
     }
