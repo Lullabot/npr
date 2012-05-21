@@ -108,7 +108,6 @@ function npr_pull_insert_story($story) {
  *  TRUE if nor story already exists locally, FALSE otherwise.
  */
 function npr_pull_story_exists($npr_id) {
-  //dpm
   // de-bug :: remove
   if ($npr_id == 137047128) {
     return FALSE;

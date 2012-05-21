@@ -235,7 +235,6 @@ class NPRAPIDrupal extends NPRAPI {
     }
 
     $list->appendChild($story);
-    dpm($xml->saveXML());
     return $xml->saveXML();
   }
 
