@@ -100,6 +100,8 @@ function npr_fields_field_widget_form(&$form, &$form_state, $field, $instance, $
       'duration' => array(
         'title' => 'Duration',
         'type' => 'textfield',
+        'description' => 'Duration of audio (in total seconds)',
+        'maxlength' => 11,
       ),
       'mp3' => array(
         'title' => 'MP3 Link',
@@ -107,25 +109,25 @@ function npr_fields_field_widget_form(&$form, &$form_state, $field, $instance, $
         'maxlength' => 255,
       ),
       'mediastream' => array(
-        'title' => 'mediastream',
+        'title' => 'Mediastream Link',
         'type' => 'textfield',
-        'mazlength' => 255,
+        'maxlength' => 255,
       ),
       'wm' => array(
-        'title' => 'wm',
+        'title' => 'Windows Media Link',
         'type' => 'textfield',
         'maxlength' => 255,
       ),
       'download' => array(
-        'title' => 'download',
+        'title' => 'OK to download?',
         'type' => 'checkbox',
       ),
       'stream' => array(
-        'title' => 'stream',
+        'title' => 'OK to stream?',
         'type' => 'checkbox',
       ),
       'embed' => array(
-        'title' => 'embed',
+        'title' => 'OK to embed?',
         'type' => 'checkbox',
       ),
     );
@@ -136,10 +138,12 @@ function npr_fields_field_widget_form(&$form, &$form_state, $field, $instance, $
       $element[$key] = array(
         '#type' => $field['type'],
         '#title' => $field['title'],
-        '#size' => 2,
         '#default_value' => $value,
         '#size' => 30,
       );
+      if (!empty($field['description'])) {
+        $element[$key]['#description'] = $field['description'];
+      }      
       if (!empty($field['maxlength'])) {
         $element[$key]['#maxlength'] = $field['maxlength'];
       }
