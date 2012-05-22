@@ -87,15 +87,12 @@ function pi_api_pull_pull_stories() {
  * Creates a new npr_story node from NPRMLEntity object
  */
 function npr_pull_insert_story($story) {
-  if (!npr_pull_story_exists($story->id)) {
-    npr_pull_save_story($story);
-  }
-  else {
-    // TODO :: add updating
+  $nid = npr_pull_get_nid_from_story_id($story->id);
+  if ($nid) {
     // using the date modified field from API
-    // npr_pull_update_story($story);
-    drupal_set_message(t("Story with ID=@id  already exists.", array('@id' => $story->id)));
+    $story->nid = $nid;
   }
+  npr_pull_save_story($story);
 }
 
 /**
@@ -108,10 +105,6 @@ function npr_pull_insert_story($story) {
  *  TRUE if nor story already exists locally, FALSE otherwise.
  */
 function npr_pull_story_exists($npr_id) {
-  // de-bug :: remove
-  if ($npr_id == 137047128) {
-    return FALSE;
-  }
   return npr_pull_get_nid_from_story_id($npr_id) > 0;
 }
 
@@ -161,16 +154,25 @@ function npr_pull_save_story($story) {
 
   */
   module_load_include('inc', 'node', 'node.pages');
-
-  $node = new stdClass();
-  $form_state = array();
-  $node = array(
-    'type' => 'npr_story',
-    'nid' => NULL,
-    'status' => isset($story->status) ? $story->status : 1,
-    'language' => LANGUAGE_NONE,
-    'created' => isset($story->created) ? $story->created : strtotime($story->pubDate->value),
-  );
+  
+  
+  // is an update?
+  if (!empty($story->nid)) {
+    $node = (array)node_load($story->nid); 
+  }
+  
+  // or a newly pulled story?
+  else {
+    $node = new stdClass();
+    $form_state = array();
+    $node = array(
+      'type' => 'npr_story',
+      'nid' => NULL,
+      'status' => isset($story->status) ? $story->status : 1,
+      'language' => LANGUAGE_NONE,
+      'created' => isset($story->created) ? $story->created : strtotime($story->pubDate->value),
+    );
+  }
 
   $form_state['values']['title'] = $story->title->value;
   $form_state['values']['field_npr_id'][LANGUAGE_NONE][0]['value'] = $story->id;
