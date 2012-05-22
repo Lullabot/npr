@@ -150,7 +150,7 @@ function npr_api_get_nprml_fields() {
       'type' => 'text',
       'accepted_types' => array('text_textfield'), 
     ),
-    'miniteaser' => array(
+    'miniTeaser' => array(
       'type' => 'text',
       'accepted_types' => array('text_textfield'),
     ),
