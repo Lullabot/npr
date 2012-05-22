@@ -104,14 +104,17 @@ function npr_fields_field_widget_form(&$form, &$form_state, $field, $instance, $
       'mp3' => array(
         'title' => 'MP3 Link',
         'type' => 'textfield',
+        'maxlength' => 255,
       ),
       'mediastream' => array(
         'title' => 'mediastream',
         'type' => 'textfield',
+        'mazlength' => 255,
       ),
       'wm' => array(
         'title' => 'wm',
         'type' => 'textfield',
+        'maxlength' => 255,
       ),
       'download' => array(
         'title' => 'download',
@@ -137,6 +140,9 @@ function npr_fields_field_widget_form(&$form, &$form_state, $field, $instance, $
         '#default_value' => $value,
         '#size' => 30,
       );
+      if (!empty($field['maxlength'])) {
+        $element[$key]['#maxlength'] = $field['maxlength'];
+      }
     }
   }
   return $element;

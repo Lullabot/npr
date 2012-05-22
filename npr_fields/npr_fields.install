@@ -26,13 +26,16 @@ function npr_fields_field_schema($field) {
           'type' => 'text',
         ),
         'mp3' => array(
-          'type' => 'text',
+          'type' => 'varchar',
+          'length' => 255,
         ),
         'mediastream' => array(
-          'type' => 'text',
+          'type' => 'varchar',
+          'length' => 255,
         ),
         'wm' => array(
-          'type' => 'text',
+          'type' => 'varchar',
+          'length' => 255,
         ),
         'download' => array(
           'type' => 'int',
