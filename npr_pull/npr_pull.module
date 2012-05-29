@@ -180,7 +180,7 @@ function npr_pull_save_story($story) {
 
   $form_state['values']['body'][LANGUAGE_NONE][0]['value'] = $story->body;
   $form_state['values']['body'][LANGUAGE_NONE][0]['summary'] = $story->teaser->value;
-  $form_state['values']['field_npr_byline'][LANGUAGE_NONE][0]['value'] = $story->byline->name->value;
+  $form_state['values']['field_npr_byline'][LANGUAGE_NONE][0]['value'] = !empty($story->byline->name->value) ? $story->byline->name->value : '';
   $form_state['values']['field_npr_url'][LANGUAGE_NONE][0]['value'] = $story->link['html']->value;
   $form_state['values']['npr_audio'][LANGUAGE_NONE][0] = array(
     'value' => isset($story->audio->id) ? $story->audio->id : 0,
