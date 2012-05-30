@@ -89,4 +89,12 @@ function npr_fields_install() {
     'locked' => TRUE,
   );
   field_create_field($npr_url);
+
+  $npr_org_id = array(
+    'field_name' => 'field_npr_org_id',
+    'type' => 'text',
+    'translatable' => FALSE,
+    'locked' => TRUE,
+  );
+  field_create_field($npr_org_id);
 }

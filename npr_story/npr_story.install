@@ -175,6 +175,32 @@ function _npr_story_get_all_field_instances() {
       ),
     ),
 
+    'npr org id' => array(
+      'field_name' => 'field_npr_org_id',
+      'entity_type' => 'node',
+      'bundle' => 'npr_story',
+      'label' => 'NPR ORG ID',
+      'description' => 'NPR ORG ID',
+      'widget' => array(
+        'type' => 'text_textfield',
+        'weight' => 25,
+      ),
+      'display' => array(
+        'default' => array(
+          'label' => 'hidden',
+          'type' => 'hidden',
+        ),
+        'full' => array(
+          'label' => 'hidden',
+          'type' => 'hidden',
+        ),
+        'teaser' => array(
+          'label' => 'hidden',
+          'type' => 'hidden',
+        ),
+      ),
+    ),
+
   );
   return $instances;
 }
