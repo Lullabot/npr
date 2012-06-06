@@ -39,6 +39,11 @@ function npr_push_node_insert($node) {
     module_load_include('php', 'npr_api', 'classes/NPRAPIDrupal');
     $NPRAPIDrupal = new NPRAPIDrupal();
     $NPRAPIDrupal->push_NPRML($node);
+    $NPRAPIDrupal->parse_response();
+    if (!empty($NPRAPIDrupal->response->id)) {
+      $node->field_npr_id[$node->language][0]['value'] = $NPRAPIDrupal->response->id;
+      field_attach_update('node', $node);
+    }
   }
 }
 

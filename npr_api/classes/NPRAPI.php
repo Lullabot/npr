@@ -49,6 +49,14 @@ class NPRAPI {
 
   }
 
+  function parse_response() {
+    $xml = simplexml_load_string($this->response->data);
+    if (!empty($xml->list->story)) {
+      $id = $this->get_attribute($xml->list->story, 'id');
+    }
+    $this->response->id = $id ? $id : NULL;
+  }
+
   function flatten() {
 
   }
