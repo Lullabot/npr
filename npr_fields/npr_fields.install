@@ -62,7 +62,6 @@ function npr_fields_install() {
     'field_name' => 'field_npr_image',
     'type' => 'image',
     'cardinality' => 1,
-    'locked' => TRUE,
   );
   field_create_field($image);
 
@@ -70,7 +69,6 @@ function npr_fields_install() {
     'field_name' => 'field_npr_byline',
     'type' => 'text',
     'translatable' => FALSE,
-    'locked' => TRUE,
   );
   field_create_field($byline);
 
@@ -78,7 +76,6 @@ function npr_fields_install() {
     'field_name' => 'field_npr_id',
     'type' => 'text',
     'translatable' => FALSE,
-    'locked' => TRUE,
   );
   field_create_field($npr_api);
 
@@ -86,7 +83,6 @@ function npr_fields_install() {
     'field_name' => 'field_npr_url',
     'type' => 'text',
     'translatable' => FALSE,
-    'locked' => TRUE,
   );
   field_create_field($npr_url);
 
@@ -94,7 +90,6 @@ function npr_fields_install() {
     'field_name' => 'field_npr_org_id',
     'type' => 'text',
     'translatable' => FALSE,
-    'locked' => TRUE,
   );
   field_create_field($npr_org_id);
 }
