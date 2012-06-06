@@ -45,7 +45,7 @@ function npr_push_node_insert($node) {
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function npr_pull_form_npr_api_config_form_alter(&$form, &$form_state, $form_id) {
+function npr_push_form_npr_api_config_form_alter(&$form, &$form_state, $form_id) {
 
   $form['npr_push_config'] = array(
     '#type' => 'fieldset',
