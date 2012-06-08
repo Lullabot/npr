@@ -188,7 +188,7 @@ function npr_pull_save_story($story) {
     'value' => isset($story->audio->id) ? $story->audio->id : 0,
     'title' => isset($story->audio->title->value) ? $story->audio->title->value : '',
     'description' => isset($story->audio->description->value) ? $story->audio->description->value : '',
-    'duration' => isset($story->audio->duration->value) ? $story->audio->duration->value : 0,
+    'duration' => isset($story->audio->duration->value) ? $story->audio->duration->value : '',
     'mp3' => isset($story->audio->format->mp3->value) ? $story->audio->format->mp3->value : '',
     'mediastream' => isset($story->audio->format->mediastream->value) ? $story->audio->format->mediastream->value : '',
     'wm' => isset($story->audio->format->wm->value) ? $story->audio->format->wm->value : '',

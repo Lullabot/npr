@@ -20,7 +20,8 @@ function npr_fields_field_schema($field) {
           'type' => 'text',
         ),
         'duration' => array(
-          'type' => 'int',
+          'type' => 'varchar',
+          'length' => 255,
         ),
         'description' => array(
           'type' => 'text',
