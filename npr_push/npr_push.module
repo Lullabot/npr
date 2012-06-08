@@ -33,7 +33,8 @@ function npr_push_menu() {
  * Implements hook_node_insert().
  */
 function npr_push_node_insert($node) {
-  if (variable_get('npr_push_types_' . $node->type)) {
+  $local_id = _npr_push_get_node_org_id($node);
+  if (variable_get('npr_push_types_' . $node->type) && (!$local_id || ($local_id && $local_id == variable_get('npr_push_org_id')))) {
     // Load API classes
     module_load_include('php', 'npr_api', 'classes/NPRAPI');
     module_load_include('php', 'npr_api', 'classes/NPRAPIDrupal');
@@ -43,7 +44,22 @@ function npr_push_node_insert($node) {
     if (!empty($NPRAPIDrupal->response->id)) {
       $node->field_npr_id[$node->language][0]['value'] = $NPRAPIDrupal->response->id;
       field_attach_update('node', $node);
-    }
+    }   
+  }
+}
+
+/**
+ * Finds NPR org id of node (if node is a pulled story and that field is
+ * non-empty).
+ *
+ * @param object $node
+ *   A drupal node.
+ * @return string/FALSE
+ *   The value of the node's NPR org ID field, or false it it's empty.
+ */
+function _npr_push_get_node_org_id($node) {
+  if ($node->type == 'npr_story' && !empty($node->field_npr_org_id[$node->language][0]['value'])) {
+    return $node->field_npr_org_id[$node->language][0]['value'];
   }
 }
 
