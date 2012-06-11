@@ -68,6 +68,25 @@ function npr_push_node_update($node) {
 }
 
 /**
+ * Implements hook_node_delete().
+ */
+function npr_push_node_delete($node) {
+  if (variable_get('npr_push_types_' . $node->type)) {
+    $map = variable_get('npr_push_field_map_' . $node->type);
+    if (is_array($map)) {
+      $npr_id_field = array_search('id', $map);
+      $field = field_get_items('node', $node, $npr_id_field);
+      $npr_id = $field[0]['value'];
+      // Load API classes
+      module_load_include('php', 'npr_api', 'classes/NPRAPI');
+      module_load_include('php', 'npr_api', 'classes/NPRAPIDrupal');
+      $NPRAPIDrupal = new NPRAPIDrupal();
+      $NPRAPIDrupal->delete_node($npr_id);
+    }
+  }
+}
+
+/**
  * Finds NPR org id of node (if node is a pulled story and that field is
  * non-empty).
  *

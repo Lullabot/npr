@@ -258,4 +258,25 @@ class NPRAPIDrupal extends NPRAPI {
     $data = $this->create_NPRML($node);
     $this->request($params, $method, $data, $path, $base);
   }
+
+  /**
+   * Delete a node from NPR API.
+   *
+   * @param string $npr_id
+   *   An NPR API id.
+   */
+  function delete_node($npr_id) {
+    $org_id = variable_get('npr_push_org_id');
+    $api_key = variable_get('npr_api_api_key');
+    $params = array(
+      'orgId' => $org_id,
+      'apiKey' => $api_key,
+      'id' => $npr_id,
+    );
+    $method = 'DELETE';
+    $base = variable_get('npr_push_api_url');
+    $path = 'story';
+
+    $this->request($params, $method, NULL, $path, $base);
+  }
 }
