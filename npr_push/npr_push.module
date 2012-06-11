@@ -49,6 +49,25 @@ function npr_push_node_insert($node) {
 }
 
 /**
+ * Implements hook_node_update().
+ */
+function npr_push_node_update($node) {
+  $local_id = _npr_push_get_node_org_id($node);
+  if (variable_get('npr_push_types_' . $node->type) && (!$local_id || ($local_id && $local_id == variable_get('npr_push_org_id')))) {
+    // Load API classes
+    module_load_include('php', 'npr_api', 'classes/NPRAPI');
+    module_load_include('php', 'npr_api', 'classes/NPRAPIDrupal');
+    $NPRAPIDrupal = new NPRAPIDrupal();
+    $NPRAPIDrupal->push_NPRML($node);
+    $NPRAPIDrupal->parse_response();
+    if (!empty($NPRAPIDrupal->response->id)) {
+      $node->field_npr_id[$node->language][0]['value'] = $NPRAPIDrupal->response->id;
+      field_attach_update('node', $node);
+    }
+  }
+}
+
+/**
  * Finds NPR org id of node (if node is a pulled story and that field is
  * non-empty).
  *

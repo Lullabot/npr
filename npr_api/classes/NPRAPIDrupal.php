@@ -86,8 +86,8 @@ class NPRAPIDrupal extends NPRAPI {
     $story = $xml->createElement('story');
 
     //if the nprID field is set, (probably because this is an update) send that along too
-    if (isset($node->npr_id)) {
-      $id_element = $xml->createElement('id', $node->npr_id);
+    if (!empty($node->field_npr_id[$node->language][0]['value'])) {
+      $id_element = $xml->createElement('id', $node->field_npr_id[$node->language][0]['value']);
       $story->appendChild($id_element);
     }
 
@@ -113,9 +113,9 @@ class NPRAPIDrupal extends NPRAPI {
       $story->appendChild($teaser);
     }
 
-    $now = format_date($node->created, 'custom', "D, d M Y G:i:s O ");
-
-    $story->appendChild($xml->createElement('storyDate', $now));
+    $now = format_date(REQUEST_TIME, 'custom', "D, d M Y G:i:s O ");
+    $story_date = ($node->changed == $node->created) ? $now : format_date($node->created, 'custom', "D, d M Y G:i:s O ") ;
+    $story->appendChild($xml->createElement('storyDate', $story_date));
     $story->appendChild($xml->createElement('pubDate', $now));
 
     $url = url(drupal_get_path_alias('node/' . $node->nid), array('absolute' => TRUE));
@@ -249,7 +249,7 @@ class NPRAPIDrupal extends NPRAPI {
     $api_key = variable_get('npr_api_api_key');
     $params = array(
       'orgId' => $org_id,
-      'apiKey' => $api_key,
+      'apiKey' => $api_key,   
     );
     $method = 'PUT';
     $base = variable_get('npr_push_api_url');
