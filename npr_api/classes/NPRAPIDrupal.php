@@ -101,15 +101,16 @@ class NPRAPIDrupal extends NPRAPI {
 
     if (!empty($node->body[$language][0]['value'])) {
       $body = $node->body[$language][0]['value'];
-      $body_cdata = $xml->createCDATASection($body);
 
+      $body_cdata = $xml->createCDATASection($body);
       $text = $xml->createElement('text');
       $text->appendChild($body_cdata);
       $story->appendChild($text);
 
       // FIX!
+      $teaser_cdata = $xml->createCDATASection($body);
       $teaser = $xml->createElement('teaser');
-      $teaser->appendChild($body_cdata);
+      $teaser->appendChild($teaser_cdata);
       $story->appendChild($teaser);
     }
 
@@ -235,6 +236,7 @@ class NPRAPIDrupal extends NPRAPI {
     }
 
     $list->appendChild($story);
+    dpm($xml->saveXML());
     return $xml->saveXML();
   }
 
