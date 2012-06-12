@@ -135,7 +135,7 @@ class NPRAPIDrupal extends NPRAPI {
     $story->appendChild($org_element);
 
     //partner id
-    $partner_id = $xml->createElement('partnerID', $node->nid);
+    $partner_id = $xml->createElement('partnerId', $node->nid);
     $story->appendChild($partner_id);
 
     $type = $node->type;
