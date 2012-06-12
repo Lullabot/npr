@@ -87,8 +87,9 @@ class NPRAPIDrupal extends NPRAPI {
 
     //if the nprID field is set, (probably because this is an update) send that along too
     if (!empty($node->field_npr_id[$node->language][0]['value'])) {
-      $id_element = $xml->createElement('id', $node->field_npr_id[$node->language][0]['value']);
-      $story->appendChild($id_element);
+      $id_attribute = $xml->createAttribute('id');
+      $id_attribute->value = $node->field_npr_id[$node->language][0]['value'];
+      $story->appendChild($id_attribute);
     }
 
     $title = substr(($node->title), 0, 100);
@@ -234,7 +235,6 @@ class NPRAPIDrupal extends NPRAPI {
     }
 
     $list->appendChild($story);
-    dpm($xml->saveXML());
     return $xml->saveXML();
   }
 
