@@ -97,8 +97,6 @@ class NPRAPIDrupal extends NPRAPI {
     $title_element->appendChild($title_cdata);
     $story->appendChild($title_element);
 
-    $story->appendChild($xml->createElement('title', $title));
-
     if (!empty($node->body[$language][0]['value'])) {
       $body = $node->body[$language][0]['value'];
 
