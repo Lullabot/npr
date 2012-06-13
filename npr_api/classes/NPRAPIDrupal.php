@@ -106,8 +106,7 @@ class NPRAPIDrupal extends NPRAPI {
       $text->appendChild($body_cdata);
       $story->appendChild($text);
 
-      // FIX!
-      $teaser_cdata = $xml->createCDATASection($body);
+      $teaser_cdata = $xml->createCDATASection(text_summary($body));
       $teaser = $xml->createElement('teaser');
       $teaser->appendChild($teaser_cdata);
       $story->appendChild($teaser);

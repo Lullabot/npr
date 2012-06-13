@@ -138,10 +138,6 @@ function npr_api_get_nprml_fields() {
       'type' => 'attribute',
       'accepted_types' => array('text_textfield'),
     ),
-    'teaser' => array(
-      'type' => 'text', 
-      'accepted_types' => array('text_textfield'),
-    ),
     'subtitle' => array(
       'type' => 'text', 
       'accepted_types' => array('text_textfield'),
