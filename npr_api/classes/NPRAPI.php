@@ -99,16 +99,23 @@ class NPRAPI {
           $current = $xml_iterator->current();
           $key = $xml_iterator->key();
 
-          if ($key == 'image' || $key == 'link') {
+          if ($key == 'image' || $key == 'audio' || $key == 'link') {
             // images
             if ($key == 'image') {
               $parsed->{$key}[] = $this->parse_simplexml_element($current);
             }
+
+            // audio
+            if ($key == 'audio') {
+              $parsed->{$key}[] = $this->parse_simplexml_element($current);
+            }
+
             // links
             if ($key == 'link') {
               $type = $this->get_attribute($current, 'type');
               $parsed->{$key}[$type] = $this->parse_simplexml_element($current);
             }
+
           }
           else {
             $parsed->{$key} = $this->parse_simplexml_element($current);
@@ -140,9 +147,15 @@ class NPRAPI {
     $this->add_simplexml_attributes($element, $NPRMLElement);
     if (count($element->children())) { // works for PHP5.2
       foreach ($element->children() as $i => $child) {
-        if ($i == 'paragraph') {
-        $paragraph = $this->parse_simplexml_element($child);
-          $NPRMLElement->paragraphs[$paragraph->num] = $paragraph;
+        if ($i == 'paragraph' || $i == 'mp3') {
+          if ($i == 'paragraph') {
+            $paragraph = $this->parse_simplexml_element($child);
+            $NPRMLElement->paragraphs[$paragraph->num] = $paragraph;
+          }
+          if ($i == 'mp3') {
+            $mp3 = $this->parse_simplexml_element($child);
+            $NPRMLElement->mp3[$mp3->type] = $mp3;
+          }
         }
         else {
           $NPRMLElement->$i = $this->parse_simplexml_element($child);
