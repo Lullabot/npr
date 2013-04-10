@@ -1,0 +1,6 @@
+name = NPR Stations
+description = Provide basic NPR station functionality
+core = 7.x
+package = NPR
+
+dependencies[] = npr_api
