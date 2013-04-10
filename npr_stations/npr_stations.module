@@ -91,3 +91,28 @@ function npr_stations_get_stations() {
     return array();
   }
 }
+
+/**
+ * Implements hook_modules_installed().
+ */
+function npr_stations_modules_installed($modules) {
+  if (in_array('chosen', $modules)) {
+    npr_stations_add_select_to_chosen();
+  }
+}
+
+/**
+ * Appends selector for massive npr stations cron select to relevant variable
+ * for Chosen module.
+ *
+ * Allows for automated, lightweight Chosen<-->NPR_Stations integration without
+ * a strict dependency.
+ */
+function npr_stations_add_select_to_chosen() {
+  $selector = '#edit-npr-stations-cron-query-ids';
+  $selectors = variable_get('chosen_jquery_selector', '');
+  if (strstr($selectors, $selector) === FALSE) {
+    $selectors = $selectors . $selector . "\n";
+    variable_set('chosen_jquery_selector', $selectors);
+  }
+}
