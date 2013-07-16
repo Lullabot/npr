@@ -184,19 +184,24 @@ function npr_pull_save_story($story) {
   
   $form_state['values']['field_npr_org_id'][LANGUAGE_NONE][0]['value'] = $story->organization->orgId;
   $form_state['values']['field_npr_url'][LANGUAGE_NONE][0]['value'] = $story->link['html']->value;
-  $form_state['values']['npr_audio'][LANGUAGE_NONE][0] = array(
-    'value' => isset($story->audio->id) ? $story->audio->id : 0,
-    'title' => isset($story->audio->title->value) ? $story->audio->title->value : '',
-    'description' => isset($story->audio->description->value) ? $story->audio->description->value : '',
-    'duration' => isset($story->audio->duration->value) ? $story->audio->duration->value : '',
-    'mp3' => isset($story->audio->format->mp3->value) ? $story->audio->format->mp3->value : '',
-    'mediastream' => isset($story->audio->format->mediastream->value) ? $story->audio->format->mediastream->value : '',
-    'wm' => isset($story->audio->format->wm->value) ? $story->audio->format->wm->value : '',
-    'download' => isset($story->audio->permissions->download->allow) ? 1 : 0,
-    'embed' => isset($story->audio->permissions->embed->allow) ? 1 : 0,
-    'stream' => isset($story->audio->permissions->stream->allow) ? 1 : 0,
-  );
-
+  $story->audio[] = clone $story->audio[0];
+  if (!empty($story->audio)) {
+    foreach($story->audio as $audio) {
+      $audio_element = array(
+        'value' => isset($audio->id) ? $audio->id : 0,
+        'title' => isset($audio->title->value) ? $audio->title->value : '',
+        'description' => isset($audio->description->value) ? $audio->description->value : '',
+        'duration' => isset($audio->duration->value) ? $audio->duration->value : '',
+        'mp3' => isset($audio->format->mp3['mp3']->value) ? $audio->format->mp3['mp3']->value : '',
+        'mediastream' => isset($audio->format->mediastream->value) ? $audio->format->mediastream->value : '',
+        'wm' => isset($audio->format->wm->value) ? $audio->format->wm->value : '',
+        'download' => isset($audio->permissions->download->allow) ? 1 : 0,
+        'embed' => isset($audio->permissions->embed->allow) ? 1 : 0,
+        'stream' => isset($audio->permissions->stream->allow) ? 1 : 0,
+      );
+      $form_state['values']['npr_audio'][LANGUAGE_NONE][] = $audio_element;
+    }
+  }
   if (!empty($story->image)) {
     // Take first image in array (for now)
     // (presume that $story->image[0] == 'primary')
