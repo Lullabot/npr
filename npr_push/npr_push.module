@@ -115,7 +115,7 @@ function npr_push_form_npr_api_config_form_alter(&$form, &$form_state, $form_id)
     '#type' => 'textfield',
     '#title' => t('NPR Push URL'),
     '#default_value' => variable_get('npr_push_api_url'),
-    '#description' => t('Users are strongly encouraged to first test API push functionality by pushing content to a stage server (!stage) before using the live server(!production).', array('!stage' => NPR_PUSH_STAGE_URL, '!production' => NPR_PUSH_PRODUCTION_URL)),
+    '#description' => t('Users are strongly encouraged to first test API push functionality by pushing content to a stage server (!stage) before using the live server (!production).', array('!stage' => NPR_PUSH_STAGE_URL, '!production' => NPR_PUSH_PRODUCTION_URL)),
   );
 
   $form['npr_push_config']['npr_push_org_id'] = array(
