@@ -184,7 +184,6 @@ function npr_pull_save_story($story) {
   
   $form_state['values']['field_npr_org_id'][LANGUAGE_NONE][0]['value'] = $story->organization->orgId;
   $form_state['values']['field_npr_url'][LANGUAGE_NONE][0]['value'] = $story->link['html']->value;
-  $story->audio[] = clone $story->audio[0];
   if (!empty($story->audio)) {
     foreach($story->audio as $audio) {
       $audio_element = array(
