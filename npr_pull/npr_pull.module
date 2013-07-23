@@ -56,13 +56,13 @@ function npr_pull_menu() {
  * Implements hook_cron().
  */
 function npr_pull_cron() {
-  pi_api_pull_pull_stories();
+  npr_api_pull_pull_stories();
 }
 
 /**
  * Pulls NPR stories (according to config settings).
  */
-function pi_api_pull_pull_stories() {
+function npr_api_pull_pull_stories() {
   $ids = variable_get('npr_pull_cron_query_ids', array());
   $today = format_date(REQUEST_TIME, 'custom', 'Y-m-d');
   $pub = variable_get('npr_pull_cron_publish_flag', 1);
