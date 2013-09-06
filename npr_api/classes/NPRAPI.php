@@ -115,10 +115,21 @@ class NPRAPI {
               $type = $this->get_attribute($current, 'type');
               $parsed->{$key}[$type] = $this->parse_simplexml_element($current);
             }
-
           }
           else {
-            $parsed->{$key} = $this->parse_simplexml_element($current);
+            if (empty($parsed->{$key})){
+              // The $key wasn't parsed already, so just add the current element.
+              $parsed->{$key} = $this->parse_simplexml_element($current);
+            }
+            else {
+              // If $parsed->$key exists and it's not an array, create an array
+              // out of the existing element
+              if (!is_array($parsed->{$key})){
+                $parsed->{$key} = array($parsed->{$key});
+              }
+              // Add the new child
+              $parsed->{$key}[] = $this->parse_simplexml_element($current);
+            }
           }
         }
         $body ='';
@@ -158,7 +169,19 @@ class NPRAPI {
           }
         }
         else {
-          $NPRMLElement->$i = $this->parse_simplexml_element($child);
+          // If $i wasn't parsed already, so just add the current element.
+          if (empty($NPRMLElement->$i)){
+            $NPRMLElement->$i = $this->parse_simplexml_element($child);
+          }
+          else {
+            // If $NPRMLElement->$i exists and it's not an array, create an array
+            // out of the existing element
+            if (!is_array($NPRMLElement->$i)) {
+              $NPRMLElement->$i = array($NPRMLElement->$i);
+            }
+            // Add the new child.
+            $NPRMLElement->{$i}[] = $this->parse_simplexml_element($child);
+          }
         }
       }
     }
