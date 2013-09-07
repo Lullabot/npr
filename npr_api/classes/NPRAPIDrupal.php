@@ -56,7 +56,13 @@ class NPRAPIDrupal extends NPRAPI {
   }
 
   function flatten() {
-
+    foreach($this->stories as $i => $story) {
+      foreach($story->parent as $parent) {
+        if ($parent->type == 'tag') {
+          $this->stories[$i]->tags[] = $parent->title->value;
+        }
+      }
+    }
   }
 
   /**

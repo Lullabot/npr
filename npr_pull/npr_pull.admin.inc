@@ -79,6 +79,37 @@ function npr_pull_cron_config() {
 }
 
 /**
+ * Form constructor for the npr pull tags config form.
+ *
+ * Generates a form to map NPR API tags to local terms.
+ * Callback for admin/config/services/npr/tags.
+ *
+ * @see npr_pull_menu()
+ * @ingroup forms
+ */
+function npr_pull_tags_config() {
+
+  $form['npr_pull_map_tags'] = array(
+    '#type' => 'checkbox',
+    '#title' => 'Turn on tag mapping',
+    '#default_value' => variable_get('npr_pull_map_tags'),
+    '#description' => 'Map NPR tags from pulled stories to local taxonomy terms.',
+  );
+
+  $vocabs = array();
+  foreach (taxonomy_vocabulary_get_names() as $vocab) {
+    $vocabs[$vocab->vid] = $vocab->name;
+  }
+  $form['npr_pull_mapped_vid'] = array(
+    '#type' => 'select',
+    '#default_value' => variable_get('npr_pull_mapped_vid'),
+    '#options' => $vocabs,
+    '#description' => 'Map NPR tags to terms in the chosen category. (Be sure that the vocabulary you choose has been attached as a term_reference field to the NPR Story content type, is not a required field, can accept unlimited values, and uses the "Autocomplete term widget (tagging)" widget.)'
+  );
+  return system_settings_form($form);
+}
+
+/**
  * Form constructor for the ad-hoc npr pull form.
  *
  * Generates a form to retrieve an NPR story by URL.
@@ -158,6 +189,7 @@ function npr_pull_get_story_submit($form, &$form_state) {
   $failure = !empty($NPR->message) && $NPR->message->id == 201;
 
   if (is_object($NPR) && !empty($NPR->stories) && !$failure) {
+    $NPR->flatten();
     $story = array_shift($NPR->stories);
     $date_flag = $form_state['values']['date_flag'];
     $story->created = ($date_flag) ? strtotime($story->pubDate->value) : REQUEST_TIME;
