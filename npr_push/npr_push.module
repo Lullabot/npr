@@ -6,7 +6,7 @@
  * Notes: users must register with NPR in order to use this module properly.
  */
 
-define('NPR_PUSH_STAGE_URL', 'http://api-s1.npr.org');
+define('NPR_PUSH_STAGE_URL', 'http://api-s2.npr.org');
 define('NPR_PUSH_PRODUCTION_URL', 'http://api.npr.org');
 
 /**
