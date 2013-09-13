@@ -35,6 +35,23 @@ function npr_pull_cron_config() {
     '#description' => t('Choose one or more topics. New stories from these topic(s) will be be pulled down at every cron run.')
   );
 
+  $users = entity_load('user');
+  $all_users = array();
+  foreach ($users as $uid => $user) {
+    $all_users[$uid] = $user->name;
+  }
+
+  unset($all_users[0]);
+  asort($all_users);
+  $all_users = array(0 => 'Anonymous') + $all_users;
+
+  $form['npr_pull_author'] = array(
+    '#type' => 'select',
+    '#title' => 'Drupal author of pulled stories',
+    '#default_value' => variable_get('npr_pull_author', 0),
+    '#options' => $all_users,
+  );
+
   $form['node_settings'] = array(
     '#title' => t('Node settings'),
     '#type' => 'fieldset',

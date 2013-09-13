@@ -163,6 +163,13 @@ function npr_pull_save_story($story) {
   organization -- doesn't hurt to save this
 
   */
+
+  // Impersonate the proper user.
+  global $user;
+  $original_user = $user;
+  drupal_save_session(FALSE);
+  $user = user_load(variable_get('npr_pull_author', 0));
+
   module_load_include('inc', 'node', 'node.pages');
   
   
@@ -183,6 +190,9 @@ function npr_pull_save_story($story) {
       'created' => isset($story->created) ? $story->created : strtotime($story->pubDate->value),
     );
   }
+
+  // Name must be set to a value or null;
+  $node['name'] = empty($user->name) ? NULL : $user->name;
 
   $form_state['values']['title'] = $story->title->value;
   $form_state['values']['field_npr_id'][LANGUAGE_NONE][0]['value'] = $story->id;
@@ -259,7 +269,6 @@ function npr_pull_save_story($story) {
     $file = new stdClass();
     $file->filename = $file_name;
     $file->uri = $file_uri;
-    global $user;
     $file->uid = $user->uid;
     $file->filemime = 'image/jpeg';
     $file->file_size = filesize($file_uri);
@@ -271,5 +280,8 @@ function npr_pull_save_story($story) {
   $form_state['values']['op'] = t('Save');
   $node = (object)$node;
   drupal_form_submit('npr_story_node_form', $form_state, $node);
+  // set user back
+  $user = $original_user;
+  drupal_save_session(TRUE);
   drupal_set_message(t('Go to') . ' ' . l($node->title, 'node/' . $node->nid));
 }

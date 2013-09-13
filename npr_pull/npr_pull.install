@@ -20,4 +20,5 @@ function npr_pull_enable() {
 function npr_pull_uninstall() {
   variable_del('npr_pull_cron_query_ids');
   variable_del('npr_pull_cron_publish_flag');
+  variable_del('npr_pull_author');
 }
