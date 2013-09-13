@@ -259,8 +259,36 @@ function npr_pull_save_story($story) {
     $file_name = $npr_image->id . rand();
     $file_uri = 'public://' . $file_name;
 
+    $image_url = '';
+    // check the <enlargement> and then the <crop>'s (type = enlargement or
+    // standard), if they don't exist, just get the image->src
+    if (!empty($npr_image->enlargement)) {
+      $image_url = $npr_image->enlargement->src;
+    }
+    else {
+      if (!empty($npr_image->crop)) {
+        foreach ($npr_image->crop as $crop) {
+          if ($crop->type == 'enlargement') {
+            $image_url = $crop->src;
+            continue;
+          }
+        }
+      }
+      if ($image_url == '') {
+        foreach ($npr_image->crop as $crop) {
+          if ($crop->type == 'standard') {
+            $image_url = $crop->src;
+            continue;
+          }
+        }
+      }
+    }
+    if ($image_url == '') {
+      $image_url = $image->src;
+    }
+
     // Download the image and create a local copy.
-    $image_in = fopen($npr_image->src, 'rb');
+    $image_in = fopen($image_url, 'rb');
     $image_out = fopen('public://' . $file_name, 'wb');
     stream_copy_to_stream($image_in, $image_out);
     fclose($image_in);
@@ -276,6 +304,7 @@ function npr_pull_save_story($story) {
     $saved_file = file_save($file);
     $saved_file->display = 1;
     $form_state['values']['field_npr_image'][LANGUAGE_NONE][] = (array)$saved_file;
+    $form_state['values']['field_npr_image']['und'][0]['title'] = $npr_image->title->value;
   }
   $form_state['values']['op'] = t('Save');
   $node = (object)$node;

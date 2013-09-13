@@ -117,6 +117,9 @@ function _npr_story_get_all_field_instances() {
       'widget' => array(
         'weight' => -5,
       ),
+      'settings' => array(
+        'title_field' => 1,
+      ),
       'display' => array(
         'default' => array(
           'label' => 'hidden',
