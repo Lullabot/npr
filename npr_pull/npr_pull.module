@@ -256,8 +256,12 @@ function npr_pull_save_story($story) {
     // clean up how we do collision prevention
     // rand() seems to hacky
     // there MUST be a cleaner way
-    $file_name = $npr_image->id . rand();
-    $file_uri = 'public://' . $file_name;
+    $file_name = $npr_image->id . '_' . rand();
+
+    // Get the image directory.
+    $image_dir_uri = _npr_pull_get_image_dir_uri();
+    file_prepare_directory($image_dir_uri, FILE_CREATE_DIRECTORY);
+    $file_uri = $image_dir_uri . $file_name;
 
     $image_url = '';
     // check the <enlargement> and then the <crop>'s (type = enlargement or
@@ -289,7 +293,7 @@ function npr_pull_save_story($story) {
 
     // Download the image and create a local copy.
     $image_in = fopen($image_url, 'rb');
-    $image_out = fopen('public://' . $file_name, 'wb');
+    $image_out = fopen($file_uri, 'wb');
     stream_copy_to_stream($image_in, $image_out);
     fclose($image_in);
     fclose($image_out);
@@ -313,4 +317,17 @@ function npr_pull_save_story($story) {
   $user = $original_user;
   drupal_save_session(TRUE);
   drupal_set_message(t('Go to') . ' ' . l($node->title, 'node/' . $node->nid));
+}
+
+/**
+ * Retrieves the directory in which to store pulled images.
+ *
+ * @return string
+ *   The URI directory in which to save files. Includes trailing slash.
+ */
+function _npr_pull_get_image_dir_uri() {
+  $field_instance_info = field_info_instance('node', 'field_npr_image', 'npr_story');
+  $field_info = field_info_field('field_npr_image');
+  $dir_uri = $field_info['settings']['uri_scheme'] . '://' . $field_instance_info['settings']['file_directory'] . '/';
+  return $dir_uri;
 }
