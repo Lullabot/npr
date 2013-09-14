@@ -64,33 +64,43 @@ function npr_fields_install() {
     'type' => 'image',
     'cardinality' => 1,
   );
-  field_create_field($image);
+  if (!field_read_field('field_npr_image')) {
+    field_create_field($image);
+  }
 
   $byline = array(
     'field_name' => 'field_npr_byline',
     'type' => 'text',
     'translatable' => FALSE,
   );
-  field_create_field($byline);
+  if (!field_read_field('field_npr_byline')) {
+    field_create_field($byline);
+  }
 
   $npr_api = array(
     'field_name' => 'field_npr_id',
     'type' => 'text',
     'translatable' => FALSE,
   );
-  field_create_field($npr_api);
+  if (!field_read_field('field_npr_id')) {
+    field_create_field($npr_api);
+  }
 
   $npr_url = array(
     'field_name' => 'field_npr_url',
     'type' => 'text',
     'translatable' => FALSE,
   );
-  field_create_field($npr_url);
+  if (!field_read_field('field_npr_url')) {
+    field_create_field($npr_url);
+  }
 
   $npr_org_id = array(
     'field_name' => 'field_npr_org_id',
     'type' => 'text',
     'translatable' => FALSE,
   );
-  field_create_field($npr_org_id);
+  if (!field_read_field('field_npr_org_id')) {
+    field_create_field($npr_org_id);
+  }
 }

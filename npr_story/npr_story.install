@@ -15,7 +15,9 @@ function npr_story_install() {
     'type' => 'npr_audio',
     'cardinality' => FIELD_CARDINALITY_UNLIMITED,
   );
-  field_create_field($audio);
+  if (!field_read_field('npr_audio')) {
+    field_create_field($audio);
+  }
 
   node_types_rebuild();
   $types = node_type_get_types();
@@ -23,7 +25,9 @@ function npr_story_install() {
 
   $instances = _npr_story_get_all_field_instances();
   foreach ($instances as $instance) {
-    field_create_instance($instance);
+    if (!field_read_field($instance['field_name'])) {
+      field_create_instance($instance);
+    }
   }
   variable_set('node_submitted_npr_story', 0);
 }
