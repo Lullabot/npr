@@ -156,8 +156,10 @@ function npr_fields_field_widget_form(&$form, &$form_state, $field, $instance, $
 /**
  * Implements hook_field_is_empty().
  */
-function npr_fields_field_is_empty() {
-
+function npr_fields_field_is_empty($item, $field) {
+  if ($item['mp3'] == '') {
+    return TRUE;
+  }
 }
 
 /**
