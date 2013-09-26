@@ -252,16 +252,6 @@ function npr_pull_save_story($story) {
     // Take first image in array (for now)
     // (presume that $story->image[0] == 'primary')
     $npr_image = $story->image[0];
-    // @TODO
-    // clean up how we do collision prevention
-    // rand() seems to hacky
-    // there MUST be a cleaner way
-    $file_name = $npr_image->id . '_' . rand();
-
-    // Get the image directory.
-    $image_dir_uri = _npr_pull_get_image_dir_uri();
-    file_prepare_directory($image_dir_uri, FILE_CREATE_DIRECTORY);
-    $file_uri = $image_dir_uri . $file_name;
 
     $image_url = '';
     // check the <enlargement> and then the <crop>'s (type = enlargement or
@@ -290,6 +280,28 @@ function npr_pull_save_story($story) {
     if ($image_url == '') {
       $image_url = $image->src;
     }
+
+    // Convert mimetype string (e.g., 'image/jpeg') into file extension (e.g., 'jpg')
+    require_once DRUPAL_ROOT . '/' . 'includes/file.mimetypes.inc';
+    $mappings = file_default_mimetype_mapping();
+    // Create an array that maps mimetype string to integer (mimetype constant)
+    $mimetypes = array_flip($mappings['mimetypes']);
+    // Create an array that maps integer (imietype constant) into file extension
+    $extensions = array_flip($mappings['extensions']);
+    $npr_image_mimetype = file_get_mimetype($image_url);
+    // Convert mimetype string into extension
+    $ext = $extensions[$mimetypes[$npr_image_mimetype]];
+
+    // @TODO
+    // clean up how we do collision prevention
+    // rand() seems to hacky
+    // there MUST be a cleaner way
+    $file_name = $npr_image->id . '_' . rand() . '.' . $ext;
+
+    // Get the image directory.
+    $image_dir_uri = _npr_pull_get_image_dir_uri();
+    file_prepare_directory($image_dir_uri, FILE_CREATE_DIRECTORY);
+    $file_uri = $image_dir_uri . $file_name;
 
     // Download the image and create a local copy.
     $image_in = fopen($image_url, 'rb');
