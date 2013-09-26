@@ -25,7 +25,7 @@ function npr_story_install() {
 
   $instances = _npr_story_get_all_field_instances();
   foreach ($instances as $instance) {
-    if (!field_read_field($instance['field_name'])) {
+    if (!field_info_instance('node', $instance['field_name'], 'npr_story')) {
       field_create_instance($instance);
     }
   }
