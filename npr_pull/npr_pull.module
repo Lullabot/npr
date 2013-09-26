@@ -286,7 +286,7 @@ function npr_pull_save_story($story) {
     $mappings = file_default_mimetype_mapping();
     // Create an array that maps mimetype string to integer (mimetype constant)
     $mimetypes = array_flip($mappings['mimetypes']);
-    // Create an array that maps integer (imietype constant) into file extension
+    // Create an array that maps integer (mimetype constant) into file extension
     $extensions = array_flip($mappings['extensions']);
     $npr_image_mimetype = file_get_mimetype($image_url);
     // Convert mimetype string into extension
