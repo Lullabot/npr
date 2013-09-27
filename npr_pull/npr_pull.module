@@ -171,13 +171,13 @@ function npr_pull_save_story($story) {
   $user = user_load(variable_get('npr_pull_author', 0));
 
   module_load_include('inc', 'node', 'node.pages');
-  
-  
+
+
   // is an update?
   if (!empty($story->nid)) {
-    $node = (array)node_load($story->nid); 
+    $node = (array)node_load($story->nid);
   }
-  
+
   // or a newly pulled story?
   else {
     $node = new stdClass();
@@ -201,7 +201,7 @@ function npr_pull_save_story($story) {
   $form_state['values']['body'][LANGUAGE_NONE][0]['value'] = $story->body;
   $form_state['values']['body'][LANGUAGE_NONE][0]['summary'] = $story->teaser->value;
   $form_state['values']['field_npr_byline'][LANGUAGE_NONE][0]['value'] = !empty($story->byline->name->value) ? $story->byline->name->value : '';
-  
+
   $form_state['values']['field_npr_org_id'][LANGUAGE_NONE][0]['value'] = $story->organization->orgId;
   $form_state['values']['field_npr_url'][LANGUAGE_NONE][0]['value'] = $story->link['html']->value;
 
@@ -248,82 +248,88 @@ function npr_pull_save_story($story) {
       $form_state['values']['npr_audio'][LANGUAGE_NONE][] = $audio_element;
     }
   }
+  $images = array();
   if (!empty($story->image)) {
-    // Take first image in array (for now)
-    // (presume that $story->image[0] == 'primary')
-    $npr_image = $story->image[0];
-
-    $image_url = '';
-    // check the <enlargement> and then the <crop>'s (type = enlargement or
-    // standard), if they don't exist, just get the image->src
-    if (!empty($npr_image->enlargement)) {
-      $image_url = $npr_image->enlargement->src;
-    }
-    else {
-      if (!empty($npr_image->crop)) {
-        foreach ($npr_image->crop as $crop) {
-          if ($crop->type == 'enlargement') {
-            $image_url = $crop->src;
-            continue;
+    foreach ($story->image as $npr_image) {
+      $image_url = '';
+      // check the <enlargement> and then the <crop>'s (type = enlargement or
+      // standard), if they don't exist, just get the image->src
+      if (!empty($npr_image->enlargement)) {
+        $image_url = $npr_image->enlargement->src;
+      }
+      else {
+        if (!empty($npr_image->crop)) {
+          foreach ($npr_image->crop as $crop) {
+            if ($crop->type == 'enlargement') {
+              $image_url = $crop->src;
+              continue;
+            }
+          }
+        }
+        if ($image_url == '') {
+          foreach ($npr_image->crop as $crop) {
+            if ($crop->type == 'standard') {
+              $image_url = $crop->src;
+              continue;
+            }
           }
         }
       }
       if ($image_url == '') {
-        foreach ($npr_image->crop as $crop) {
-          if ($crop->type == 'standard') {
-            $image_url = $crop->src;
-            continue;
-          }
-        }
+        $image_url = $image->src;
       }
+
+      // Convert mimetype string (e.g., 'image/jpeg') into file extension (e.g., 'jpg')
+      require_once DRUPAL_ROOT . '/' . 'includes/file.mimetypes.inc';
+      $mappings = file_default_mimetype_mapping();
+      // Create an array that maps mimetype string to integer (mimetype constant)
+      $mimetypes = array_flip($mappings['mimetypes']);
+      // Create an array that maps integer (mimetype constant) into file extension
+      $extensions = array_flip($mappings['extensions']);
+      $npr_image_mimetype = file_get_mimetype($image_url);
+      // Convert mimetype string into extension
+      $ext = $extensions[$mimetypes[$npr_image_mimetype]];
+
+      // @TODO
+      // clean up how we do collision prevention
+      // rand() seems to hacky
+      // there MUST be a cleaner way
+      $file_name = $npr_image->id . '_' . rand() . '.' . $ext;
+
+      // Get the image directory.
+      $image_dir_uri = _npr_pull_get_image_dir_uri();
+      file_prepare_directory($image_dir_uri, FILE_CREATE_DIRECTORY);
+      $file_uri = $image_dir_uri . $file_name;
+
+      // Download the image and create a local copy.
+      $image_in = fopen($image_url, 'rb');
+      $image_out = fopen($file_uri, 'wb');
+      stream_copy_to_stream($image_in, $image_out);
+      fclose($image_in);
+      fclose($image_out);
+
+      $file = new stdClass();
+      $file->filename = $file_name;
+      $file->uri = $file_uri;
+      $file->uid = $user->uid;
+      $file->filemime = 'image/jpeg';
+      $file->file_size = filesize($file_uri);
+
+      file_save($file);
+      $images[] = array(
+        'fid' => $file->fid,
+        'title' => $npr_image->title->value,
+        'display' => 1,
+      );
     }
-    if ($image_url == '') {
-      $image_url = $image->src;
-    }
-
-    // Convert mimetype string (e.g., 'image/jpeg') into file extension (e.g., 'jpg')
-    require_once DRUPAL_ROOT . '/' . 'includes/file.mimetypes.inc';
-    $mappings = file_default_mimetype_mapping();
-    // Create an array that maps mimetype string to integer (mimetype constant)
-    $mimetypes = array_flip($mappings['mimetypes']);
-    // Create an array that maps integer (mimetype constant) into file extension
-    $extensions = array_flip($mappings['extensions']);
-    $npr_image_mimetype = file_get_mimetype($image_url);
-    // Convert mimetype string into extension
-    $ext = $extensions[$mimetypes[$npr_image_mimetype]];
-
-    // @TODO
-    // clean up how we do collision prevention
-    // rand() seems to hacky
-    // there MUST be a cleaner way
-    $file_name = $npr_image->id . '_' . rand() . '.' . $ext;
-
-    // Get the image directory.
-    $image_dir_uri = _npr_pull_get_image_dir_uri();
-    file_prepare_directory($image_dir_uri, FILE_CREATE_DIRECTORY);
-    $file_uri = $image_dir_uri . $file_name;
-
-    // Download the image and create a local copy.
-    $image_in = fopen($image_url, 'rb');
-    $image_out = fopen($file_uri, 'wb');
-    stream_copy_to_stream($image_in, $image_out);
-    fclose($image_in);
-    fclose($image_out);
-
-    $file = new stdClass();
-    $file->filename = $file_name;
-    $file->uri = $file_uri;
-    $file->uid = $user->uid;
-    $file->filemime = 'image/jpeg';
-    $file->file_size = filesize($file_uri);
-
-    $saved_file = file_save($file);
-    $saved_file->display = 1;
-    $form_state['values']['field_npr_image'][LANGUAGE_NONE][] = (array)$saved_file;
-    $form_state['values']['field_npr_image']['und'][0]['title'] = $npr_image->title->value;
   }
   $form_state['values']['op'] = t('Save');
   $node = (object)$node;
+
+  if (!empty($images)) {
+    $node->field_npr_image[LANGUAGE_NONE] = $images;
+  }
+
   drupal_form_submit('npr_story_node_form', $form_state, $node);
   // set user back
   $user = $original_user;
