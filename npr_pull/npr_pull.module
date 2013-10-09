@@ -312,7 +312,7 @@ function npr_pull_save_story($story) {
       $file->filename = $file_name;
       $file->uri = $file_uri;
       $file->uid = $user->uid;
-      $file->filemime = 'image/jpeg';
+      $file->filemime = $npr_image_mimetype;
       $file->file_size = filesize($file_uri);
 
       file_save($file);
