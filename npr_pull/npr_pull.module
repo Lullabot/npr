@@ -269,7 +269,7 @@ function npr_pull_save_story($story) {
         }
       }
       if ($image_url == '') {
-        $image_url = $image->src;
+        $image_url = $npr_image->src;
       }
 
       // Convert mimetype string (e.g., 'image/jpeg') into file extension (e.g., 'jpg')
