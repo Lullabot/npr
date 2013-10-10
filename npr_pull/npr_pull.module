@@ -253,15 +253,15 @@ function npr_pull_save_story($story) {
       else {
         if (!empty($npr_image->crop)) {
           foreach ($npr_image->crop as $crop) {
-            if ($crop->type == 'enlargement') {
+            if (!empty($crop->type) && $crop->type == 'enlargement') {
               $image_url = $crop->src;
               continue;
             }
           }
         }
-        if ($image_url == '') {
+        if ($image_url == '' && !empty($npr_image->crop)) {
           foreach ($npr_image->crop as $crop) {
-            if ($crop->type == 'standard') {
+            if (!empty($crop->type) && $crop->type == 'standard') {
               $image_url = $crop->src;
               continue;
             }
