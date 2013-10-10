@@ -218,6 +218,7 @@ function npr_pull_save_story($story) {
         $added_tags[] = $tag;
       }
       if (!empty($added_tags)) {
+        $vocab = taxonomy_vocabulary_load($vid);
         $form_state['values']['field_'  . $vocab->machine_name][LANGUAGE_NONE] = implode(',', $added_tags);
       }
     }
