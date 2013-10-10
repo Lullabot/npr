@@ -208,24 +208,16 @@ function npr_pull_save_story($story) {
   // Tags
   if (variable_get('npr_pull_map_tags')) {
     $vid = variable_get('npr_pull_mapped_vid');
-    if ($vid && !empty($story->tags)) {
-      $create_new_tag = variable_get('npr_pull_create_new_term');
+    if ($vid) {
       $full_terms = entity_load('taxonomy_term', FALSE, array('vid' => $vid));
+      $terms = array();
       foreach ($full_terms as $tid => $full_term) {
-        $terms[$tid] = strtolower($full_term->name);
+        $terms[$tid] = $full_term->name;
       }
-      $vocab = taxonomy_vocabulary_load($vid);
       foreach($story->tags as $tag) {
-        $match = array_search($tag, $terms);
-        if ($match !== FALSE) {
-          $added_tags[] = $match;
-        }
-        else{
-          $added_tags[] = $tag;
-        }
+        $added_tags[] = $tag;
       }
       if (!empty($added_tags)) {
-        // can we assume field_machine_name is OK?
         $form_state['values']['field_'  . $vocab->machine_name][LANGUAGE_NONE] = implode(',', $added_tags);
       }
     }
