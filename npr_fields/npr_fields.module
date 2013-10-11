@@ -133,7 +133,6 @@ function npr_fields_field_widget_form(&$form, &$form_state, $field, $instance, $
       ),
     );
 
-    $delta = 0;
     foreach ($subfields as $key => $field) {
       $value = isset($items[$delta][$key]) ? $items[$delta][$key] : '';
       $element[$key] = array(
