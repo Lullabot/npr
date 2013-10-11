@@ -208,7 +208,7 @@ function npr_pull_save_story($story) {
   // Tags
   if (variable_get('npr_pull_map_tags')) {
     $vid = variable_get('npr_pull_mapped_vid');
-    if ($vid) {
+    if ($vid && !empty($story->tags)) {
       $full_terms = entity_load('taxonomy_term', FALSE, array('vid' => $vid));
       $terms = array();
       foreach ($full_terms as $tid => $full_term) {
