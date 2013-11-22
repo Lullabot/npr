@@ -123,6 +123,7 @@ function _npr_story_get_all_field_instances() {
       ),
       'settings' => array(
         'title_field' => 1,
+        'alt_field' => 1,
       ),
       'display' => array(
         'default' => array(

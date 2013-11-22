@@ -312,6 +312,7 @@ function npr_pull_save_story($story) {
       $images[] = array(
         'fid' => $file->fid,
         'title' => $npr_image->title->value,
+        'alt' => $npr_image->caption->value,
         'display' => 1,
       );
     }
