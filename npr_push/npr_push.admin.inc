@@ -90,30 +90,28 @@ function npr_push_admin_config_validate($form, &$form_state) {
   foreach (node_type_get_types() as $type) {
     $is_pushing = $form_state['values']['npr_push_types_' . $type->type];
     variable_set('npr_push_types_' . $type->type, $is_pushing);
-    if ($is_pushing) {
-      $all_fields = field_info_instances('node', $type->type);
-      $taken = array();
-      foreach ($all_fields as $key => $all_field) {
-        $name = $all_field['field_name'];
-        if (!in_array($name, $required_fields)) {
-          $value = $form_state['values']['npr_push_mapping_' . $name];
-          if ($value !== '0') {
-            if (!in_array($all_field['widget']['type'], $nprml_fields[$value]['accepted_types'])) {
-              $error_msg = "To map to NPRML field $value, the (drupal) field must be one of the following type(s): " . implode(',', $nprml_fields[$value]['accepted_types']);
-              form_set_error('npr_push_mapping_' . $all_field['field_name'], t('Incompatible field types.') . ' ' . $error_msg);
-            }
-            if (in_array($value, $taken)) {
-              form_set_error('npr_push_mapping_' . $all_field['field_name'], t('Multiple fields cannot be mapped to the same NPRML field.'));
-            }
-            $taken[] = $value;
+    $all_fields = field_info_instances('node', $type->type);
+    $taken = array();
+    foreach ($all_fields as $key => $all_field) {
+      $name = $all_field['field_name'];
+      if (!in_array($name, $required_fields)) {
+        $value = $form_state['values']['npr_push_mapping_' . $name];
+        if ($value !== '0') {
+          if (!in_array($all_field['widget']['type'], $nprml_fields[$value]['accepted_types'])) {
+            $error_msg = "To map to NPRML field $value, the (drupal) field must be one of the following type(s): " . implode(',', $nprml_fields[$value]['accepted_types']);
+            form_set_error('npr_push_mapping_' . $all_field['field_name'], t('Incompatible field types.') . ' ' . $error_msg);
           }
+          if (in_array($value, $taken)) {
+            form_set_error('npr_push_mapping_' . $all_field['field_name'], t('Multiple fields cannot be mapped to the same NPRML field.'));
+          }
+          $taken[] = $value;
         }
       }
-      $required_nprml_fields = array('id');
-      foreach ($required_nprml_fields as $nprml_field) {
-        if (!in_array($nprml_field, $taken)) {
-          form_set_error('npr_push', t('A field must map to the NPRML field:') . ' ' . $nprml_field);
-        }
+    }
+    $required_nprml_fields = array('id');
+    foreach ($required_nprml_fields as $nprml_field) {
+      if (!in_array($nprml_field, $taken)) {
+        form_set_error('npr_push', t('A field must map to the NPRML field:') . ' ' . $nprml_field);
       }
     }
   }
