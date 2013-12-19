@@ -57,7 +57,20 @@ function npr_push_admin_config() {
         );
       }
     }
+    $pf = array();
+    foreach(array_keys($all_fields) as $field) {
+      $pf[$field] = $field;
+    }
+    array_unshift($pf, t('None'));
+    $form[$type->type . '_settings']['npr_push_' . $type->type . '_pushflag'] = array(
+      '#type' => 'select',
+      '#title' => t('Push flag'),
+      '#description' => t('Use a (drupal) field to push on a per-node basis.'),
+      '#options' => $pf,
+      '#default_value' => variable_get('npr_push_' . $type->type . '_pushflag', 0),
+    );
   }
+
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Save settings'),
@@ -75,6 +88,12 @@ function npr_push_admin_config_validate($form, &$form_state) {
 
   $nprml_fields = npr_api_get_nprml_fields();
   foreach (node_type_get_types() as $type) {
+
+    // Insert push flag field, if it exists
+    if ($form_state['values']['npr_push_' . $type->type . '_pushflag']) {
+      variable_set('npr_push_' . $type->type . '_pushflag', $form_state['values']['npr_push_' . $type->type . '_pushflag']);
+    }
+      
     $is_pushing = $form_state['values']['npr_push_types_' . $type->type];
     variable_set('npr_push_types_' . $type->type, $is_pushing);
     if ($is_pushing) {

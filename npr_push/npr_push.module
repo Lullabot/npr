@@ -34,7 +34,8 @@ function npr_push_menu() {
  */
 function npr_push_node_insert($node) {
   $local_id = _npr_push_get_node_org_id($node);
-  if (variable_get('npr_push_types_' . $node->type) && (!$local_id || ($local_id && $local_id == variable_get('npr_push_org_id')))) {
+  $flag = _npr_push_push_flag($node);
+  if (variable_get('npr_push_types_' . $node->type) && $flag && (!$local_id || ($local_id && $local_id == variable_get('npr_push_org_id')))) {
     // Load API classes
     module_load_include('php', 'npr_api', 'classes/NPRAPI');
     module_load_include('php', 'npr_api', 'classes/NPRAPIDrupal');
@@ -53,7 +54,8 @@ function npr_push_node_insert($node) {
  */
 function npr_push_node_update($node) {
   $local_id = _npr_push_get_node_org_id($node);
-  if (variable_get('npr_push_types_' . $node->type) && (!$local_id || ($local_id && $local_id == variable_get('npr_push_org_id')))) {
+  $flag = _npr_push_push_flag($node);
+  if (variable_get('npr_push_types_' . $node->type) && $flag && (!$local_id || ($local_id && $local_id == variable_get('npr_push_org_id')))) {
     // Load API classes
     module_load_include('php', 'npr_api', 'classes/NPRAPI');
     module_load_include('php', 'npr_api', 'classes/NPRAPIDrupal');
@@ -101,6 +103,15 @@ function _npr_push_get_node_org_id($node) {
   }
 }
 
+
+function _npr_push_push_flag($node) {
+  $flag = TRUE;
+  $field = variable_get('npr_push_' . $node->type . '_pushflag');
+  if ($field && property_exists($node, $field)) {
+    $flag = (boolean) $node->{$field}[$node->language][0]['value'];
+  }
+  return $flag;
+}
 /**
  * Implements hook_form_FORM_ID_alter().
  */
