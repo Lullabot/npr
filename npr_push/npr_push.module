@@ -43,8 +43,7 @@ function npr_push_node_insert($node) {
     $NPRAPIDrupal->push_NPRML($node);
     $NPRAPIDrupal->parse_response();
     if (!empty($NPRAPIDrupal->response->id)) {
-      $node->field_npr_id[$node->language][0]['value'] = $NPRAPIDrupal->response->id;
-      field_attach_update('node', $node);
+      _npr_push_add_api_id($node, $NPRAPIDrupal->response->id);
     }   
   }
 }
@@ -63,8 +62,7 @@ function npr_push_node_update($node) {
     $NPRAPIDrupal->push_NPRML($node);
     $NPRAPIDrupal->parse_response();
     if (!empty($NPRAPIDrupal->response->id)) {
-      $node->field_npr_id[$node->language][0]['value'] = $NPRAPIDrupal->response->id;
-      field_attach_update('node', $node);
+      _npr_push_add_api_id($node, $NPRAPIDrupal->response->id);
     }
   }
 }
@@ -112,6 +110,24 @@ function _npr_push_push_flag($node) {
   }
   return $flag;
 }
+
+function _npr_push_add_api_id($node, $id) {
+  if ($node->type == 'npr_story') {
+    $field = 'field_npr_id';
+  }
+  else {
+    $map = variable_get('npr_push_field_map_' . $node->type, array());
+    $drupal_field = array_search('id', $map);
+    if (property_exists($node, $drupal_field)) {
+      $field = $drupal_field;
+    }
+  }
+  if ($field) {
+    $node->{$field}[$node->language][0]['value'] = $id;
+    field_attach_update('node', $node);
+  }
+}
+
 /**
  * Implements hook_form_FORM_ID_alter().
  */
