@@ -88,12 +88,6 @@ function npr_push_admin_config_validate($form, &$form_state) {
 
   $nprml_fields = npr_api_get_nprml_fields();
   foreach (node_type_get_types() as $type) {
-
-    // Insert push flag field, if it exists
-    if ($form_state['values']['npr_push_' . $type->type . '_pushflag']) {
-      variable_set('npr_push_' . $type->type . '_pushflag', $form_state['values']['npr_push_' . $type->type . '_pushflag']);
-    }
-      
     $is_pushing = $form_state['values']['npr_push_types_' . $type->type];
     variable_set('npr_push_types_' . $type->type, $is_pushing);
     if ($is_pushing) {
@@ -135,7 +129,6 @@ function npr_push_admin_config_submit($form, &$form_state) {
   $required_fields = array('body');
 
   foreach (node_type_get_types() as $type) {
-
     variable_set('npr_push_types_' . $type->type, $form_state['values']['npr_push_types_' . $type->type]);
 
     $all_fields = field_info_instances('node', $type->type);
@@ -146,5 +139,10 @@ function npr_push_admin_config_submit($form, &$form_state) {
       }
     }
     variable_set('npr_push_field_map_' . $type->type, $mapping);
+
+    // Insert push flag field, if it exists
+    if ($form_state['values']['npr_push_' . $type->type . '_pushflag']) {
+      variable_set('npr_push_' . $type->type . '_pushflag', $form_state['values']['npr_push_' . $type->type . '_pushflag']);
+    }
   }
 }
