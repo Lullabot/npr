@@ -262,7 +262,6 @@ class NPRAPIDrupal extends NPRAPI {
 
     $data = $this->create_NPRML($node);
     $this->request($params, $method, $data, $path, $base);
-    dpm($this);
   }
 
   /**
