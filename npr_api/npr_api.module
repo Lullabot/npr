@@ -152,7 +152,7 @@ function npr_api_get_nprml_fields() {
     ),
     'slug' => array(
       'type' => 'text',
-      'accepted_types' => array('text_textfield'),
+      'accepted_types' => array('text_textfield', 'options_select'),
     ),
     'image' => array(
       'type' => 'image',
