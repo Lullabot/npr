@@ -18,4 +18,11 @@ function npr_push_install() {
 function npr_push_uninstall() {
   variable_del('npr_push_api_url');
   variable_del('npr_push_org_id');
+
+  foreach (node_type_get_types() as $node_type) {
+    $name = $node_type->type;
+    variable_del('npr_push_types_' . $name);
+    variable_del('npr_push_field_map_' . $name);
+    variable_del('npr_push_' . $name . '_pushflag');
+  }
 }
