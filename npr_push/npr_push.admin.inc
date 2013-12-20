@@ -36,7 +36,7 @@ function npr_push_admin_config() {
       '#type' => 'fieldset',
       '#title' => t($type->name . ' settings'),
       '#collapsible' => TRUE,
-      '#collapsed' => FALSE,
+      '#collapsed' => TRUE,
     );
 
     $map = variable_get('npr_push_field_map_' . $type->type, array());
