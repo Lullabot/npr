@@ -49,7 +49,7 @@ function npr_push_admin_config() {
     );
     foreach ($all_fields as $key => $all_field) {
       if (!in_array($all_field['field_name'], $required_fields)) {
-        $form[$type->type . '_settings']['npr_push_mapping_' . $all_field['field_name']] = array(
+        $form[$type->type . '_settings']['npr_push_mapping_' . $type->type . $all_field['field_name']] = array(
           '#type' => 'select',
           '#title' => t('Map "' . $all_field['field_name'] . '" to the following NPRML field:'),
           '#options' => $nprml_options,
@@ -95,7 +95,7 @@ function npr_push_admin_config_validate($form, &$form_state) {
     foreach ($all_fields as $key => $all_field) {
       $name = $all_field['field_name'];
       if (!in_array($name, $required_fields)) {
-        $value = $form_state['values']['npr_push_mapping_' . $name];
+        $value = $form_state['values']['npr_push_mapping_' . $type->type . $name];
         if ($value !== '0') {
           if (!in_array($all_field['widget']['type'], $nprml_fields[$value]['accepted_types'])) {
             $error_msg = "To map to NPRML field $value, the (drupal) field must be one of the following type(s): " . implode(',', $nprml_fields[$value]['accepted_types']);
@@ -133,7 +133,7 @@ function npr_push_admin_config_submit($form, &$form_state) {
     $mapping = array();
     foreach ($all_fields as $key => $all_field) {
       if (!in_array($all_field['field_name'], $required_fields)) {
-        $mapping[$all_field['field_name']] = $form_state['values']['npr_push_mapping_' . $all_field['field_name']];
+        $mapping[$all_field['field_name']] = $form_state['values']['npr_push_mapping_' . $type->type . $all_field['field_name']];
       }
     }
     variable_set('npr_push_field_map_' . $type->type, $mapping);
