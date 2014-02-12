@@ -28,6 +28,12 @@ Images
   *) To alter the directory in which images are saved, simply edit the
      "File directory" value of field_npr_image on npr_story.
 
+Audio
+  *) If you're pulling down stories from NPR that include audio, be sure to
+     check out the NPR Player Pack module (audio is fairly minimal-looking
+	 without some sort of additional player module).
+	 Link: https://drupal.org/project/npr_player_pack
+
 Tags
   Tagging is not enabled out of the box. To configure tagging on pulls:
   1) Create a vocabulary to be used for tagging NPR stories.
