@@ -251,6 +251,9 @@ function npr_pull_save_story($story) {
         $image_url = $npr_image->enlargement->src;
       }
       else {
+        if (!is_array($npr_image->crop)) {
+          $npr_image->crop = array($npr_image->crop);
+        }
         if (!empty($npr_image->crop)) {
           foreach ($npr_image->crop as $crop) {
             if (!empty($crop->type) && $crop->type == 'enlargement') {
