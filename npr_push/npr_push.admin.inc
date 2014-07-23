@@ -153,11 +153,11 @@ function npr_push_admin_config_submit($form, &$form_state) {
     variable_set('npr_push_field_map_' . $type->type, $mapping);
 
     // Insert push flag field, if it exists
-    if ($form_state['values']['npr_push_' . $type->type . '_pushflag']) {
+    if (isset($form_state['values']['npr_push_' . $type->type . '_pushflag'])) {
       variable_set('npr_push_' . $type->type . '_pushflag', $form_state['values']['npr_push_' . $type->type . '_pushflag']);
     }
     // Insert NPR One flag field, if it exists
-    if ($form_state['values']['npr_push_' . $type->type . '_nproneflag']) {
+    if (isset($form_state['values']['npr_push_' . $type->type . '_nproneflag'])) {
       variable_set('npr_push_' . $type->type . '_nproneflag', $form_state['values']['npr_push_' . $type->type . '_nproneflag']);
     }
   }
