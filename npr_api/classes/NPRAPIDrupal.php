@@ -91,6 +91,15 @@ class NPRAPIDrupal extends NPRAPI {
 
     $story = $xml->createElement('story');
 
+    // if node has been flagged to send to NPR One, add this specific parent
+    // element
+    if (!empty($node->npr_push_npr_one_send)) {
+      $npr_one = $xml->createElement('parent');
+      $npr_one->setAttribute('id', '319418027');
+      $npr_one->setAttribute('type', 'collection');
+      $story->appendChild($npr_one);
+    }
+
     //if the nprID field is set, (probably because this is an update) send that along too
     if (!empty($node->field_npr_id[$node->language][0]['value'])) {
       $id_attribute = $xml->createAttribute('id');

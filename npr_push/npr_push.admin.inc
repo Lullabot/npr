@@ -69,6 +69,13 @@ function npr_push_admin_config() {
       '#options' => $pf,
       '#default_value' => variable_get('npr_push_' . $type->type . '_pushflag', 0),
     );
+    $form[$type->type . '_settings']['npr_push_' . $type->type . '_nproneflag'] = array(
+      '#type' => 'select',
+      '#title' => t('NPR One flag'),
+      '#description' => t('Use a (drupal) field to push to NPR One on a per-node basis.'),
+      '#options' => $pf,
+      '#default_value' => variable_get('npr_push_' . $type->type . '_nproneflag', 0),
+    );
   }
 
   $form['submit'] = array(
@@ -141,6 +148,10 @@ function npr_push_admin_config_submit($form, &$form_state) {
     // Insert push flag field, if it exists
     if ($form_state['values']['npr_push_' . $type->type . '_pushflag']) {
       variable_set('npr_push_' . $type->type . '_pushflag', $form_state['values']['npr_push_' . $type->type . '_pushflag']);
+    }
+    // Insert NPR One flag field, if it exists
+    if ($form_state['values']['npr_push_' . $type->type . '_nproneflag']) {
+      variable_set('npr_push_' . $type->type . '_nproneflag', $form_state['values']['npr_push_' . $type->type . '_nproneflag']);
     }
   }
 }
