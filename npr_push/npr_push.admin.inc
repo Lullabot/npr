@@ -65,7 +65,7 @@ function npr_push_admin_config() {
     $form[$type->type . '_settings']['npr_push_' . $type->type . '_pushflag'] = array(
       '#type' => 'select',
       '#title' => t('Push flag'),
-      '#description' => t('Use a (drupal) field to push on a per-node basis.'),
+      '#description' => t('Use a (drupal) field to push to the NPR API on a per-node basis.'),
       '#options' => $pf,
       '#default_value' => variable_get('npr_push_' . $type->type . '_pushflag', 0),
     );
