@@ -62,14 +62,21 @@ function npr_push_admin_config() {
       $pf[$field] = $field;
     }
     array_unshift($pf, t('None'));
-    $form[$type->type . '_settings']['npr_push_' . $type->type . '_pushflag'] = array(
+
+    $form[$type->type . '_settings']['flags'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Flags'),
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+    );
+    $form[$type->type . '_settings']['flags']['npr_push_' . $type->type . '_pushflag'] = array(
       '#type' => 'select',
       '#title' => t('Push flag'),
       '#description' => t('Use a (drupal) field to push to the NPR API on a per-node basis.'),
       '#options' => $pf,
       '#default_value' => variable_get('npr_push_' . $type->type . '_pushflag', 0),
     );
-    $form[$type->type . '_settings']['npr_push_' . $type->type . '_nproneflag'] = array(
+    $form[$type->type . '_settings']['flags']['npr_push_' . $type->type . '_nproneflag'] = array(
       '#type' => 'select',
       '#title' => t('NPR One flag'),
       '#description' => t('Use a (drupal) field to push to NPR One on a per-node basis.'),
