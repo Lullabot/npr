@@ -101,7 +101,7 @@ function npr_push_node_delete($node) {
  * @param object $node
  *   A drupal node.
  * @return string/FALSE
- *   The value of the node's NPR org ID field, or false it it's empty.
+ *   The value of the node's NPR org ID field, or false if it's empty.
  */
 function _npr_push_get_node_org_id($node) {
   if ($node->type == 'npr_story' && !empty($node->field_npr_org_id[$node->language][0]['value'])) {
