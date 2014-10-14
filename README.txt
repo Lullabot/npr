@@ -64,3 +64,18 @@ Text Format
   you probably want the better_formats module:
   https://drupal.org/project/better_formats
   Please see issue [#2056763] for context.
+
+Pushing Stories
+
+  1) npr_push will push a node of any given content type to the API.
+  2) Configure your push settings at admin/config/services/npr/push
+  3) Any/all content types and fields can be mapped to NPRML data
+  4) BE SURE to check the 'Push XXXX nodes to the NPR API' checkbox (a.k.a. the
+     killswitch).
+  5) BE SURE to map a field to the NPRML ID field
+  6) This ID field should be LEFT BLANK; upon successful push the module will
+     automatically fill it out with the new ID sent back from the API.
+  7) There are also push flags, i.e., fields that are associated with certain actions
+     on a per-node basis. If a node's mapped 'Push flag' is in any way truthy,
+     it will be pushed to the API. If not, it won't. The same goes for the
+     'NPR One flag'.
