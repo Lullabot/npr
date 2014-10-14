@@ -61,7 +61,7 @@ class NPRAPI {
 
   }
 
-  function create_NPRML() {
+  function create_NPRML($node) {
 
   }
 
