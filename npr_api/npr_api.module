@@ -40,7 +40,7 @@ function npr_api_menu() {
   );
 
   $items['admin/config/services/npr/npr_api_test'] = array(
-    'title' => 'API Test',
+    'title' => 'API Pull Test',
     'page callback' => 'npr_api_test_api',
     'access arguments' => array('administer npr api'),
     'type' => MENU_LOCAL_TASK,
