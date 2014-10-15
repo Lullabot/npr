@@ -49,7 +49,11 @@ function npr_push_node_insert($node) {
     if (!empty($NPRAPIDrupal->response->id)) {
       _npr_push_add_api_id($node, $NPRAPIDrupal->response->id);
     }
-    if (!empty($NPRAPIDrupal->response->error)) {
+    if ($NPRAPIDrupal->response->error = '200') {
+      $message = t('%node was successfully pushed to the NPR API.', array('%node' => $node->title));
+      drupal_set_message($message);
+    }
+    else {
       $message = t('An error occurred while pushing %node. Status code: %status. Error message: %message', array('%node' => $node->title, '%status' => $NPRAPIDrupal->response->code, '%message' => $NPRAPIDrupal->response->error));
       drupal_set_message($message, 'error');
       watchdog('npr_push', $message, NULL, WATCHDOG_ERROR);
@@ -77,7 +81,11 @@ function npr_push_node_update($node) {
     if (!empty($NPRAPIDrupal->response->id)) {
       _npr_push_add_api_id($node, $NPRAPIDrupal->response->id);
     }
-    if (!empty($NPRAPIDrupal->response->error)) {
+    if ($NPRAPIDrupal->response->error = '200') {
+      $message = t('%node was successfully pushed to the NPR API.', array('%node' => $node->title));
+      drupal_set_message($message);
+    }
+    else {
       $message = t('An error occurred while pushing %node. Status code: %status. Error message: %message', array('%node' => $node->title, '%status' => $NPRAPIDrupal->response->code, '%message' => $NPRAPIDrupal->response->error));
       drupal_set_message($message, 'error');
       watchdog('npr_push', $message, NULL, WATCHDOG_ERROR);
