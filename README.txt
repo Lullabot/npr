@@ -79,3 +79,4 @@ Pushing Stories
      on a per-node basis. If a node's mapped 'Push flag' is in any way truthy,
      it will be pushed to the API. If not, it won't. The same goes for the
      'NPR One flag'.
+  8) Title, teaser, and body will automatically be mapped to the corresponding NPRML elements.

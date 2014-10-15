@@ -47,6 +47,11 @@ function npr_push_admin_config() {
       '#title' => t('Push ' . $type->name . ' nodes to the NPR API'),
       '#default_value' => variable_get('npr_push_types_' . $type->type, 0),
     );
+
+    $form[$type->type . '_settings'][$type->type . '_help_text'] = array(
+      '#markup' => t('Title, teaser, and body will automatically be mapped to the corresponding NPRML elements.'),
+    );
+
     foreach ($all_fields as $key => $all_field) {
       if (!in_array($all_field['field_name'], $required_fields)) {
         $form[$type->type . '_settings']['npr_push_mapping_' . $type->type . $all_field['field_name']] = array(
