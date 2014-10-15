@@ -33,38 +33,23 @@ function npr_push_menu() {
  * Implements hook_node_insert().
  */
 function npr_push_node_insert($node) {
-  $local_id = _npr_push_get_node_org_id($node);
-  $flag = _npr_push_push_flag($node);
-  if (variable_get('npr_push_types_' . $node->type) && $flag && (!$local_id || ($local_id && $local_id == variable_get('npr_push_org_id')))) {
-    // Should we set 'NPR One send' flag?
-    if (_npr_push_npr_one_flag($node)) {
-      $node->npr_push_npr_one_send = TRUE;
-    }
-    // Load API classes
-    module_load_include('php', 'npr_api', 'classes/NPRAPI');
-    module_load_include('php', 'npr_api', 'classes/NPRAPIDrupal');
-    $NPRAPIDrupal = new NPRAPIDrupal();
-    $NPRAPIDrupal->push_NPRML($node);
-    $NPRAPIDrupal->parse_response();
-    if (!empty($NPRAPIDrupal->response->id)) {
-      _npr_push_add_api_id($node, $NPRAPIDrupal->response->id);
-    }
-    if ($NPRAPIDrupal->response->error = '200') {
-      $message = t('%node was successfully pushed to the NPR API.', array('%node' => $node->title));
-      drupal_set_message($message);
-    }
-    else {
-      $message = t('An error occurred while pushing %node. Status code: %status. Error message: %message', array('%node' => $node->title, '%status' => $NPRAPIDrupal->response->code, '%message' => $NPRAPIDrupal->response->error));
-      drupal_set_message($message, 'error');
-      watchdog('npr_push', $message, NULL, WATCHDOG_ERROR);
-    }
-  }
+  npr_push_push_node($node);
 }
 
 /**
  * Implements hook_node_update().
  */
 function npr_push_node_update($node) {
+  npr_push_push_node($node);
+}
+
+/**
+ * Pushes a node up to the NPR API.
+ *
+ * @param $node object
+ *   The node being pushed.
+ */
+function npr_push_push_node($node) {
   $local_id = _npr_push_get_node_org_id($node);
   $flag = _npr_push_push_flag($node);
   if (variable_get('npr_push_types_' . $node->type) && $flag && (!$local_id || ($local_id && $local_id == variable_get('npr_push_org_id')))) {
