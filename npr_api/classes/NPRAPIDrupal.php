@@ -27,7 +27,8 @@ class NPRAPIDrupal extends NPRAPI {
    * @param string $base
    *   The base URL of the request (i.e., HTTP://EXAMPLE.COM/path) with no trailing slash.
    */
-  function request($params = array(), $method = 'GET', $data = NULL, $path = 'query', $base = self::NPRAPI_PULL_URL) {
+  function request($params = array(), $method = 'GET', $data = NULL, $path = 'query') {
+    $base = variable_get('npr_pull_api_url', self::NPRAPI_PULL_URL);
 
     $this->request->method = $method;
     $this->request->params = $params;
