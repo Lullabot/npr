@@ -80,3 +80,4 @@ Pushing Stories
      it will be pushed to the API. If not, it won't. The same goes for the
      'NPR One flag'.
   8) Title, teaser, and body will automatically be mapped to the corresponding NPRML elements.
+  9) In general, a story's NPRML requires a title, a teaser, and a pubDate in order to be successfully pushed to the API.
