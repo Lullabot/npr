@@ -54,7 +54,7 @@ class NPRAPI {
     if (!empty($xml->list->story)) {
       $id = $this->get_attribute($xml->list->story, 'id');
     }
-    $this->response->id = $id ? $id : NULL;
+    $this->response->id = !empty($id) ? $id : NULL;
   }
 
   function flatten() {
