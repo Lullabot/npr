@@ -48,7 +48,12 @@ function npr_push_node_insert($node) {
     $NPRAPIDrupal->parse_response();
     if (!empty($NPRAPIDrupal->response->id)) {
       _npr_push_add_api_id($node, $NPRAPIDrupal->response->id);
-    }   
+    }
+    if (!empty($NPRAPIDrupal->response->error)) {
+      $message = t('An error occurred while pushing %node. Status code: %status. Error message: %message', array('%node' => $node->title, '%status' => $NPRAPIDrupal->response->code, '%message' => $NPRAPIDrupal->response->error));
+      drupal_set_message($message, 'error');
+      watchdog('npr_push', $message, NULL, WATCHDOG_ERROR);
+    }
   }
 }
 
@@ -71,6 +76,11 @@ function npr_push_node_update($node) {
     $NPRAPIDrupal->parse_response();
     if (!empty($NPRAPIDrupal->response->id)) {
       _npr_push_add_api_id($node, $NPRAPIDrupal->response->id);
+    }
+    if (!empty($NPRAPIDrupal->response->error)) {
+      $message = t('An error occurred while pushing %node. Status code: %status. Error message: %message', array('%node' => $node->title, '%status' => $NPRAPIDrupal->response->code, '%message' => $NPRAPIDrupal->response->error));
+      drupal_set_message($message, 'error');
+      watchdog('npr_push', $message, NULL, WATCHDOG_ERROR);
     }
   }
 }
