@@ -66,7 +66,7 @@ function npr_push_push_node($node) {
     if (!empty($NPRAPIDrupal->response->id)) {
       _npr_push_add_api_id($node, $NPRAPIDrupal->response->id);
     }
-    if ($NPRAPIDrupal->response->error = '200') {
+    if ($NPRAPIDrupal->response->code == '200') {
       $message = t('%node was successfully pushed to the NPR API.', array('%node' => $node->title));
       drupal_set_message($message);
     }
