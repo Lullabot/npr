@@ -219,6 +219,18 @@ class NPRAPI {
    */
   function report() {
     $msg = array();
+
+    $xml = simplexml_load_string($this->xml);
+    if (!empty($xml->messages)) {
+      foreach($xml->messages->children() as $message) {
+        $id = ($this->get_attribute($message, 'id')) ? $this->get_attribute($message, 'id') : 'NULL';
+        $level = ($this->get_attribute($message, 'level')) ? $this->get_attribute($message, 'level') : 'NULL';
+        $text = ($message->text) ? (string) $message->text : 'NULL';
+        $args = array('%id' => $id, '%level' => $level, '@text' => $text);
+        $msg[] = t("Message [ID: %id LEVEL: %level]: @text", $args);
+      }
+    }
+
     $params = '';
     if (isset($this->request->params)) {
       foreach ($this->request->params as $k => $v) {
