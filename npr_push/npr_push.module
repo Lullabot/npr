@@ -71,9 +71,9 @@ function npr_push_push_node($node) {
       drupal_set_message($message);
     }
     else {
-      $message = t('An error occurred while pushing %node. Status code: %status. Error message: %message', array('%node' => $node->title, '%status' => $NPRAPIDrupal->response->code, '%message' => $NPRAPIDrupal->response->error));
+      $message = t('An error occurred while pushing %node. Status code: %status. Error message: %message. Check the logs for me details.', array('%node' => $node->title, '%status' => $NPRAPIDrupal->response->code, '%message' => $NPRAPIDrupal->response->error));
       drupal_set_message($message, 'error');
-      watchdog('npr_push', $message, NULL, WATCHDOG_ERROR);
+      watchdog('NPR Push', $NPRAPIDrupal->response->data, NULL, WATCHDOG_ERROR);
     }
   }
 }
