@@ -46,6 +46,16 @@ function npr_api_menu() {
     'type' => MENU_LOCAL_TASK,
   );
 
+  $items['admin/config/services/npr/help'] = array(
+    'title' => 'Help',
+    'description' => 'Get more information on mapping fields to NPR',
+    'weight' => 50,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('nprapi_help_form'),
+    'access arguments' => array('administer npr api'),
+    'type' => MENU_LOCAL_TASK,
+  );
+
   return $items; 
 }
 
@@ -137,31 +147,77 @@ function npr_api_get_nprml_fields() {
     'id' => array(
       'type' => 'attribute',
       'accepted_types' => array('text_textfield'),
+      'description' => t('A unique identifier for the content.')
     ),
     'subtitle' => array(
       'type' => 'text', 
       'accepted_types' => array('text_textfield'),
+      'description' => t('Text giving additional information about the content.')
     ),
     'shortTitle' => array(
       'type' => 'text',
       'accepted_types' => array('text_textfield'), 
+      'description' => t('A shorter version of the title.')
     ),
     'miniTeaser' => array(
       'type' => 'text',
       'accepted_types' => array('text_textfield'),
+      'description' => t('A shorter version of the teaser.')
     ),
     'slug' => array(
       'type' => 'text',
       'accepted_types' => array('text_textfield', 'options_select'),
+      'description' => t('A short phrase or title used to indicate the story content.')
     ),
     'image' => array(
       'type' => 'image',
       'accepted_types' => array('image_image'),    
+      'description' => t('An image related to the content.')
     ),
     'audio' => array(
       'type' => 'audio',
       'accepted_types' => array('npr_audio'),
+      'description' => t('An audio file related to the content.')
     ),
   );
   return $nprml_fields;
+}
+function nprapi_help_form($form, &$form_state) {
+  $npr_fields = npr_api_get_nprml_fields();
+  $header = array(t('NPRML Field'), t('Description'), t('Type'), t('Accepted Types for mapping'));
+
+  $form['intro'] = array(
+      '#markup' => "Listed below are the avaiable fields from NPR to map content to, and descriptions.",
+    );
+
+  $rows = array();
+  $table = null;
+  foreach ($npr_fields as $name => $field) {
+    $new_row = array();
+    $accepted_types = "";
+    foreach ($field['accepted_types'] as $type => $value) {
+      
+      $accepted_types .= $value."<br/>";
+    }
+    $description = isset($field['description']) ? $field['description'] : '';
+    $new_row = array($name, $description, $field['type'], $accepted_types);
+    array_push($rows, $new_row);
+  }
+
+  $table = theme('table', array('header' => $header, 'rows' => $rows));
+
+  $form['NPRML_fields'] = array(
+    '#type' => 'fieldset',
+    '#title' => strtoupper('NPRML Fields'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  );
+  $form['NPRML_fields']['info'] = array(
+    '#markup' => 'Title, teaser, and body will automatically be mapped to the corresponding NPRML elements.'
+  );
+  $form['NPRML_fields']['table'] = array(
+    '#markup' => $table,
+  );
+  
+  return $form;
 }
