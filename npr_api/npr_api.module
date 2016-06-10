@@ -70,11 +70,15 @@ function npr_api_menu() {
  * @see npr_api_menu()
  */
 function npr_api_config_form($form, &$form_state) {
+
   $form['npr_api_api_key'] = array(
     '#type' => 'textfield',
     '#title' => t('NPR API Key'),
     '#default_value' => variable_get('npr_api_api_key'),
     '#description' => t(''),
+  );
+  $form['npr_api_get_key'] = array(
+    '#markup' => 'To get an API Key, visist <a href="http://api.npr.org" target="_blank">http://api.npr.org</a>',
   );
   return system_settings_form($form);
 }

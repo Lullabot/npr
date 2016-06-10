@@ -170,4 +170,9 @@ function npr_push_form_npr_api_config_form_alter(&$form, &$form_state, $form_id)
     '#title' => t('NPR Organization ID'),
     '#default_value' => variable_get('npr_push_org_id'),
   );
+  $form['npr_push_config']['npr_push_ip_help'] = array(
+    '#markup' => 'NPR Push requires a special API key + registration of your IP address with NPR
+     (you can only push with that key, from that IP). Contact NPR Digital Services
+     for more help: <a href="http://info.ds.npr.org/contact.html" target="_blank">http://info.ds.npr.org/contact.html</a>'
+  );
 }
