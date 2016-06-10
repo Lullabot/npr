@@ -191,7 +191,7 @@ function nprapi_help_form($form, &$form_state) {
   $header = array(t('NPRML Field'), t('Description'), t('Type'), t('Accepted Types for mapping'));
 
   $form['intro'] = array(
-      '#markup' => "Listed below are the avaiable fields from NPR to map content to, and descriptions.",
+      '#markup' => 'Listed below are the avaiable fields from NPR to map content to, and descriptions. If you are having trouble, please visit the Support Center at <a href="https://nprsupport.desk.com/" target="_blank">https://nprsupport.desk.com/</a>',
     );
 
   $rows = array();
@@ -222,6 +222,6 @@ function nprapi_help_form($form, &$form_state) {
   $form['NPRML_fields']['table'] = array(
     '#markup' => $table,
   );
-  
+
   return $form;
 }
