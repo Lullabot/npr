@@ -208,11 +208,12 @@ function npr_pull_save_story($story) {
   $user = user_load(variable_get('npr_pull_author', 0));
 
   module_load_include('inc', 'node', 'node.pages');
-
+  $is_update = FALSE;
 
   // is an update?
   if (!empty($story->nid)) {
     $node = (array)node_load($story->nid);
+    $is_update = TRUE;
   }
 
   // or a newly pulled story?
@@ -369,6 +370,7 @@ function npr_pull_save_story($story) {
   $user = $original_user;
   drupal_save_session(TRUE);
   drupal_set_message(t('Go to') . ' ' . l($node->title, 'node/' . $node->nid));
+  
 }
 
 /**
